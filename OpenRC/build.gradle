@@ -2,7 +2,6 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "29.0.0"
 
     defaultConfig {
         minSdkVersion 23
@@ -24,4 +23,7 @@ dependencies {
     turboImplementation project (':Blocks')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation('com.acmerobotics.dashboard:dashboard:0.3.10') {
+        exclude group: 'org.firstinspires.ftc'
+    }
 }
