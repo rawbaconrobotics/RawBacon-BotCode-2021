@@ -3,7 +3,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.BotComponents.Components.BotComponentImplBase;
+import org.firstinspires.ftc.teamcode.BotComponents.DesignIdeas.Components.BotComponentImplBase;
 
 /**
  * Represents the four wheel mechanum drive on the bot
