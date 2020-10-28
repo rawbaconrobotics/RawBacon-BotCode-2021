@@ -17,7 +17,7 @@ import static android.os.SystemClock.sleep;
 import org.firstinspires.ftc.teamcode.BotComponents.DesignIdeas.Components.BotComponentImplBase;
 
 /**
- * Represents the four wheel mechanum drive on the bot
+ * Represents the mechanism used for lifting the wobble arm
  * @author Raw Bacon Coders
  */
 
@@ -56,7 +56,8 @@ public class AdamWobbleArm extends BotComponentImplBase {
         double downPosition = 0;
         double upPosition = 1;
         boolean armPosition = true;
-        if (opModeIsActive()){
+        //true=arm is down, false = arm is up
+        while (opModeIsActive()){
             if (gamepad2.a){
                 if (armPosition = true){
                     wobbleArm.setPosition(upPosition);
