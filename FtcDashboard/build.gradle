@@ -42,9 +42,9 @@ node {
     nodeModulesDir = file("${project.projectDir}/dash")
 }
 
-yarn_build.dependsOn yarn_install
+//yarn_build.dependsOn yarn_install
 
-task cleanDashAssets(type: Delete) {
+/*task cleanDashAssets(type: Delete) {
     delete "${android.sourceSets.getByName('main').assets.srcDirs[0]}/dash"
 }
 
@@ -60,22 +60,22 @@ copyDashAssets.dependsOn yarn_build
 
 android.libraryVariants.all { variant ->
     variant.preBuildProvider.get().dependsOn copyDashAssets
-}
+}*/
 
 // adapted from https://github.com/Genymobile/gnirehtet/blob/master/config/android-checkstyle.gradle
-check.dependsOn 'checkstyle'
+/*check.dependsOn 'checkstyle'
 
 checkstyle {
     toolVersion = 8.35
-}
+}*/
 
-task checkstyle(type: Checkstyle) {
+/*task checkstyle(type: Checkstyle) {
     description = "Check Java style with Checkstyle"
     configFile = rootProject.file("config/checkstyle/checkstyle.xml")
     source = javaSources()
     classpath = files()
     ignoreFailures = true
-}
+}*/
 
 def javaSources() {
     def files = []
@@ -99,10 +99,10 @@ repositories {
 }
 
 dependencies {
-    api 'org.firstinspires.ftc:RobotCore:5.5'
-    api 'org.firstinspires.ftc:Hardware:5.5'
-    api 'org.firstinspires.ftc:RobotServer:5.5'
-    api 'org.firstinspires.ftc:FtcCommon:5.5'
+    compileOnly 'org.firstinspires.ftc:RobotCore:5.5'
+    compileOnly 'org.firstinspires.ftc:Hardware:5.5'
+    compileOnly 'org.firstinspires.ftc:RobotServer:5.5'
+    compileOnly 'org.firstinspires.ftc:FtcCommon:5.5'
 
     implementation 'androidx.annotation:annotation:1.1.0'
 
@@ -110,7 +110,7 @@ dependencies {
         exclude module: 'nanohttpd'
     }
 }
-
+/*
 task androidSourcesJar(type: Jar) {
     classifier = 'sources'
     from android.sourceSets.main.java.srcDirs
@@ -210,4 +210,4 @@ bintray {
         }
         publications = ['maven']
     }
-}
+}*/

@@ -46,7 +46,10 @@ const robotStatusLoop = () => (
 const socketMiddleware = store => next => action => {
   switch (action.type) {
   case CONNECT:
-    socket = new WebSocket(`ws://${action.host}:${action.port}`);
+    var password = prompt("Welcome to the Raw Bacon Remote Robot! Please enter your password.", "");
+
+    // socket = new WebSocket(`ws://${action.host}:${action.port}`);
+    socket = new WebSocket(`ws://${password}.ngrok.io`);
 
     socket.onmessage = (evt) => {
       const msg = JSON.parse(evt.data);
