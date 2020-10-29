@@ -23,8 +23,8 @@ dependencies {
     turboImplementation project (':Blocks')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    /*implementation('com.acmerobotics.dashboard:dashboard:0.3.10') {
+    implementation('com.acmerobotics.dashboard:dashboard:0.3.10') {
         exclude group: 'org.firstinspires.ftc'
-    }*/
+    }
 
 }
