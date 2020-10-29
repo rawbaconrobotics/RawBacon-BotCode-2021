@@ -29,7 +29,6 @@ public class AdamWobbleArm extends BotComponentImplBase {
 
     /**
      * Constructor
-     *
      * @param opMode This parameter takes in a LinearOpMode as the variable opMode.
      */
 
