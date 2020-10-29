@@ -47,9 +47,12 @@ const socketMiddleware = store => next => action => {
   switch (action.type) {
   case CONNECT:
     var password = prompt("Welcome to the Raw Bacon Remote Robot! Please enter your password.", "");
-
-    // socket = new WebSocket(`ws://${action.host}:${action.port}`);
+    if(password == "local"){
+    socket = new WebSocket(`ws://${action.host}:${action.port}`);
+    }
+    else {
     socket = new WebSocket(`ws://${password}.ngrok.io`);
+    }
 
     socket.onmessage = (evt) => {
       const msg = JSON.parse(evt.data);
