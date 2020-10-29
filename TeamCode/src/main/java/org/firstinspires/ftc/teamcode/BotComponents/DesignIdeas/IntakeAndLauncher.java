@@ -23,8 +23,8 @@ import org.firstinspires.ftc.teamcode.BotComponents.DesignIdeas.Components.BotCo
 
 public class IntakeAndLauncher extends BotComponentImplBase {
 
-    private DCMotor intake = null;
-    private DCMotor launcher = null;
+    private DcMotor intake = null;
+    private DcMotor launcher = null;
     private Servo hopper = null;
     private Servo transfer = null;
 
@@ -49,19 +49,19 @@ public class IntakeAndLauncher extends BotComponentImplBase {
 
     public void init(){
 
-        intake = (DCMotor) hardwareMap.dcMotor.get(INTAKE_NAME);
-        launcher = (DCMotor) hardwareMap.dcMotor.get(LAUNCHER_NAME);
-        hopper = (Servo) hardwareMap.servo.get(HOPPER_NAME);
-        transfer = (Servo)hardwareMap.servo.get(TRANSFER_NAME);
+        intake = hardwareMap.dcMotor.get(INTAKE_NAME);
+        launcher = hardwareMap.dcMotor.get(LAUNCHER_NAME);
+        hopper = hardwareMap.servo.get(HOPPER_NAME);
+        transfer = hardwareMap.servo.get(TRANSFER_NAME);
 
     }
 
     public void initAutonomous(){
 
-        intake = (DCMotor) hardwareMap.dcMotor.get(INTAKE_NAME);
-        launcher = (DCMotor) hardwareMap.dcMotor.get(LAUNCHER_NAME);
-        hopper = (Servo) hardwareMap.servo.get(HOPPER_NAME);
-        transfer = (Servo)hardwareMap.servo.get(TRANSFER_NAME);
+        intake = hardwareMap.dcMotor.get(INTAKE_NAME);
+        launcher = hardwareMap.dcMotor.get(LAUNCHER_NAME);
+        hopper = hardwareMap.servo.get(HOPPER_NAME);
+        transfer = hardwareMap.servo.get(TRANSFER_NAME);
 
     }
 
