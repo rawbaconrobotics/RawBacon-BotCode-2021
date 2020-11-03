@@ -81,7 +81,7 @@ public class IntakeAndLauncher extends BotComponentImplBase {
 
         while (opModeIsActive()) {
             //turns the intake on and off
-            if (gamepad1.y) {
+            if (gamepad1.left_trigger == 1) {
                 if (intakeStatus = false) {
                     intake.setPower(1);
                     intakeStatus = true;
@@ -90,25 +90,33 @@ public class IntakeAndLauncher extends BotComponentImplBase {
                     intakeStatus = false;
                 }
             }
+
             //moves the hopper if the second driver hits the b button
-            if (gamepad2.b) {
-                if (hopperPosition = true) {
+            while (gamepad2.left_trigger == 1) {
+                hopperPosition = false;
+            }
+
+            while (gamepad2.left_trigger == 0){
+                hopperPosition = true;
+            }
+            if (hopperPosition = true){
+                if (gamepad2.left_trigger == 1){
                     hopper.setPosition(hopperUpPosition);
-                    hopperPosition = false;
-                }
-                else if (hopperPosition = false) {
-                    hopper.setPosition(hopperDownPosition);
-                    hopperPosition = true;
                 }
             }
+            if (hopperPosition = false) {
+                    hopper.setPosition(hopperDownPosition);
+                }
+
             //shoots 1 ring
-            if (gamepad2.x) {
+            if (gamepad2.right_trigger == 1) {
                 transfer.setPosition(transferInPosition);
                 sleep(1000);
                 transfer.setPosition(transferOutPosition);
                 }
+
             //turns the launcher on and off
-            if (gamepad1.x) {
+            if (gamepad2.x) {
                 if (launcherStatus = false) {
                     launcher.setPower(1);
                     launcherStatus = true;
