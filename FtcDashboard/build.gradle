@@ -41,7 +41,7 @@ node {
     download = true
     nodeModulesDir = file("${project.projectDir}/dash")
 }
-/*
+///*
 yarn_build.dependsOn yarn_install
 
 task cleanDashAssets(type: Delete) {
@@ -90,7 +90,7 @@ def javaSources() {
     }
     return files
 }
-*/
+//*/
 repositories {
     flatDir {
         dirs '../libs'
@@ -110,7 +110,7 @@ dependencies {
         exclude module: 'nanohttpd'
     }
 }
-/*
+//
 
 task androidSourcesJar(type: Jar) {
     classifier = 'sources'
@@ -211,4 +211,4 @@ bintray {
         }
         publications = ['maven']
     }
-} */
+} //*/

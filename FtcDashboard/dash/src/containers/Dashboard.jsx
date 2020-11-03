@@ -23,7 +23,7 @@ class Dashboard extends Component {
     return (
       <div>
         <Header>
-          <Heading text="FTC Dashboard" level={1}>
+          <Heading text="Raw Bacon Dashboard" level={1}>
             <IconGroup>
               <select 
                 style={{ margin: '0px 8px 0px 8px' }}

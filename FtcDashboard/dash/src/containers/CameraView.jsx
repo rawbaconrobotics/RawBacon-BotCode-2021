@@ -54,7 +54,7 @@ class CameraView extends React.Component {
   render() {
     return (
       <div>
-        <Heading level={2} text="Camera" >
+        <Heading level={2} text="Camera View" >
           <IconGroup>
             <Icon onClick={() => this.setState({ rotation: (this.state.rotation + 1) % 4 })} icon="refresh" size="small" />
           </IconGroup>

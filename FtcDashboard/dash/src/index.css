@@ -14,7 +14,7 @@
 
 html { overflow: hidden; }
 body { font-family: "Roboto", sans-serif; margin: 0; padding: 0; font-size: 14px; }
-header { width: calc(100% - 16px); background-color: #2962ff; color: white; padding: 8px; height: 44px; }
+header { width: calc(100% - 16px); background-color: #d80100; color: white; padding: 8px; height: 33px; }
 h1, h2, h3 { font-weight: bold; margin: 0; }
 .tile-grid { display: grid; width: 100%; height: calc(100vh - 60px); }
 .tile { border: 1px solid #EEE; padding: 16px; }

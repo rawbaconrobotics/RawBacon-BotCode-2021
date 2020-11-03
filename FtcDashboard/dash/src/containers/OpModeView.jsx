@@ -42,7 +42,7 @@ class OpModeView extends React.Component {
   }
 
   renderInitButton() {
-    return <button style={{margin: '4px'}} onClick={() => this.props.dispatch(initOpMode(this.state.selectedOpMode))}>Init</button>;
+    return <button style={{margin: '4px'}} onClick={() => this.props.dispatch(initOpMode(this.state.selectedOpMode))}>Begin</button>;
   }
 
   renderStartButton() {
@@ -84,15 +84,15 @@ class OpModeView extends React.Component {
     if (!available) {
       return (
         <div>
-          <Heading level={2} text="Op Mode" />
-          <p>Event loop detached</p>
+          <Heading level={2} text="Program" />
+          <p>Error: Robot disconnected from this computer!</p>
         </div>
       );
     }
 
     return (
       <div>
-        <Heading level={2} text="Op Mode">
+        <Heading level={2} text="Program">
           <IconGroup>
             <Icon opacity={ gamepad1Connected ? 1.0 : 0.3 } icon="gamepad" size="small" />
             <Icon opacity={ gamepad2Connected ? 1.0 : 0.3 } icon="gamepad" size="small" />

@@ -64,6 +64,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import fi.iki.elonen.NanoHTTPD;
 
@@ -760,9 +761,11 @@ public class FtcDashboard implements OpModeManagerImpl.Notifications {
      * @param maxFps maximum frames per second; 0 indicates unlimited
      */
     public void startCameraStream(CameraStreamSource source, double maxFps) {
-        stopCameraStream();
 
+        stopCameraStream();
         cameraStreamExecutor = ThreadPool.newSingleThreadExecutor("camera stream");
+        //Executors.newSingleThreadExecutor().submit(new CameraStreamRunnable(source, maxFps));
+
         cameraStreamExecutor.submit(new CameraStreamRunnable(source, maxFps));
     }
 

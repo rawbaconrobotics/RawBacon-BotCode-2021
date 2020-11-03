@@ -10,7 +10,7 @@ const LAYOUT_PRESET_KEY = 'layoutPreset';
 const storageMiddleware = store => next => action => {
   switch (action.type) {
   case GET_LAYOUT_PRESET: {
-    const preset = localStorage.getItem(LAYOUT_PRESET_KEY) || LayoutPreset.DEFAULT;
+    const preset = localStorage.getItem(LAYOUT_PRESET_KEY) || LayoutPreset.DRIVER;
 
     store.dispatch(receiveLayoutPreset(preset));
 

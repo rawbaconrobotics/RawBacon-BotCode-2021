@@ -9,6 +9,7 @@ import TelemetryView from '../containers/TelemetryView';
 import FieldView from '../containers/FieldView';
 
 const LayoutPreset = {
+  DRIVER: 'DRIVER',
   DEFAULT: 'DEFAULT',
   FIELD: 'FIELD',
   GRAPH: 'GRAPH',
@@ -16,6 +17,22 @@ const LayoutPreset = {
 };
 
 const LAYOUT_DETAILS = {
+  [LayoutPreset.DRIVER]: {
+    name: 'Driver',
+    content: (
+      <TileGrid gridTemplate="150px calc(100% - 150px) / 30% 70%">
+        <Tile row={1} col={1}>
+          <OpModeView />
+        </Tile>
+        <Tile row="2 / auto" col={1}>
+          <TelemetryView />
+        </Tile>
+        <Tile row="1 / span 3" col="2 / span 2">
+          <CameraView />
+        </Tile>
+      </TileGrid>
+    )
+  },
   [LayoutPreset.DEFAULT]: {
     name: 'Default',
     content: (
