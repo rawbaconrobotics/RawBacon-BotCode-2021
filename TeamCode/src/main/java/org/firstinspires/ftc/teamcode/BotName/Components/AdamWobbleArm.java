@@ -1,20 +1,9 @@
-package org.firstinspires.ftc.teamcode.BotComponents.DesignIdeas;
+package org.firstinspires.ftc.teamcode.BotName.Components;
 
-import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
-import static android.os.SystemClock.sleep;
-
-import org.firstinspires.ftc.teamcode.BotComponents.DesignIdeas.Components.BotComponentImplBase;
+import org.firstinspires.ftc.teamcode.BotName.Components.BotComponentImplBase;
 
 /**
  * Represents the mechanism used for lifting the wobble arm

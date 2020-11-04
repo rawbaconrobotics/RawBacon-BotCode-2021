@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.BotComponents.DesignIdeas.Components;
+package org.firstinspires.ftc.teamcode.BotName.Components;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;

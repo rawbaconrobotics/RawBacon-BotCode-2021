@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.BotComponents.DesignIdeas.Components;
+package org.firstinspires.ftc.teamcode.BotName.Components;
 
 /**
  * @author Raw Bacon Coders
