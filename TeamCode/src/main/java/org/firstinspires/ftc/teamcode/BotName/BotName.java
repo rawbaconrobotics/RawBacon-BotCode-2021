@@ -2,9 +2,8 @@ package org.firstinspires.ftc.teamcode.BotName;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.BotName.Components.AdamWobbleArm;
-import org.firstinspires.ftc.teamcode.BotName.Components.BotDriveTrain;
-import org.firstinspires.ftc.teamcode.BotName.Components.IntakeAndLauncher;
+import org.firstinspires.ftc.teamcode.BotName.Components.BotNameDriveTrain;
+import org.firstinspires.ftc.teamcode.BotName.Components.BotNameIntakeAndLauncher;
 
 /**
  * Organizes the various components on the robot
@@ -14,9 +13,9 @@ import org.firstinspires.ftc.teamcode.BotName.Components.IntakeAndLauncher;
 public class BotName {
 
     //Initialize new components
-    public BotDriveTrain drivetrain;
-    public AdamWobbleArm wobble;
-    public IntakeAndLauncher il;
+    public BotNameDriveTrain drivetrain;
+    public org.firstinspires.ftc.teamcode.BotName.Components.BotName wobble;
+    public BotNameIntakeAndLauncher il;
 
     /**
      * Runs the teleop on all components
@@ -32,8 +31,8 @@ public class BotName {
      * @param opMode The opmode in use. use this keyword.
      */
     public BotName (LinearOpMode opMode){
-        drivetrain = new BotDriveTrain(opMode);
-        wobble = new AdamWobbleArm(opMode);
-        il = new IntakeAndLauncher(opMode);
+        drivetrain = new BotNameDriveTrain(opMode);
+        wobble = new org.firstinspires.ftc.teamcode.BotName.Components.BotName(opMode);
+        il = new BotNameIntakeAndLauncher(opMode);
     }
 }

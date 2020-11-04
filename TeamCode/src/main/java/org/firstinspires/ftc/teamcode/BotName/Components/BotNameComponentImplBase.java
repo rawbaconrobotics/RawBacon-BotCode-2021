@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * @author Raw Bacon Coders
  * Establishes a component base for the Uhaul robot
  */
-public abstract class BotComponentImplBase implements BotComponent
+public abstract class BotNameComponentImplBase implements BotNameComponent
 {
     protected HardwareMap hardwareMap;
     protected Telemetry telemetry;
@@ -24,7 +24,7 @@ public abstract class BotComponentImplBase implements BotComponent
      * @param opMode This parameter takes in a LinearOpMode as the variable opMode.
      *
      */
-    public BotComponentImplBase(LinearOpMode opMode)
+    public BotNameComponentImplBase(LinearOpMode opMode)
     {
         hardwareMap = opMode.hardwareMap;
         telemetry = opMode.telemetry;

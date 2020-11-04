@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.BotName;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-public abstract class BaseLinearOpMode extends LinearOpMode{
+public abstract class BotNameBaseLinearOpMode extends LinearOpMode{
     protected BotName botName;
     public boolean init = true;
 

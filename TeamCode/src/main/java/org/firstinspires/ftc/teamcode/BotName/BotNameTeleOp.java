@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp(name="OFFICIAL TeleOp")
 @Disabled
 
-public class BotNameTeleOp extends BaseLinearOpMode{
+public class BotNameTeleOp extends BotNameBaseLinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     /**

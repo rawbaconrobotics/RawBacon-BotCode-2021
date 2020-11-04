@@ -3,13 +3,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.BotName.Components.BotComponentImplBase;
-
 /**
  * Represents the four wheel mechanum drive on the bot
  * @author Raw Bacon Coders
  */
-public class BotDriveTrain extends BotComponentImplBase {
+public class BotNameDriveTrain extends BotNameComponentImplBase {
 
     private DcMotorEx leftDriveBack = null;
     private DcMotorEx rightDriveBack = null;
@@ -28,7 +26,7 @@ public class BotDriveTrain extends BotComponentImplBase {
      *
      * @param opMode This parameter takes in a LinearOpMode as the variable opMode.
      */
-    public BotDriveTrain(LinearOpMode opMode) {
+    public BotNameDriveTrain(LinearOpMode opMode) {
         super(opMode);
     }
 

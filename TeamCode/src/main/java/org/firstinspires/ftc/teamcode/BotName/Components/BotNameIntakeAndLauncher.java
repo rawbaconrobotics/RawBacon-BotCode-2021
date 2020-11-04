@@ -6,14 +6,12 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import static android.os.SystemClock.sleep;
 
-import org.firstinspires.ftc.teamcode.BotName.Components.BotComponentImplBase;
-
 /**
  * Represents the mechanisms for the intake and launcher systems
  * @author Raw Bacon Coders
  */
 
-public class IntakeAndLauncher extends BotComponentImplBase {
+public class BotNameIntakeAndLauncher extends BotNameComponentImplBase {
 
     private DcMotor intake = null;
     private DcMotor launcher = null;
@@ -31,7 +29,7 @@ public class IntakeAndLauncher extends BotComponentImplBase {
      * @param opMode This parameter takes in a LinearOpMode as the variable opMode.
      */
 
-    public IntakeAndLauncher (LinearOpMode opMode) {super(opMode);}
+    public BotNameIntakeAndLauncher(LinearOpMode opMode) {super(opMode);}
 
     /**
      * Hardware maps and sets modes of all motors
