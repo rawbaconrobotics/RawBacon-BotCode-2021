@@ -77,7 +77,7 @@ public class FTCDashCam extends LinearOpMode
                  * For a rear facing camera or a webcam, rotation is defined assuming the camera is facing
                  * away from the user.
                  */
-                phoneCam.startStreaming(640, 480, OpenCvCameraRotation.SIDEWAYS_RIGHT);
+                phoneCam.startStreaming(320, 240, OpenCvCameraRotation.SIDEWAYS_RIGHT);
 
             }
         });
@@ -100,7 +100,6 @@ public class FTCDashCam extends LinearOpMode
 
             logGamepad(telemetry, gamepad1, "gamepad1");
             logGamepad(telemetry, gamepad2, "gamepad2");
-            telemetry.update();
 
             /*
              * Send some stats to the telemetry
