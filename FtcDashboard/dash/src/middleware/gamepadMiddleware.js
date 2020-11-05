@@ -112,8 +112,8 @@ const extractGamepadState = (gamepad) => {
       // the trigger range is [-1, 1] although it starts at 0.0 for some reason
       //left_trigger: gamepad.axes[6] === 0.0 ? 0.0 : (gamepad.axes[6] + 1) / 2,
       //right_trigger: gamepad.axes[7] === 0.0 ? 0.0 : (gamepad.axes[7] + 1) / 2
-      left_trigger: gamepad.value[6],
-      right_trigger: gamepad.value[7]
+      left_trigger: gamepad.buttons[6].value,
+      right_trigger: gamepad.buttons[7].value
     };
   default:
     throw new Error(`Unable to handle support gamepad of type ${type}`);
