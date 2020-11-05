@@ -162,10 +162,10 @@ window.onkeydown = function(e) { pressedKeys[e.keyCode] = true; if(e.keyCode===1
 let keyboardPlayer = false;
 
 let leftYaxis = function(){
-  if(pressedKeys["87"]){
+  if(pressedKeys["80"]){
     return 1;
   }
-  else if(pressedKeys["83"]){
+  else if(pressedKeys["186"]){
     return -1;
   }
   else{
@@ -184,10 +184,10 @@ let leftXaxis = function(){
   }
 }
 let rightYaxis = function(){
-  if(pressedKeys["38"]){
+  if(pressedKeys["222"]){
     return 1;
   }
-  else if(pressedKeys["40"]){
+  else if(pressedKeys["76"]){
     return -1;
   }
   else{
@@ -279,10 +279,10 @@ const gamepadMiddleware = store => {
           left_stick_y: leftYaxis(),
           right_stick_x: rightXAxis(),
           right_stick_y: rightYaxis(),
-          dpad_up: pressedKeys["73"],
-          dpad_down: pressedKeys["75"],
-          dpad_left: pressedKeys["74"],
-          dpad_right: pressedKeys["76"],
+          dpad_up: pressedKeys["88"],
+          dpad_down: pressedKeys["67"],
+          dpad_left: pressedKeys["90"],
+          dpad_right: pressedKeys["86"],
           a: pressedKeys["77"],
           b: pressedKeys["188"],
           x: pressedKeys["190"],
@@ -294,8 +294,8 @@ const gamepadMiddleware = store => {
           right_bumper: rightShift,
           left_stick_button: pressedKeys["-1"],
           right_stick_button: pressedKeys["-1"],
-          left_trigger: +(pressedKeys["189"]),
-          right_trigger: +(pressedKeys["187"])
+          left_trigger: +(pressedKeys["20"]),
+          right_trigger: +(pressedKeys["13"])
         };
         gamepad1State = PAD1_KEYBOARD_STATE;
       } 
@@ -312,10 +312,10 @@ const gamepadMiddleware = store => {
           left_stick_y: leftYaxis(),
           right_stick_x: rightXAxis(),
           right_stick_y: rightYaxis(),
-          dpad_up: pressedKeys["73"],
-          dpad_down: pressedKeys["75"],
-          dpad_left: pressedKeys["74"],
-          dpad_right: pressedKeys["76"],
+          dpad_up: pressedKeys["88"],
+          dpad_down: pressedKeys["67"],
+          dpad_left: pressedKeys["90"],
+          dpad_right: pressedKeys["86"],
           a: pressedKeys["77"],
           b: pressedKeys["188"],
           x: pressedKeys["190"],
@@ -327,8 +327,8 @@ const gamepadMiddleware = store => {
           right_bumper: rightShift,
           left_stick_button: pressedKeys["-1"],
           right_stick_button: pressedKeys["-1"],
-          left_trigger: +(pressedKeys["189"]),
-          right_trigger: +(pressedKeys["187"])
+          left_trigger: +(pressedKeys["20"]),
+          right_trigger: +(pressedKeys["13"])
         };
         gamepad2State = PAD2_KEYBOARD_STATE;
       }else{
