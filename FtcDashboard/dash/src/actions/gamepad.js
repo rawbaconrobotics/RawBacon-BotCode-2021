@@ -19,6 +19,14 @@ export const receiveGamepadState = (gamepad1, gamepad2) => ({
   gamepad1,
   gamepad2
 });
+export const receiveGamepad1State = (gamepad1) => ({
+  type: RECEIVE_GAMEPAD_STATE,
+  gamepad1
+});
+export const receiveGamepad2State = (gamepad2) => ({
+  type: RECEIVE_GAMEPAD_STATE,
+  gamepad2
+});
 
 /*
 To save bandwidth, new gamepad states are only sent if they differ from the previous.
@@ -30,12 +38,21 @@ const MAX_GAMEPAD_MS = 150;
 let lastGamepad1, lastGamepad2;
 let lastGamepadTimestamp;
 
-export const sendGamepadState = (gamepad1, gamepad2) => (
+export const sendGamepadState = (gamepad1 = null, gamepad2 = null) => (
   (dispatch) => {
     const timestamp = Date.now();
     if (!isEqual(lastGamepad1, gamepad1) || !isEqual(lastGamepad2, gamepad2) || 
         (timestamp - lastGamepadTimestamp) < MAX_GAMEPAD_MS) {
-      dispatch(receiveGamepadState(gamepad1, gamepad2));
+      if(gamepad1 === null){
+        dispatch(receiveGamepad2State(gamepad2));
+      }
+      else if(gamepad2 === null){
+        dispatch(receiveGamepad1State(gamepad1));
+
+      }
+      else{
+        dispatch(receiveGamepadState(gamepad1, gamepad2));
+      }
       
       lastGamepad1 = gamepad1;
       lastGamepad2 = gamepad2;

@@ -162,10 +162,10 @@ window.onkeydown = function(e) { pressedKeys[e.keyCode] = true; if(e.keyCode===1
 let keyboardPlayer = false;
 
 let leftYaxis = function(){
-  if(pressedKeys["80"]){
+  if(pressedKeys["87"]){
     return 1;
   }
-  else if(pressedKeys["186"]){
+  else if(pressedKeys["83"]){
     return -1;
   }
   else{
@@ -184,6 +184,17 @@ let leftXaxis = function(){
   }
 }
 let rightYaxis = function(){
+  if(pressedKeys["80"]){
+    return 1;
+  }
+  else if(pressedKeys["186"]){
+    return -1;
+  }
+  else{
+    return 0;
+  }
+}
+let rightXAxis = function(){
   if(pressedKeys["222"]){
     return 1;
   }
@@ -194,17 +205,8 @@ let rightYaxis = function(){
     return 0;
   }
 }
-let rightXAxis = function(){
-  if(pressedKeys["39"]){
-    return 1;
-  }
-  else if(pressedKeys["37"]){
-    return -1;
-  }
-  else{
-    return 0;
-  }
-}
+let gamepad1Rested = false;
+let gamepad2Rested = false;
 
 const gamepadMiddleware = store => {
   function updateGamepads() {
@@ -216,7 +218,10 @@ const gamepadMiddleware = store => {
       return;
     }
 
-  
+    let gamepadState = REST_GAMEPAD_STATE;
+    let gamepad1State = null;
+    let gamepad2State = null;
+
     // check for Start-A/Start-B
     for (let gamepad of navigator.getGamepads()) {
       if(pressedKeys["81"]){
@@ -226,7 +231,7 @@ const gamepadMiddleware = store => {
         continue;
       }
       let gamepadType;
-      if (gamepad != null){
+      if (gamepad !== null){
         gamepadType = GamepadType.getFromGamepad(gamepad);
         if (!GamepadType.isSupported(gamepadType)) {
           continue;
@@ -234,7 +239,6 @@ const gamepadMiddleware = store => {
       }
 
   
-      let gamepadState = REST_GAMEPAD_STATE;
       if(!keyboardPlayer){
       gamepadState = extractGamepadState(gamepad);
     } 
@@ -249,10 +253,12 @@ const gamepadMiddleware = store => {
         }
         store.dispatch(gamepadConnected(1));
   
-        if ((gamepad2Index === gamepad1Index)) {
+        if ((gamepad2Index === gamepad1Index) && (gamepad1Index !== -1)) {
+          gamepad2State = null;
+
           store.dispatch(gamepadDisconnected(2));
 
-          gamepad2Index = -1;
+          gamepad2Index = -2;
         }
       } else if ((gamepadState.start && gamepadState.b) | ((pressedKeys["81"]) && (pressedKeys["83"]))) {
         if(!keyboardPlayer){
@@ -262,16 +268,15 @@ const gamepadMiddleware = store => {
           gamepad2Index = 1;  
           }  
         store.dispatch(gamepadConnected(2));
-        if ((gamepad1Index === gamepad2Index)) {
+        if ((gamepad1Index === gamepad2Index) && (gamepad1Index !== -1)) {
+          gamepad1State = null;
           store.dispatch(gamepadDisconnected(1));
 
-          gamepad1Index = -1;
+          gamepad1Index = -2;
         }
-      }
-  
+      } 
       // actually dispatch motion events
-      let gamepad1State;
-      if ((gamepad1Index !== -1) && !keyboardPlayer) {
+      if (((gamepad1Index !== -2) && (gamepad1Index !== -1)) && !keyboardPlayer) {
         gamepad1State = extractGamepadState(gamepads[gamepad1Index], 1);
       } else if(keyboardPlayer && (gamepad1Index === 1)){
         let PAD1_KEYBOARD_STATE = {
@@ -279,10 +284,10 @@ const gamepadMiddleware = store => {
           left_stick_y: leftYaxis(),
           right_stick_x: rightXAxis(),
           right_stick_y: rightYaxis(),
-          dpad_up: pressedKeys["88"],
-          dpad_down: pressedKeys["67"],
-          dpad_left: pressedKeys["90"],
-          dpad_right: pressedKeys["86"],
+          dpad_up: pressedKeys["38"],
+          dpad_down: pressedKeys["40"],
+          dpad_left: pressedKeys["37"],
+          dpad_right: pressedKeys["39"],
           a: pressedKeys["77"],
           b: pressedKeys["188"],
           x: pressedKeys["190"],
@@ -299,12 +304,11 @@ const gamepadMiddleware = store => {
         };
         gamepad1State = PAD1_KEYBOARD_STATE;
       } 
-      else {
-        gamepad1State = REST_GAMEPAD_STATE;
-      }
+      //else {
+      //  gamepad1State = REST_GAMEPAD_STATE;
+      //}
       
-      let gamepad2State;
-      if ((gamepad2Index !== -1) && !keyboardPlayer) {
+      if (((gamepad2Index !== -2) && (gamepad2Index !== -1)) && !keyboardPlayer) {
         gamepad2State = extractGamepadState(gamepads[gamepad2Index], 2);
       } else if((keyboardPlayer) && (gamepad2Index === 1)){
         let PAD2_KEYBOARD_STATE = {
@@ -312,10 +316,10 @@ const gamepadMiddleware = store => {
           left_stick_y: leftYaxis(),
           right_stick_x: rightXAxis(),
           right_stick_y: rightYaxis(),
-          dpad_up: pressedKeys["88"],
-          dpad_down: pressedKeys["67"],
-          dpad_left: pressedKeys["90"],
-          dpad_right: pressedKeys["86"],
+          dpad_up: pressedKeys["38"],
+          dpad_down: pressedKeys["40"],
+          dpad_left: pressedKeys["37"],
+          dpad_right: pressedKeys["39"],
           a: pressedKeys["77"],
           b: pressedKeys["188"],
           x: pressedKeys["190"],
@@ -331,11 +335,14 @@ const gamepadMiddleware = store => {
           right_trigger: +(pressedKeys["13"])
         };
         gamepad2State = PAD2_KEYBOARD_STATE;
-      }else{
-        gamepad2State = REST_GAMEPAD_STATE;
-      }      
-      store.dispatch(sendGamepadState(gamepad1State, gamepad2State));
+      }
+      //}else{
+      //  gamepad2State = REST_GAMEPAD_STATE;
+      //}      
+      if((gamepad2Index !== -1) | (gamepad1Index !== -1)){
 
+      store.dispatch(sendGamepadState(gamepad1State, gamepad2State));
+      }
     }
      
     requestAnimationFrame(updateGamepads);
@@ -345,11 +352,11 @@ const gamepadMiddleware = store => {
     if (gamepad1Index === gamepad.index) {
       store.dispatch(gamepadDisconnected(gamepad1Index));
       
-      gamepad1Index = -1;
+      gamepad1Index = -2;
     } else if (gamepad2Index === gamepad.index) {
       store.dispatch(gamepadDisconnected(gamepad2Index));
 
-      gamepad2Index = -1;
+      gamepad2Index = -2;
     }
   });
 
@@ -357,5 +364,6 @@ const gamepadMiddleware = store => {
 
   return next => action => next(action);
 };
+
 
 export default gamepadMiddleware;

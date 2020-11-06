@@ -808,8 +808,16 @@ public class FtcDashboard implements OpModeManagerImpl.Notifications {
             }
 
             try {
-                activeOpMode.gamepad1.copy(gamepad1);
-                activeOpMode.gamepad2.copy(gamepad2);
+                if(gamepad1 == null){
+                    activeOpMode.gamepad2.copy(gamepad2);
+                }
+                else if(gamepad2 == null){
+                    activeOpMode.gamepad1.copy(gamepad1);
+                }
+                else {
+                    activeOpMode.gamepad1.copy(gamepad1);
+                    activeOpMode.gamepad2.copy(gamepad2);
+                }
             } catch (RobotCoreException e) {
                 Log.w(TAG, e);
             }
