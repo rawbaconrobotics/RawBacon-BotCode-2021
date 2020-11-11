@@ -5,7 +5,10 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.opencv.core.Mat;
@@ -27,6 +30,10 @@ import java.lang.reflect.Modifier;
 public class FTCDashCam extends LinearOpMode
 {
     OpenCvInternalCamera2 phoneCam;
+    private DcMotor leftDrive = null;
+    private DcMotor leftDriveBack = null;
+    private DcMotor rightDriveBack = null;
+    private DcMotor rightDrive = null;
 
     @Override
     public void runOpMode()
@@ -43,6 +50,15 @@ public class FTCDashCam extends LinearOpMode
         //phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera2(OpenCvInternalCamera2.CameraDirection.FRONT, cameraMonitorViewId);
         // OR...  Do Not Activate the Camera Monitor View
         phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera2(OpenCvInternalCamera2.CameraDirection.BACK);
+
+        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive_front");
+        leftDriveBack  = hardwareMap.get(DcMotor.class, "left_drive_back");
+        rightDrive  = hardwareMap.get(DcMotor.class, "right_drive_front");
+        rightDriveBack = hardwareMap.get(DcMotor.class, "right_drive_back");
+        leftDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftDriveBack.setDirection(DcMotor.Direction.FORWARD);
+        rightDrive.setDirection(DcMotor.Direction.REVERSE);
+        rightDriveBack.setDirection(DcMotor.Direction.REVERSE);
 
         /*
          * Specify the image processing pipeline we wish to invoke upon receipt
@@ -77,7 +93,9 @@ public class FTCDashCam extends LinearOpMode
                  * For a rear facing camera or a webcam, rotation is defined assuming the camera is facing
                  * away from the user.
                  */
-                phoneCam.startStreaming(320, 240, OpenCvCameraRotation.SIDEWAYS_RIGHT);
+                phoneCam.startStreaming(270, 480, OpenCvCameraRotation.UPRIGHT);
+                phoneCam.setFlashlightEnabled(true);
+
 
             }
         });
@@ -98,27 +116,44 @@ public class FTCDashCam extends LinearOpMode
         while (opModeIsActive())
         {
 
-            logGamepad(telemetry, gamepad1, "gamepad1");
-            logGamepad(telemetry, gamepad2, "gamepad2");
+            //logGamepad(telemetry, gamepad1, "gamepad1");
+            //logGamepad(telemetry, gamepad2, "gamepad2");
 
             /*
              * Send some stats to the telemetry
              */
            // telemetry.addData("Frame Count", phoneCam.getFrameCount());
-            telemetry.addData("FPS", String.format("%.2f", phoneCam.getFps()));
+           // telemetry.addData("FPS", String.format("%.2f", phoneCam.getFps()));
            // telemetry.addData("Total frame time ms", phoneCam.getTotalFrameTimeMs());
            // telemetry.addData("Pipeline time ms", phoneCam.getPipelineTimeMs());
            // telemetry.addData("Overhead time ms", phoneCam.getOverheadTimeMs());
            // telemetry.addData("Theoretical max FPS", phoneCam.getCurrentPipelineMaxFps());
-            telemetry.update();
+            //telemetry.update();
+
+            double drive = -gamepad1.left_stick_y;
+            double turn  =  -gamepad1.right_stick_x;
+            double leftPower = Range.clip(drive + turn, -1.0, 1.0) ;
+            double rightPower = Range.clip(drive - turn, -1.0, 1.0) ;
+
+            // Tank Mode uses one stick to control each wheel.
+            // - This requires no math, but it is hard to drive forward slowly and keep straight.
+            // leftPower  = -gamepad1.left_stick_y ;
+            // rightPower = -gamepad1.right_stick_y ;
+
+            // Send calculated power to wheels
+            leftDrive.setPower(leftPower);
+            leftDriveBack.setPower(leftPower);
+            rightDrive.setPower(rightPower);
+            rightDriveBack.setPower(rightPower);
+
 
             /*
              * NOTE: stopping the stream from the camera early (before the end of the OpMode
              * when it will be automatically stopped for you) *IS* supported. The "if" statement
              * below will stop streaming from the camera when the "A" button on gamepad 1 is pressed.
              */
-            if(gamepad1.a)
-            {
+            //if(gamepad1.a)
+            //{
                 /*
                  * IMPORTANT NOTE: calling stopStreaming() will indeed stop the stream of images
                  * from the camera (and, by extension, stop calling your vision pipeline). HOWEVER,
@@ -138,9 +173,9 @@ public class FTCDashCam extends LinearOpMode
                  * time. Of course, this comment is irrelevant in light of the use case described in
                  * the above "important note".
                  */
-                phoneCam.stopStreaming();
+               /** phoneCam.stopStreaming();**/
                 //phoneCam.closeCameraDevice();
-            }
+           // }
 
             /*
              * For the purposes of this sample, throttle ourselves to 10Hz loop to avoid burning
