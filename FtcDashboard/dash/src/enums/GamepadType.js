@@ -8,6 +8,8 @@ const GamepadType = {
   LOGITECH_DUAL_ACTION: 'LOGITECH_DUAL_ACTION',
   XBOX_360: 'XBOX_360',
   SWITCH_PRO: 'SWITCH_PRO',
+  STEELSERIES_STRATUS_XL: 'STEELSERIES_STRATUS_XL',
+  L_JOYCON: 'L_JOYCON',
   UNKNOWN: 'UNKNOWN'
 };
 
@@ -21,6 +23,10 @@ export default Object.freeze({
       return GamepadType.XBOX_360;
     } else if (gamepad.id.search('xinput') !== -1) {
       return GamepadType.SWITCH_PRO;
+    } else if (gamepad.id.search('L_JOYCON') !== -1) {
+       return GamepadType.L_JOYCON;
+      else if (gamepad.id.search('SteelSeries Stratus XL') !== -1) {
+            return GamepadType.STEELSERIES_STRATUS_XL;
     } else {
       return GamepadType.UNKNOWN;
     }
