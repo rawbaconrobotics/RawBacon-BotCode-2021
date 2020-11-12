@@ -10,6 +10,7 @@ const GamepadType = {
   SWITCH_PRO: 'SWITCH_PRO',
   STEELSERIES_STRATUS_XL: 'STEELSERIES_STRATUS_XL',
   L_JOYCON: 'L_JOYCON',
+  WIRELESS_CONTROLLER: 'WIRELESS_CONTROLLER',
   UNKNOWN: 'UNKNOWN'
 };
 
@@ -23,8 +24,10 @@ export default Object.freeze({
       return GamepadType.XBOX_360;
     } else if (gamepad.id.search('xinput') !== -1) {
       return GamepadType.SWITCH_PRO;
-    } else if (gamepad.id.search('L_JOYCON') !== -1) {
-       return GamepadType.L_JOYCON;
+    } else if (gamepad.id.search('Joy-Con) !== -1) {
+       return GamepadType.L_JOYCON;}
+     else if (gamepad.id.search('Wireless Controller') !== -1) {
+            return GamepadType.WIRELESS_CONTROLLER;}
       else if (gamepad.id.search('SteelSeries Stratus XL') !== -1) {
             return GamepadType.STEELSERIES_STRATUS_XL;
     } else {
