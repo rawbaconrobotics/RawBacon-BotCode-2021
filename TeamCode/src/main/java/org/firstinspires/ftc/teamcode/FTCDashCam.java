@@ -1,13 +1,23 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.BatteryManager;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.qualcomm.hardware.broadcom.BroadcomColorSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -26,14 +36,21 @@ import org.openftc.easyopencv.OpenCvPipeline;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
+import static android.content.Context.BATTERY_SERVICE;
+
 @TeleOp(name="AARemote Test")
 public class FTCDashCam extends LinearOpMode
 {
+    FTCDashCam context = this;
+    private final static String GRABBER_SERVO_NAME = "arm";
+    private double GRABBER_OPEN = 1;
+    private double GRABBER_CLOSED = -0.6;
     OpenCvInternalCamera2 phoneCam;
     private DcMotor leftDrive = null;
     private DcMotor leftDriveBack = null;
     private DcMotor rightDriveBack = null;
     private DcMotor rightDrive = null;
+    double getBatteryVoltage() { double result = Double.POSITIVE_INFINITY; for (VoltageSensor sensor : hardwareMap.voltageSensor) { double voltage = sensor.getVoltage(); if (voltage > 0) { result = Math.min(result, voltage); } } return result; }
 
     @Override
     public void runOpMode()
@@ -55,10 +72,12 @@ public class FTCDashCam extends LinearOpMode
         leftDriveBack  = hardwareMap.get(DcMotor.class, "left_drive_back");
         rightDrive  = hardwareMap.get(DcMotor.class, "right_drive_front");
         rightDriveBack = hardwareMap.get(DcMotor.class, "right_drive_back");
-        leftDrive.setDirection(DcMotor.Direction.FORWARD);
-        leftDriveBack.setDirection(DcMotor.Direction.FORWARD);
-        rightDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightDriveBack.setDirection(DcMotor.Direction.REVERSE);
+        leftDrive.setDirection(DcMotor.Direction.REVERSE);
+        leftDriveBack.setDirection(DcMotor.Direction.REVERSE);
+        rightDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightDriveBack.setDirection(DcMotor.Direction.FORWARD);
+        CRServo grabberServo = null;
+        grabberServo = hardwareMap.crservo.get(GRABBER_SERVO_NAME);
 
         /*
          * Specify the image processing pipeline we wish to invoke upon receipt
@@ -77,7 +96,9 @@ public class FTCDashCam extends LinearOpMode
          *
          * If you really want to open synchronously, the old method is still available.
          */
+
         phoneCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
+
         {
             @Override
             public void onOpened()
@@ -93,7 +114,7 @@ public class FTCDashCam extends LinearOpMode
                  * For a rear facing camera or a webcam, rotation is defined assuming the camera is facing
                  * away from the user.
                  */
-                phoneCam.startStreaming(270, 480, OpenCvCameraRotation.UPRIGHT);
+                phoneCam.startStreaming(360, 270, OpenCvCameraRotation.SIDEWAYS_RIGHT);
                 phoneCam.setFlashlightEnabled(true);
 
 
@@ -112,9 +133,16 @@ public class FTCDashCam extends LinearOpMode
         telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
 
         waitForStart();
+        boolean needsReset = false;
+        BatteryManager bm = (BatteryManager) hardwareMap.appContext.getSystemService(BATTERY_SERVICE);
 
         while (opModeIsActive())
         {
+
+            int percentage = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
+            telemetry.addData("Phone battery", percentage);
+            telemetry.addData("Robot Battery Voltage", getBatteryVoltage());
+
 
             //logGamepad(telemetry, gamepad1, "gamepad1");
             //logGamepad(telemetry, gamepad2, "gamepad2");
@@ -128,12 +156,29 @@ public class FTCDashCam extends LinearOpMode
            // telemetry.addData("Pipeline time ms", phoneCam.getPipelineTimeMs());
            // telemetry.addData("Overhead time ms", phoneCam.getOverheadTimeMs());
            // telemetry.addData("Theoretical max FPS", phoneCam.getCurrentPipelineMaxFps());
-            //telemetry.update();
 
             double drive = -gamepad1.left_stick_y;
-            double turn  =  -gamepad1.right_stick_x;
+            double turn  =  gamepad1.right_stick_x;
             double leftPower = Range.clip(drive + turn, -1.0, 1.0) ;
             double rightPower = Range.clip(drive - turn, -1.0, 1.0) ;
+            //replace with state machine
+            if(gamepad1.right_bumper){
+                grabberServo.setPower(GRABBER_OPEN);
+                needsReset = true;
+            }
+            else if(gamepad1.left_bumper){
+                grabberServo.setPower(GRABBER_CLOSED);
+                needsReset = true;
+            }
+            else if(needsReset){
+                grabberServo.setPower(0);
+                needsReset = false;
+            }
+            //telemetry.addData("servo pressed:", needsReset);
+
+            telemetry.addData("Drive:", drive);
+            telemetry.addData("Turn:", turn);
+            telemetry.update();
 
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
@@ -182,7 +227,6 @@ public class FTCDashCam extends LinearOpMode
              * excess CPU cycles for no reason. (By default, telemetry is only sent to the DS at 4Hz
              * anyway). Of course in a real OpMode you will likely not want to do this.
              */
-            sleep(100);
         }
         FtcDashboard.getInstance().stopCameraStream();
     }
@@ -288,5 +332,6 @@ public class FTCDashCam extends LinearOpMode
             }
         }
     }
+
 }
 

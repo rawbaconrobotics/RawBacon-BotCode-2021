@@ -43,10 +43,11 @@ const robotStatusLoop = () => (
   }
 );
 
+var password = prompt("Welcome to the Raw Bacon Remote Robot! Please enter your password.", "");
+
 const socketMiddleware = store => next => action => {
   switch (action.type) {
   case CONNECT:
-    var password = prompt("Welcome to the Raw Bacon Remote Robot! Please enter your password.", "");
     if(password === "local"){
     socket = new WebSocket(`ws://${action.host}:${action.port}`);
     }

@@ -42,6 +42,8 @@ import org.firstinspires.ftc.robotcore.internal.opmode.OpModeServices;
 
 import java.util.concurrent.TimeUnit;
 
+import static android.content.Context.BATTERY_SERVICE;
+
 /**
  * Base class for user defined operation modes (op modes).
  */
@@ -226,5 +228,5 @@ public abstract class OpMode {
   public final void internalUpdateTelemetryNow(TelemetryMessage telemetry) {
     this.internalOpModeServices.refreshUserTelemetry(telemetry, 0);
   }
+  }
 
-}

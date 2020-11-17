@@ -46,7 +46,7 @@ class CameraView extends React.Component {
         (this.state.rotation % 2 === 0 ? viewportWidth : viewportHeight) / this.image.width);
       this.ctx.translate(viewportWidth / 2, viewportHeight / 2);
       this.ctx.rotate(this.state.rotation * Math.PI / 2);
-      this.ctx.scale(scale*1.5, scale*1.5);
+      this.ctx.scale(scale*2, scale*2);
       this.ctx.drawImage(this.image, -this.image.width / 2, -this.image.height / 2, this.image.width, this.image.height);
     }
   }

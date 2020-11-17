@@ -91,9 +91,9 @@ const extractGamepadState = (gamepad) => {
   case GamepadType.XBOX_360:
     return {
       left_stick_x: cleanMotionValues(gamepad.axes[0]),
-      left_stick_y: cleanMotionValues(-gamepad.axes[1]),
+      left_stick_y: cleanMotionValues(gamepad.axes[1]),
       right_stick_x: cleanMotionValues(gamepad.axes[2]),
-      right_stick_y: cleanMotionValues(-gamepad.axes[3]),
+      right_stick_y: cleanMotionValues(gamepad.axes[3]),
       dpad_up: gamepad.buttons[12].pressed,
       dpad_down: gamepad.buttons[13].pressed,
       dpad_left: gamepad.buttons[14].pressed,
@@ -378,9 +378,9 @@ const gamepadMiddleware = store => {
       } else if(keyboardPlayer && (gamepad1Index === 1)){
         let PAD1_KEYBOARD_STATE = {
           left_stick_x: leftXaxis(),
-          left_stick_y: leftYaxis(),
+          left_stick_y: -leftYaxis(),
           right_stick_x: rightXAxis(),
-          right_stick_y: rightYaxis(),
+          right_stick_y: -rightYaxis(),
           dpad_up: pressedKeys["38"],
           dpad_down: pressedKeys["40"],
           dpad_left: pressedKeys["37"],
@@ -410,9 +410,9 @@ const gamepadMiddleware = store => {
       } else if((keyboardPlayer) && (gamepad2Index === 1)){
         let PAD2_KEYBOARD_STATE = {
           left_stick_x: leftXaxis(),
-          left_stick_y: leftYaxis(),
+          left_stick_y: -leftYaxis(),
           right_stick_x: rightXAxis(),
-          right_stick_y: rightYaxis(),
+          right_stick_y: -rightYaxis(),
           dpad_up: pressedKeys["38"],
           dpad_down: pressedKeys["40"],
           dpad_left: pressedKeys["37"],
