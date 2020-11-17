@@ -139,7 +139,7 @@ const extractGamepadState = (gamepad) => {
           left_trigger: gamepad.buttons[6].value,
           right_trigger: gamepad.buttons[7].value
         };
-        case GamepadType.STEELSERIES_STRATUS_XL
+    case GamepadType.STEELSERIES_STRATUS_XL
                 return {
                   left_stick_x: cleanMotionValues(gamepad.axes[0]),
                   left_stick_y: cleanMotionValues(-gamepad.axes[1]),
