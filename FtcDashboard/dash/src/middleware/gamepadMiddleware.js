@@ -186,7 +186,7 @@ const extractGamepadState = (gamepad) => {
       left_trigger: gamepad.buttons[3].value,
       right_trigger: gamepad.buttons[4].value,
     };
-  case GamepadType.WIRELESS_CONTROLLER:
+  case GamepadType.PS4:
     return {
       left_stick_x: cleanMotionValues(gamepad.axes[0]),
       left_stick_y: cleanMotionValues(-gamepad.axes[1]),
