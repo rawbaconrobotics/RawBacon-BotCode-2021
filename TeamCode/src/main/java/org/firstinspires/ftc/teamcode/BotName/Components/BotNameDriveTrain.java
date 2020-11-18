@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.BotName.Components;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * Represents the four wheel mechanum drive on the bot
@@ -18,6 +19,13 @@ public class BotNameDriveTrain extends BotNameComponentImplBase {
     private final static String FRONTLEFT_WHEEL_NAME = "left_drive_front";
     private final static String BACKRIGHT_WHEEL_NAME = "right_drive_back";
     private final static String BACKLEFT_WHEEL_NAME = "left_drive_back";
+
+    private static final double COUNTS_PER_MOTOR_REV = 1120; //1440
+    private static final double DRIVE_GEAR_REDUCTION = 1.0;
+    private static final double WHEEL_DIAMETER_INCHES = 4.0;
+    private static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
+
+    private ElapsedTime runtime = new ElapsedTime();
 
     boolean speedModeOn = false;
 
@@ -68,10 +76,12 @@ public class BotNameDriveTrain extends BotNameComponentImplBase {
         leftDriveBack.setDirection(DcMotor.Direction.FORWARD);
         rightDriveBack.setDirection(DcMotor.Direction.REVERSE);
 
-        leftDriveFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftDriveBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightDriveFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightDriveBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftDriveBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftDriveFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightDriveBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightDriveFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        runUsingEncoders();
 
     }
     /**
@@ -103,8 +113,102 @@ public class BotNameDriveTrain extends BotNameComponentImplBase {
         //normalize(wheelSpeeds);
     }
 
+    public void driveFor(double distance, double speed, double timeoutS){
+        if (opModeIsActive()){
+            int targetDistLeft;
+            int targetDistRight;
+            targetDistLeft = leftDriveFront.getCurrentPosition() + (int) (distance * COUNTS_PER_INCH);
+            targetDistRight = rightDriveFront.getCurrentPosition() + (int) (distance * COUNTS_PER_INCH);
+
+            leftDriveBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftDriveFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightDriveBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightDriveFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            runUsingEncoders();
+
+            runtime.reset();
+
+            leftDriveBack.setPower(speed);
+            leftDriveFront.setPower(speed);
+            rightDriveBack.setPower(speed);
+            rightDriveFront.setPower(speed);
+
+            while (opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    ((Math.abs((leftDriveBack.getCurrentPosition() + leftDriveFront.getCurrentPosition() + rightDriveBack.getCurrentPosition() + rightDriveFront.getCurrentPosition()) / 4)) < (Math.abs((distance * COUNTS_PER_INCH))))) {
+                telemetry.addData("Left Front",  " Position: %7d", leftDriveFront.getCurrentPosition());
+                telemetry.addData("Right Front",  " Position: %7d", rightDriveFront.getCurrentPosition());
+                telemetry.addData("Left Back",  " Position: %7d", leftDriveBack.getCurrentPosition());
+                telemetry.addData("Right Back",  " Position: %7d", rightDriveBack.getCurrentPosition());
+                telemetry.update();
+            }
+
+            leftDriveBack.setPower(0);
+            leftDriveFront.setPower(0);
+            rightDriveBack.setPower(0);
+            rightDriveFront.setPower(0);
+
+            System.out.println("ROBOT STOPPED");
+            System.out.println("RUN USING ENCODERS METHOD RAN");
+        }
+    }
+
+    public void strafeFor(double distance, double speed, double timeoutS) {
+        if (opModeIsActive()) {
 
 
+            leftDriveBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftDriveFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightDriveBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightDriveFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            runUsingEncoders();
+            runtime.reset();
+
+            if (distance < 0) {
+                leftDriveBack.setPower(speed);
+                leftDriveFront.setPower(-speed);
+                rightDriveBack.setPower(-speed);
+                rightDriveFront.setPower(speed);
+            }
+            else {
+                leftDriveBack.setPower(-speed);
+                leftDriveFront.setPower(speed);
+                rightDriveBack.setPower(speed);
+                rightDriveFront.setPower(-speed);
+            }
+
+            while (opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (((Math.abs(leftDriveBack.getCurrentPosition()) + Math.abs(leftDriveFront.getCurrentPosition()) + Math.abs(rightDriveBack.getCurrentPosition()) + Math.abs(rightDriveFront.getCurrentPosition())) / 4)) < (Math.abs((distance * COUNTS_PER_INCH)))) {
+
+                telemetry.addData("Left Front",  " Position: %7d", leftDriveFront.getCurrentPosition());
+                telemetry.addData("Right Front",  " Position: %7d", rightDriveFront.getCurrentPosition());
+                telemetry.addData("Left Back",  " Position: %7d", leftDriveBack.getCurrentPosition());
+                telemetry.addData("Right Back",  " Position: %7d", rightDriveBack.getCurrentPosition());
+                telemetry.update();
+
+                leftDriveBack.setPower(0);
+                leftDriveFront.setPower(0);
+                rightDriveBack.setPower(0);
+                rightDriveFront.setPower(0);
+
+                System.out.println("ROBOT STOPPED");
+                System.out.println("RUN USING ENCODERS METHOD RAN");
+            }
+        }
+    }
+
+        public void runUsingEncoders() {
+            System.out.println("ABOUT TO SET RUNUSINGENCODERS DIRECTLY...");
+
+            leftDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            leftDriveFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightDriveFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            System.out.println("SET IT DIRECTLY!");
+        }
 
 
 
