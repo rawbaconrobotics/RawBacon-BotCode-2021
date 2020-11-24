@@ -23,6 +23,19 @@ public class BotNameIntakeAndLauncher extends BotNameComponentImplBase {
     private final static String HOPPER_NAME = "hopper";
     private final static String TRANSFER_NAME = "transfer";
 
+    double hopperDownPosition = 0;
+    double hopperUpPosition = 1;
+    boolean hopperPosition = true;
+
+    double transferInPosition = 0;
+    double transferOutPosition = 1;
+    //true = hopper is down, transfer is out
+    // false = hopper is up, transfer is in
+
+    boolean intakeStatus = false;
+    boolean launcherStatus = false;
+    //true = on, false = off
+
     /**
      * Constructor
      *
@@ -56,18 +69,7 @@ public class BotNameIntakeAndLauncher extends BotNameComponentImplBase {
     }
 
     public void runIntakeAndLauncher(){
-        double hopperDownPosition = 0;
-        double hopperUpPosition = 1;
-        boolean hopperPosition = true;
 
-        double transferInPosition = 0;
-        double transferOutPosition = 1;
-        //true = hopper is down, transfer is out
-        // false = hopper is up, transfer is in
-
-        boolean intakeStatus = false;
-        boolean launcherStatus = false;
-        //true = on, false = off
 
         while (opModeIsActive()) {
             //turns the intake on and off
@@ -118,5 +120,33 @@ public class BotNameIntakeAndLauncher extends BotNameComponentImplBase {
                 }
 
             }
+        }
+
+        public void autoLaunch(double height){
+        if (height == 1){
+            launcher.setPower(1);
+            transfer.setPosition(transferInPosition);
+            sleep(1000);
+            transfer.setPosition(transferOutPosition);
+            sleep(1000);
+            launcher.setPower(0);
+        }
+        else if (height == 2){
+            launcher.setPower(1);
+            transfer.setPosition(transferInPosition);
+            sleep(1000);
+            transfer.setPosition(transferOutPosition);
+            sleep(1000);
+            launcher.setPower(0);
+        }
+        else if (height == 3){
+            launcher.setPower(1);
+            transfer.setPosition(transferInPosition);
+            sleep(1000);
+            transfer.setPosition(transferOutPosition);
+            sleep(1000);
+            launcher.setPower(0);
+        }
+
         }
     }

@@ -8,18 +8,23 @@ import com.qualcomm.robotcore.hardware.Servo;
  * @author Raw Bacon Coders
  */
 
-public class BotName extends BotNameComponentImplBase {
+public class BotNameWobble extends BotNameComponentImplBase {
 
     private Servo wobbleArm = null;
 
     private final static String WOBBLE_ARM_NAME = "wobble_arm";
+
+    double downPosition = 0;
+    double upPosition = 1;
+    boolean armPosition = true;
+    //true=arm is down, false = arm is up
 
     /**
      * Constructor
      * @param opMode This parameter takes in a LinearOpMode as the variable opMode.
      */
 
-    public BotName(LinearOpMode opMode) {super(opMode);}
+    public BotNameWobble(LinearOpMode opMode) {super(opMode);}
 
     /**
      * Hardware maps and sets modes of all motors
@@ -39,10 +44,7 @@ public class BotName extends BotNameComponentImplBase {
     }
 
     public void moveArm(){
-        double downPosition = 0;
-        double upPosition = 1;
-        boolean armPosition = true;
-        //true=arm is down, false = arm is up
+        
         while (opModeIsActive()){
             if (gamepad2.a){
                 if (armPosition = true){
@@ -55,6 +57,17 @@ public class BotName extends BotNameComponentImplBase {
                 }
             }
 
+        }
+    }
+    
+    public void autoArm(boolean direction){
+        //true = up
+        //false = down
+        if (direction == true){
+            wobbleArm.setPosition(upPosition);
+        }
+        else if (direction == false){
+            wobbleArm.setPosition((downPosition));
         }
     }
 }

@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.BotName.Components.BotNameDriveTrain;
 import org.firstinspires.ftc.teamcode.BotName.Components.BotNameIntakeAndLauncher;
+import org.firstinspires.ftc.teamcode.BotName.Components.BotNameWobble;
 
 /**
  * Organizes the various components on the robot
@@ -14,7 +15,7 @@ public class BotName {
 
     //Initialize new components
     public BotNameDriveTrain drivetrain;
-    public org.firstinspires.ftc.teamcode.BotName.Components.BotName wobble;
+    public BotNameWobble wobble;
     public BotNameIntakeAndLauncher il;
 
     /**
@@ -32,7 +33,7 @@ public class BotName {
      */
     public BotName (LinearOpMode opMode){
         drivetrain = new BotNameDriveTrain(opMode);
-        wobble = new org.firstinspires.ftc.teamcode.BotName.Components.BotName(opMode);
+        wobble = new BotNameWobble(opMode);
         il = new BotNameIntakeAndLauncher(opMode);
     }
 }

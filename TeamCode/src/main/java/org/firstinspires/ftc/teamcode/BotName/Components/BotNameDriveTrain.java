@@ -84,6 +84,13 @@ public class BotNameDriveTrain extends BotNameComponentImplBase {
         runUsingEncoders();
 
     }
+
+    public void stopWheels(){
+        leftDriveBack.setPower(0);
+        leftDriveFront.setPower(0);
+        rightDriveBack.setPower(0);
+        rightDriveFront.setPower(0);
+    }
     /**
      * Reformats input and runs the {@link #mechanumTeleOp} method
      */
@@ -200,17 +207,55 @@ public class BotNameDriveTrain extends BotNameComponentImplBase {
         }
     }
 
-        public void runUsingEncoders() {
-            System.out.println("ABOUT TO SET RUNUSINGENCODERS DIRECTLY...");
 
-            leftDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            leftDriveFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            rightDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            rightDriveFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            System.out.println("SET IT DIRECTLY!");
+    public void turnFor(double degrees, double power, double timeoutS){
+
+        double distance = 1*degrees;
+
+        // rotate until turn is completed.
+        if (degrees < 0) {
+            //right turn
+            while (opModeIsActive() && (runtime.seconds() < timeoutS) &&
+                    (((Math.abs(leftDriveBack.getCurrentPosition()) + Math.abs(leftDriveFront.getCurrentPosition()) + Math.abs(rightDriveBack.getCurrentPosition()) + Math.abs(rightDriveFront.getCurrentPosition())) / 4)) < (Math.abs((distance * COUNTS_PER_INCH)))) {
+                leftDriveBack.setPower(1);
+                leftDriveFront.setPower(1);
+                rightDriveBack.setPower(-1);
+                rightDriveFront.setPower(-1);
+
+                telemetry.addData("Angle wanted", degrees);
+                telemetry.update();
+
+            }
+
+        } else if (degrees > 0) {   // left turn.
+            while (opModeIsActive() && (runtime.seconds() < timeoutS) &&
+                    (((Math.abs(leftDriveBack.getCurrentPosition()) + Math.abs(leftDriveFront.getCurrentPosition()) + Math.abs(rightDriveBack.getCurrentPosition()) + Math.abs(rightDriveFront.getCurrentPosition())) / 4)) < (Math.abs((distance * COUNTS_PER_INCH)))) {
+                leftDriveBack.setPower(1);
+                leftDriveFront.setPower(1);
+                rightDriveBack.setPower(-1);
+                rightDriveFront.setPower(-1);
+
+                telemetry.addData("Angle wanted", degrees);
+                telemetry.update();
+            }
         }
 
 
+
+
+    }
+
+    public void runUsingEncoders() {
+        System.out.println("ABOUT TO SET RUNUSINGENCODERS DIRECTLY...");
+
+        leftDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftDriveFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightDriveFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        System.out.println("SET IT DIRECTLY!!!!!!!!");
+    }
+
+// "IMU"
 
 
     }
