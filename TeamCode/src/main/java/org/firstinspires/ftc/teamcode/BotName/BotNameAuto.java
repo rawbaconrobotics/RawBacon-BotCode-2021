@@ -37,8 +37,19 @@ public class BotNameAuto extends BotNameBaseLinearOpMode{
     }
 
     public void run(){
-
+        //driveFor(distance, speed, timeoutS)
+        //strafeFor(distance, speed, timeoutS), negative distance is left
+        //autoLaunch(height), height can just be 1 for now
+        //drivetrain is the drivetrain, il, is the intake/launcher
         runtime.reset();
+        botName.drivetrain.driveFor(86, 1, 5);
+
+        botName.drivetrain.driveFor(-12, 1, 5);
+
+        botName.drivetrain.strafeFor(-8, 1, 5); // Maybe 8?
+        botName.drivetrain.strafeFor(-8, 1, 5);
+        botName.drivetrain.strafeFor(-8, 1, 5);
+
 
     }
 
