@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.BotName;
+package org.firstinspires.ftc.teamcode.Duncan;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp(name="OFFICIAL TeleOp")
 @Disabled
 
-public class BotNameTeleOp extends BotNameBaseLinearOpMode {
+public class DuncanTeleOp extends DuncanBaseLinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     /**
@@ -21,9 +21,9 @@ public class BotNameTeleOp extends BotNameBaseLinearOpMode {
      */
     @Override
     public void on_init(){
-        botName.drivetrain.init();
-        botName.wobble.init();
-        botName.il.init();
+        duncan.drivetrain.init();
+        duncan.wobble.init();
+        duncan.il.init();
     }
 
     /**
@@ -35,7 +35,7 @@ public class BotNameTeleOp extends BotNameBaseLinearOpMode {
         telemetry.addData("Runtime Reset", "Complete");
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()){
-            botName.teleOpActivated();
+            duncan.teleOpActivated();
         }
     }
 

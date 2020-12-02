@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.BotName.Components;
+package org.firstinspires.ftc.teamcode.Duncan.Components;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * @author Raw Bacon Coders
  * Establishes a component base for the Uhaul robot
  */
-public abstract class BotNameComponentImplBase implements BotNameComponent
+public abstract class DuncanComponentImplBase implements DuncanComponent
 {
     protected HardwareMap hardwareMap;
     protected Telemetry telemetry;
@@ -24,7 +24,7 @@ public abstract class BotNameComponentImplBase implements BotNameComponent
      * @param opMode This parameter takes in a LinearOpMode as the variable opMode.
      *
      */
-    public BotNameComponentImplBase(LinearOpMode opMode)
+    public DuncanComponentImplBase(LinearOpMode opMode)
     {
         hardwareMap = opMode.hardwareMap;
         telemetry = opMode.telemetry;

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.BotName.Components;
+package org.firstinspires.ftc.teamcode.Duncan.Components;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Represents the four wheel mechanum drive on the bot
  * @author Raw Bacon Coders
  */
-public class BotNameDriveTrain extends BotNameComponentImplBase {
+public class DuncanDriveTrain extends DuncanComponentImplBase {
 
     private DcMotorEx leftDriveBack = null;
     private DcMotorEx rightDriveBack = null;
@@ -34,7 +34,7 @@ public class BotNameDriveTrain extends BotNameComponentImplBase {
      *
      * @param opMode This parameter takes in a LinearOpMode as the variable opMode.
      */
-    public BotNameDriveTrain(LinearOpMode opMode) {
+    public DuncanDriveTrain(LinearOpMode opMode) {
         super(opMode);
     }
 
@@ -45,20 +45,24 @@ public class BotNameDriveTrain extends BotNameComponentImplBase {
     public void init() {
 
         leftDriveBack = (DcMotorEx) hardwareMap.dcMotor.get(BACKLEFT_WHEEL_NAME);
-        rightDriveBack = (DcMotorEx) hardwareMap.dcMotor.get(BACKRIGHT_WHEEL_NAME);
         leftDriveFront = (DcMotorEx) hardwareMap.dcMotor.get(FRONTLEFT_WHEEL_NAME);
+        rightDriveBack = (DcMotorEx) hardwareMap.dcMotor.get(BACKRIGHT_WHEEL_NAME);
         rightDriveFront = (DcMotorEx) hardwareMap.dcMotor.get(FRONTRIGHT_WHEEL_NAME);
 
-
-        leftDriveFront.setDirection(DcMotor.Direction.REVERSE);
-        rightDriveFront.setDirection(DcMotor.Direction.FORWARD);
         leftDriveBack.setDirection(DcMotor.Direction.FORWARD);
+        leftDriveFront.setDirection(DcMotor.Direction.REVERSE);
         rightDriveBack.setDirection(DcMotor.Direction.REVERSE);
+        rightDriveFront.setDirection(DcMotor.Direction.FORWARD);
 
-        leftDriveFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftDriveBack.setPower(0);
+        leftDriveFront.setPower(0);
+        rightDriveBack.setPower(0);
+        rightDriveFront.setPower(0);
+
         leftDriveBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightDriveFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftDriveFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDriveBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightDriveFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 
@@ -66,15 +70,19 @@ public class BotNameDriveTrain extends BotNameComponentImplBase {
     public void initAutonomous(){
 
         leftDriveBack = (DcMotorEx) hardwareMap.dcMotor.get(BACKLEFT_WHEEL_NAME);
-        rightDriveBack = (DcMotorEx) hardwareMap.dcMotor.get(BACKRIGHT_WHEEL_NAME);
         leftDriveFront = (DcMotorEx) hardwareMap.dcMotor.get(FRONTLEFT_WHEEL_NAME);
+        rightDriveBack = (DcMotorEx) hardwareMap.dcMotor.get(BACKRIGHT_WHEEL_NAME);
         rightDriveFront = (DcMotorEx) hardwareMap.dcMotor.get(FRONTRIGHT_WHEEL_NAME);
 
-
-        leftDriveFront.setDirection(DcMotor.Direction.REVERSE);
-        rightDriveFront.setDirection(DcMotor.Direction.FORWARD);
         leftDriveBack.setDirection(DcMotor.Direction.FORWARD);
+        leftDriveFront.setDirection(DcMotor.Direction.REVERSE);
         rightDriveBack.setDirection(DcMotor.Direction.REVERSE);
+        rightDriveFront.setDirection(DcMotor.Direction.FORWARD);
+
+        leftDriveBack.setPower(0);
+        leftDriveFront.setPower(0);
+        rightDriveBack.setPower(0);
+        rightDriveFront.setPower(0);
 
         leftDriveBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftDriveFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -91,6 +99,7 @@ public class BotNameDriveTrain extends BotNameComponentImplBase {
         rightDriveBack.setPower(0);
         rightDriveFront.setPower(0);
     }
+
     /**
      * Reformats input and runs the {@link #mechanumTeleOp} method
      */

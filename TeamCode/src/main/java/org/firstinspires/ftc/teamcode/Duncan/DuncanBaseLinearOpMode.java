@@ -1,15 +1,15 @@
-package org.firstinspires.ftc.teamcode.BotName;
+package org.firstinspires.ftc.teamcode.Duncan;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-public abstract class BotNameBaseLinearOpMode extends LinearOpMode{
-    protected BotName botName;
+public abstract class DuncanBaseLinearOpMode extends LinearOpMode{
+    protected Duncan duncan;
     public boolean init = true;
 
     @Override
     public final void runOpMode() throws InterruptedException
     {
-        botName = new BotName(this);
+        duncan = new Duncan(this);
         //robot.startup();
         on_init();
         System.out.println("Initialized robot");

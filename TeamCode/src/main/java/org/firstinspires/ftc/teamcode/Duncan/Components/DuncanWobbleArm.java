@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.BotName.Components;
+package org.firstinspires.ftc.teamcode.Duncan.Components;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  * @author Raw Bacon Coders
  */
 
-public class BotNameWobble extends BotNameComponentImplBase {
+public class DuncanWobbleArm extends DuncanComponentImplBase {
 
     private Servo wobbleArm = null;
 
@@ -24,7 +24,7 @@ public class BotNameWobble extends BotNameComponentImplBase {
      * @param opMode This parameter takes in a LinearOpMode as the variable opMode.
      */
 
-    public BotNameWobble(LinearOpMode opMode) {super(opMode);}
+    public DuncanWobbleArm(LinearOpMode opMode) {super(opMode);}
 
     /**
      * Hardware maps and sets modes of all motors
@@ -33,14 +33,12 @@ public class BotNameWobble extends BotNameComponentImplBase {
     @Override
 
     public void init(){
-
         wobbleArm = (Servo) hardwareMap.servo.get(WOBBLE_ARM_NAME);
-
     }
 
     public void initAutonomous(){
-
         wobbleArm = (Servo) hardwareMap.servo.get(WOBBLE_ARM_NAME);
+        wobbleArm.setPosition(upPosition);
     }
 
     public void moveArm(){
@@ -56,7 +54,6 @@ public class BotNameWobble extends BotNameComponentImplBase {
                     armPosition = true;
                 }
             }
-
         }
     }
     

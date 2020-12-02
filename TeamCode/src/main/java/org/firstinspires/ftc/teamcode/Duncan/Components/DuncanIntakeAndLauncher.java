@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.BotName.Components;
+package org.firstinspires.ftc.teamcode.Duncan.Components;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -11,7 +11,7 @@ import static android.os.SystemClock.sleep;
  * @author Raw Bacon Coders
  */
 
-public class BotNameIntakeAndLauncher extends BotNameComponentImplBase {
+public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
 
     private DcMotor intake = null;
     private DcMotor launcher = null;
@@ -42,7 +42,7 @@ public class BotNameIntakeAndLauncher extends BotNameComponentImplBase {
      * @param opMode This parameter takes in a LinearOpMode as the variable opMode.
      */
 
-    public BotNameIntakeAndLauncher(LinearOpMode opMode) {super(opMode);}
+    public DuncanIntakeAndLauncher(LinearOpMode opMode) {super(opMode);}
 
     /**
      * Hardware maps and sets modes of all motors
@@ -57,6 +57,11 @@ public class BotNameIntakeAndLauncher extends BotNameComponentImplBase {
         hopper = hardwareMap.servo.get(HOPPER_NAME);
         transfer = hardwareMap.servo.get(TRANSFER_NAME);
 
+        intake.setPower(0);
+        launcher.setPower(0);
+        hopper.setPosition(hopperDownPosition);
+        transfer.setPosition(transferOutPosition);
+
     }
 
     public void initAutonomous(){
@@ -65,6 +70,11 @@ public class BotNameIntakeAndLauncher extends BotNameComponentImplBase {
         launcher = hardwareMap.dcMotor.get(LAUNCHER_NAME);
         hopper = hardwareMap.servo.get(HOPPER_NAME);
         transfer = hardwareMap.servo.get(TRANSFER_NAME);
+
+        intake.setPower(0);
+        launcher.setPower(0);
+        hopper.setPosition(hopperUpPosition);
+        transfer.setPosition(transferOutPosition);
 
     }
 

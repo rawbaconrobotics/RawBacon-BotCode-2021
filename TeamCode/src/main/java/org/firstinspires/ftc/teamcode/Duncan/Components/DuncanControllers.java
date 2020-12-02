@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.BotName.Components;
+package org.firstinspires.ftc.teamcode.Duncan.Components;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
  * @author Raw Bacon Coders
  * Defines the Bot's Controllers
  */
-public class BotNameControllers {
+public class DuncanControllers {
     public boolean a, b, x, y, left_stick_button, right_stick_button, dpad_left, dpad_right, dpad_up, dpad_down, left_bumper, right_bumper;
     public float left_trigger, right_trigger, left_stick_x, left_stick_y, right_stick_x, right_stick_y;
 

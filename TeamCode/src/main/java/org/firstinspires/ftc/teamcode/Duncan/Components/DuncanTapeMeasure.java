@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.BotName.Components;
+package org.firstinspires.ftc.teamcode.Duncan.Components;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * @author Raw Bacon Coders
  */
 
-public class BotNameTapeMeasure extends BotNameComponentImplBase {
+public class DuncanTapeMeasure extends DuncanComponentImplBase {
     private final static String TAPE_MEASURE_NAME = "bd_tape_measure";
 
 
@@ -24,7 +24,7 @@ public class BotNameTapeMeasure extends BotNameComponentImplBase {
     /**
      * Overrides the opMode method
      */
-    public BotNameTapeMeasure(LinearOpMode opMode) {
+    public DuncanTapeMeasure(LinearOpMode opMode) {
         super(opMode);
     }
 
