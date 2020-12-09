@@ -10,8 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 
-@TeleOp(name="OFFICIAL TeleOp")
-@Disabled
+@TeleOp(name="OFFICIAL Duncan TeleOp")
 
 public class DuncanTeleOp extends DuncanBaseLinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
@@ -24,6 +23,7 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
         duncan.drivetrain.init();
         duncan.wobble.init();
         duncan.il.init();
+        duncan.rdrive.init();
     }
 
     /**
@@ -36,6 +36,7 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()){
             duncan.teleOpActivated();
+            duncan.rdrive.loop();
         }
     }
 
@@ -44,5 +45,6 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
      */
     @Override
     public void on_stop() {
+        duncan.rdrive.onStop();
     }
 }

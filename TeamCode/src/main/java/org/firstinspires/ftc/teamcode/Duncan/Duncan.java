@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Duncan.Components.DuncanDriveTrain;
 import org.firstinspires.ftc.teamcode.Duncan.Components.DuncanIntakeAndLauncher;
 import org.firstinspires.ftc.teamcode.Duncan.Components.DuncanWobbleArm;
+import org.firstinspires.ftc.teamcode.Duncan.Components.RemoteDriving;
 
 /**
  * Organizes the various components on the robot
@@ -14,9 +15,11 @@ import org.firstinspires.ftc.teamcode.Duncan.Components.DuncanWobbleArm;
 public class Duncan {
 
     //Initialize new components
-    public DuncanDriveTrain drivetrain;
-    public DuncanWobbleArm wobble;
-    public DuncanIntakeAndLauncher il;
+    DuncanDriveTrain drivetrain;
+    DuncanWobbleArm wobble;
+    DuncanIntakeAndLauncher il;
+    RemoteDriving rdrive;
+
 
     /**
      * Runs the teleop on all components
@@ -35,5 +38,7 @@ public class Duncan {
         drivetrain = new DuncanDriveTrain(opMode);
         wobble = new DuncanWobbleArm(opMode);
         il = new DuncanIntakeAndLauncher(opMode);
+        rdrive = new RemoteDriving(opMode);
+
     }
 }
