@@ -10,10 +10,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Autonomous for robot
  */
 
-@Autonomous(name = "Duncan NO LAUNCH")
-@Disabled
+@Autonomous(name = "Duncan MEET 1")
 
-public class DuncanAutoNoLaunch extends DuncanBaseLinearOpMode {
+
+public class DuncanAutoMeet1 extends DuncanBaseLinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -27,11 +27,14 @@ public class DuncanAutoNoLaunch extends DuncanBaseLinearOpMode {
     public void run(){
 
         runtime.reset();
-        duncan.wobble.autoArm(false); //move the wobble arm down
+        duncan.drivetrain.driveFor(120, 1, 10); //drive forwards 120 inches
         sleep(500);
-        duncan.drivetrain.driveFor(96, 1, 10); //drive forwards 96 inches
+        duncan.drivetrain.driveFor(-116, 1, 10); //drive backwards 116 inches
         sleep(500);
-        duncan.drivetrain.driveFor(-12, 1, 5); //drive backwards 12 inches
+        duncan.drivetrain.strafeFor(24, 1, 5); //strafe right 24 inches
+        sleep(500);
+        duncan.drivetrain.driveFor(96, 1, 10); //drive forwards 116 inches
+        sleep(500);
 
     }
 

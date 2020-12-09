@@ -31,7 +31,8 @@ public class Duncan {
     public void teleOpActivated(){
         //add bulk reads here!!!!!!!!!
         drivetrain.wheelsTeleOp();
-        wobble.moveArm();
+        //wobble.moveArm();
+        wobble.crWobble();
         //il.runIntakeAndLauncher();
         hwMap = opMode.hardwareMap;
         /**@see org.firstinspires.ftc.robotcontroller.external.samples.ConceptMotorBulkRead */

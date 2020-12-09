@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Duncan.Components;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
@@ -10,13 +11,13 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class DuncanWobbleArm extends DuncanComponentImplBase {
 
-    private Servo wobbleArm = null;
+    private CRServo wobbleArm = null;
 
     private final static String WOBBLE_ARM_NAME = "wobble_arm";
 
-    double downPosition = 0;
-    double upPosition = 1;
-    boolean armPosition = true;
+    //double downPosition = 0;
+    //double upPosition = 1;
+   // boolean armPosition = true;
     public enum ArmState { IDLE, DOWN, UP }
     //true=arm is down, false = arm is up
 
@@ -34,15 +35,15 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
     @Override
 
     public void init(){
-        wobbleArm = (Servo) hardwareMap.servo.get(WOBBLE_ARM_NAME);
+        wobbleArm = (CRServo) hardwareMap.crservo.get(WOBBLE_ARM_NAME);
     }
 
     public void initAutonomous(){
-        wobbleArm = (Servo) hardwareMap.servo.get(WOBBLE_ARM_NAME);
-        wobbleArm.setPosition(upPosition);
+        wobbleArm = (CRServo) hardwareMap.crservo.get(WOBBLE_ARM_NAME);
+        //wobbleArm.setPosition(upPosition);
     }
 
-    public void moveArm(){
+    /*public void moveArm(){
         ArmState armState = ArmState.IDLE;
 
         while (opModeIsActive()) {
@@ -84,11 +85,17 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
                 }
             }
 
-        */
+
         }
     }
-    
-    public void autoArm(boolean direction){
+    */
+
+    public void crWobble(){
+        while (opModeIsActive()){
+            wobbleArm.setPower(gamepad2.left_stick_y);
+        }
+    }
+    /*public void autoArm(boolean direction){
         //true = up
         //false = down
         if (direction == true){
@@ -98,4 +105,6 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
             wobbleArm.setPosition((downPosition));
         }
     }
+
+     */
 }

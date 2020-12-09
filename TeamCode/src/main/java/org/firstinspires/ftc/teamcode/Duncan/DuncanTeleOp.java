@@ -22,7 +22,7 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
     public void on_init(){
         duncan.drivetrain.init();
         duncan.wobble.init();
-        duncan.il.init();
+        //duncan.il.init();
         duncan.rdrive.init();
     }
 
@@ -46,5 +46,6 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
     @Override
     public void on_stop() {
         duncan.rdrive.onStop();
+        duncan.drivetrain.stopWheels();
     }
 }
