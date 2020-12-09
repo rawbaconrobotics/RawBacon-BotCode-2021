@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Duncan;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Duncan.Components.DuncanDriveTrain;
 import org.firstinspires.ftc.teamcode.Duncan.Components.DuncanIntakeAndLauncher;
@@ -19,8 +20,8 @@ public class Duncan {
     DuncanWobbleArm wobble;
     DuncanIntakeAndLauncher il;
     RemoteDriving rdrive;
-
-
+    LinearOpMode opMode;
+    HardwareMap hwMap;
     /**
      * Runs the teleop on all components
      */
@@ -29,6 +30,8 @@ public class Duncan {
         drivetrain.wheelsTeleOp();
         wobble.moveArm();
         il.runIntakeAndLauncher();
+        hwMap = opMode.hardwareMap;
+        /**@see org.firstinspires.ftc.robotcontroller.external.samples.ConceptMotorBulkRead */
     }
 
     /**
@@ -40,6 +43,7 @@ public class Duncan {
         wobble = new DuncanWobbleArm(opMode);
         il = new DuncanIntakeAndLauncher(opMode);
         rdrive = new RemoteDriving(opMode);
+        this.opMode = opMode;
 
     }
 }
