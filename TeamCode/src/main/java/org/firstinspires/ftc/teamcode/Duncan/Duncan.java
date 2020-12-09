@@ -7,6 +7,9 @@ import org.firstinspires.ftc.teamcode.Duncan.Components.DuncanDriveTrain;
 import org.firstinspires.ftc.teamcode.Duncan.Components.DuncanIntakeAndLauncher;
 import org.firstinspires.ftc.teamcode.Duncan.Components.DuncanWobbleArm;
 import org.firstinspires.ftc.teamcode.Duncan.Components.RemoteDriving;
+/**TODO: Add motion profiling to drivetrain (ramp up speed sample code)
+ * TODO: Add bulk reads to the teleopactivated method, remove reads from components and pass in the values
+ */
 
 /**
  * Organizes the various components on the robot
