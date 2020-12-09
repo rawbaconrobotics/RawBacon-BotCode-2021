@@ -17,6 +17,7 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
     double downPosition = 0;
     double upPosition = 1;
     boolean armPosition = true;
+    public enum ArmState { IDLE, DOWN, UP }
     //true=arm is down, false = arm is up
 
     /**
@@ -42,9 +43,37 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
     }
 
     public void moveArm(){
-        
-        while (opModeIsActive()){
+        ArmState armState = ArmState.IDLE;
+
+        while (opModeIsActive()) {
+
+            //anything inside the brackets after switch(autoState) defines the robot's action at each state
+            switch (armState) {
+                //case IDLE is equivalent to if(liftState == LiftState.IDLE)
+                case IDLE:
+                    if (gamepad1.b) armState = armState.UP;
+                    if (gamepad1.a) armState = armState.DOWN;
+                    break;
+
+                case UP:
+                    //  if(topTouchSensor.isPressed()){
+                    wobbleArm.setPosition(upPosition);
+                    //}
+                    armState = armState.IDLE;
+
+                    //else liftMotor.setPower(1);
+                    break;
+                case DOWN:
+                    wobbleArm.setPosition(downPosition);
+                    armState = armState.IDLE;
+            }
+
+
+
+/*
+
             if (gamepad2.a){
+
                 if (armPosition = true){
                     wobbleArm.setPosition(upPosition);
                     armPosition = false;
@@ -54,6 +83,8 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
                     armPosition = true;
                 }
             }
+
+        */
         }
     }
     
