@@ -25,6 +25,7 @@ public class Duncan {
      * Runs the teleop on all components
      */
     public void teleOpActivated(){
+        //add bulk reads here!!!!!!!!!
         drivetrain.wheelsTeleOp();
         wobble.moveArm();
         il.runIntakeAndLauncher();
