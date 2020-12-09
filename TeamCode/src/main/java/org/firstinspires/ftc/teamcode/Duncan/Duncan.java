@@ -18,7 +18,7 @@ public class Duncan {
     //Initialize new components
     DuncanDriveTrain drivetrain;
     DuncanWobbleArm wobble;
-    DuncanIntakeAndLauncher il;
+    //DuncanIntakeAndLauncher il;
     RemoteDriving rdrive;
     LinearOpMode opMode;
     HardwareMap hwMap;
@@ -29,7 +29,7 @@ public class Duncan {
         //add bulk reads here!!!!!!!!!
         drivetrain.wheelsTeleOp();
         wobble.moveArm();
-        il.runIntakeAndLauncher();
+        //il.runIntakeAndLauncher();
         hwMap = opMode.hardwareMap;
         /**@see org.firstinspires.ftc.robotcontroller.external.samples.ConceptMotorBulkRead */
     }
@@ -41,7 +41,7 @@ public class Duncan {
     public Duncan(LinearOpMode opMode){
         drivetrain = new DuncanDriveTrain(opMode);
         wobble = new DuncanWobbleArm(opMode);
-        il = new DuncanIntakeAndLauncher(opMode);
+        //il = new DuncanIntakeAndLauncher(opMode);
         rdrive = new RemoteDriving(opMode);
         this.opMode = opMode;
 
