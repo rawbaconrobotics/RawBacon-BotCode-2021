@@ -18,7 +18,7 @@ public class DuncanAuto extends DuncanBaseLinearOpMode {
     @Override
     public void on_init(){
         duncan.drivetrain.initAutonomous();
-        duncan.il.initAutonomous();
+     //   duncan.il.initAutonomous();
         duncan.wobble.initAutonomous();
     }
 
@@ -33,15 +33,15 @@ public class DuncanAuto extends DuncanBaseLinearOpMode {
         sleep(500);
         duncan.drivetrain.strafeFor(-(30.95), 1, 5); //strafe left 30.95 inches
         sleep(500);
-        duncan.il.autoLaunch(1); //launch a ring at the first powershot
+     //   duncan.il.autoLaunch(1); //launch a ring at the first powershot
+     //   sleep(500);
+        duncan.drivetrain.strafeFor(-8, 1, 5); //strafe left 8 inches
+     //   sleep(500);
+     //   duncan.il.autoLaunch(1); //launch a ring at the second powershot
         sleep(500);
         duncan.drivetrain.strafeFor(-8, 1, 5); //strafe left 8 inches
-        sleep(500);
-        duncan.il.autoLaunch(1); //launch a ring at the second powershot
-        sleep(500);
-        duncan.drivetrain.strafeFor(-8, 1, 5); //strafe left 8 inches
-        sleep(500);
-        duncan.il.autoLaunch(1); //launch a ring at the third powershot
+      //  sleep(500);
+      //  duncan.il.autoLaunch(1); //launch a ring at the third powershot
 
     }
 

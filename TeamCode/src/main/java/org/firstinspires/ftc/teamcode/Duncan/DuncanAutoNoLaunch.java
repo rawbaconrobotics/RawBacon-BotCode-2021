@@ -18,7 +18,7 @@ public class DuncanAutoNoLaunch extends DuncanBaseLinearOpMode {
     @Override
     public void on_init(){
         duncan.drivetrain.initAutonomous();
-        duncan.il.initAutonomous();
+        //duncan.il.initAutonomous(); //null pointer
         duncan.wobble.initAutonomous();
     }
 

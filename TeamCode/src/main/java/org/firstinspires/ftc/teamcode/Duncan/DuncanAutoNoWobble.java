@@ -18,7 +18,7 @@ public class DuncanAutoNoWobble extends DuncanBaseLinearOpMode {
     @Override
     public void on_init(){
         duncan.drivetrain.initAutonomous();
-        duncan.il.initAutonomous();
+       // duncan.il.initAutonomous();
         duncan.wobble.initAutonomous();
     }
 

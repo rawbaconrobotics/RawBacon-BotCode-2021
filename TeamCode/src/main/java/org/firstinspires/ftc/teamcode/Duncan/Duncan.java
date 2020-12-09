@@ -18,7 +18,7 @@ public class Duncan {
     //Initialize new components
     DuncanDriveTrain drivetrain;
     DuncanWobbleArm wobble;
-    //DuncanIntakeAndLauncher il;
+    DuncanIntakeAndLauncher il;
     RemoteDriving rdrive;
     LinearOpMode opMode;
     HardwareMap hwMap;
