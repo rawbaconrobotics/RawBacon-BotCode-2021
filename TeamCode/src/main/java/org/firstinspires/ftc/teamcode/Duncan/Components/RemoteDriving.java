@@ -12,10 +12,12 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera2;
+import org.openftc.easyopencv.OpenCvWebcam;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -23,11 +25,13 @@ import java.lang.reflect.Modifier;
 import static android.content.Context.BATTERY_SERVICE;
 
 public class RemoteDriving extends DuncanComponentImplBase {
-    OpenCvInternalCamera2 phoneCam;
+    //OpenCvInternalCamera2 phoneCam;
+    OpenCvWebcam phoneCam;
+
     FtcDashboard dashboard = FtcDashboard.getInstance();
     boolean needsReset = false;
     BatteryManager bm = (BatteryManager) hardwareMap.appContext.getSystemService(BATTERY_SERVICE);
-    int percentage = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
+    public int percentage = -1;
 
     public RemoteDriving(LinearOpMode opMode) {
         super(opMode);
@@ -42,11 +46,13 @@ public class RemoteDriving extends DuncanComponentImplBase {
             }
         }
         return result; }
-    double voltage = 0;
+    public double voltage = 0;
     public void init(){
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         //phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera2(OpenCvInternalCamera2.CameraDirection.FRONT, cameraMonitorViewId);
-        phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera2(OpenCvInternalCamera2.CameraDirection.BACK);
+        //phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera2(OpenCvInternalCamera2.CameraDirection.BACK);
+        phoneCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        percentage = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
         voltage = getBatteryVoltage();
 
         /**We disabled the pipeline right now*/
@@ -62,14 +68,14 @@ public class RemoteDriving extends DuncanComponentImplBase {
                  * For a rear facing camera or a webcam, rotation is defined assuming the camera is facing
                  * away from the user.
                  */
-                phoneCam.startStreaming(360, 270, OpenCvCameraRotation.SIDEWAYS_RIGHT);
-                phoneCam.setFlashlightEnabled(true);
+                phoneCam.startStreaming(960, 720, OpenCvCameraRotation.UPRIGHT);
+                //phoneCam.setFlashlightEnabled(true);
             }
         });
 
         FtcDashboard.getInstance().startCameraStream(phoneCam, 0);
         FtcDashboard.getInstance().setImageQuality(50);
-        telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
+      //  telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
 
 
     }
@@ -77,11 +83,11 @@ public class RemoteDriving extends DuncanComponentImplBase {
     public void initAutonomous(){
 
     }
-
+    Telemetry.Item telePercent = telemetry.addData("Phone battery", -1);
+    Telemetry.Item teleVoltage = telemetry.addData("Robot Battery Voltage", -1);
     public void loop(){
-        telemetry.addData("Phone battery", percentage);
-        telemetry.addData("Robot Battery Voltage", voltage);
-
+        telePercent.setValue(percentage);
+        teleVoltage.setValue(voltage);
         telemetry.update();
 
         /** phoneCam.stopStreaming();**/

@@ -33,8 +33,7 @@ public class Duncan {
         drivetrain.wheelsTeleOp();
         wobble.moveArm();
         //il.runIntakeAndLauncher();
-        hwMap = opMode.hardwareMap;
-        /**@see org.firstinspires.ftc.robotcontroller.external.samples.ConceptMotorBulkRead */
+
     }
 
     /**
@@ -47,6 +46,8 @@ public class Duncan {
         //il = new DuncanIntakeAndLauncher(opMode);
         rdrive = new RemoteDriving(opMode);
         this.opMode = opMode;
+        hwMap = opMode.hardwareMap;
+        /**@see org.firstinspires.ftc.robotcontroller.external.samples.ConceptMotorBulkRead */
 
     }
 }

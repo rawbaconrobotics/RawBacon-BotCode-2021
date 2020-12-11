@@ -1,8 +1,13 @@
 package org.firstinspires.ftc.teamcode.Duncan.Components;
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
  * Represents the four wheel mechanum drive on the bot
@@ -10,10 +15,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 public class DuncanDriveTrain extends DuncanComponentImplBase {
 
-    private DcMotorEx leftDriveBack = null;
-    private DcMotorEx rightDriveBack = null;
-    private DcMotorEx leftDriveFront = null;
-    private DcMotorEx rightDriveFront = null;
+    private DcMotor leftDriveBack = null;
+    private DcMotor rightDriveBack = null;
+    private DcMotor leftDriveFront = null;
+    private DcMotor rightDriveFront = null;
 
     private final static String FRONTRIGHT_WHEEL_NAME = "right_drive_front";
     private final static String FRONTLEFT_WHEEL_NAME = "left_drive_front";
@@ -44,20 +49,17 @@ public class DuncanDriveTrain extends DuncanComponentImplBase {
     @Override
     public void init() {
 
-        leftDriveBack = (DcMotorEx) hardwareMap.dcMotor.get(BACKLEFT_WHEEL_NAME);
-        leftDriveFront = (DcMotorEx) hardwareMap.dcMotor.get(FRONTLEFT_WHEEL_NAME);
-        rightDriveBack = (DcMotorEx) hardwareMap.dcMotor.get(BACKRIGHT_WHEEL_NAME);
-        rightDriveFront = (DcMotorEx) hardwareMap.dcMotor.get(FRONTRIGHT_WHEEL_NAME);
 
-        leftDriveBack.setDirection(DcMotor.Direction.FORWARD);
+
+        leftDriveFront  = hardwareMap.get(DcMotor.class, FRONTLEFT_WHEEL_NAME);
+        leftDriveBack  = hardwareMap.get(DcMotor.class, BACKLEFT_WHEEL_NAME);
+        rightDriveFront  = hardwareMap.get(DcMotor.class, FRONTRIGHT_WHEEL_NAME);
+        rightDriveBack = hardwareMap.get(DcMotor.class, BACKRIGHT_WHEEL_NAME);
         leftDriveFront.setDirection(DcMotor.Direction.REVERSE);
-        rightDriveBack.setDirection(DcMotor.Direction.REVERSE);
+        leftDriveBack.setDirection(DcMotor.Direction.FORWARD);
         rightDriveFront.setDirection(DcMotor.Direction.FORWARD);
+        rightDriveBack.setDirection(DcMotor.Direction.REVERSE);
 
-        leftDriveBack.setPower(0);
-        leftDriveFront.setPower(0);
-        rightDriveBack.setPower(0);
-        rightDriveFront.setPower(0);
 
         leftDriveBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftDriveFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -103,12 +105,23 @@ public class DuncanDriveTrain extends DuncanComponentImplBase {
     /**
      * Reformats input and runs the {@link #mechanumTeleOp} method
      */
+    public double drive = -1;
+    public double turn = -1;
+
     public void wheelsTeleOp() {
 
-        double drive = -gamepad1.left_stick_y;
-        double turn = gamepad1.right_stick_x;
+        drive = -gamepad1.left_stick_y;
+        turn  =  gamepad1.right_stick_x;
+        double leftPower = Range.clip(drive + turn, -1.0, 1.0) ;
+        double rightPower = Range.clip(drive - turn, -1.0, 1.0) ;
 
-        mechanumTeleOp(gamepad1.left_stick_x, gamepad1.left_stick_y, -gamepad1.right_stick_x);
+       // mechanumTeleOp(gamepad1.left_stick_x, gamepad1.left_stick_y, -gamepad1.right_stick_x);
+        leftDriveFront.setPower(leftPower);
+        leftDriveBack.setPower(leftPower);
+        rightDriveFront.setPower(rightPower);
+        rightDriveBack.setPower(rightPower);
+
+
     }
 
     /**

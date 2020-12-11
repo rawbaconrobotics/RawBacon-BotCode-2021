@@ -45,7 +45,6 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
     public void moveArm(){
         ArmState armState = ArmState.IDLE;
 
-        while (opModeIsActive()) {
 
             //anything inside the brackets after switch(autoState) defines the robot's action at each state
             switch (armState) {
@@ -86,7 +85,7 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
 
         */
         }
-    }
+
     
     public void autoArm(boolean direction){
         //true = up
