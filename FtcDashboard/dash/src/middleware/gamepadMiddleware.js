@@ -136,32 +136,34 @@ const extractGamepadState = (gamepad) => {
       left_stick_button: gamepad.buttons[10].pressed,
       right_stick_button: gamepad.buttons[11].pressed,
       left_trigger: gamepad.buttons[6].value,
-      right_trigger: gamepad.buttons[7].value
+      right_trigger: gamepad.buttons[7].value,
     };
-  case GamepadType.STEELSERIES_STRATUS_XL:
+  case GamepadType.WII_REMOTE:
     return {
       left_stick_x: cleanMotionValues(gamepad.axes[0]),
       left_stick_y: cleanMotionValues(-gamepad.axes[1]),
       right_stick_x: cleanMotionValues(gamepad.axes[2]),
       right_stick_y: cleanMotionValues(-gamepad.axes[3]),
-      dpad_up: gamepad.buttons[12].pressed,
-      dpad_down: gamepad.buttons[13].pressed,
-      dpad_left: gamepad.buttons[14].pressed,
-      dpad_right: gamepad.buttons[15].pressed,
-      a: gamepad.buttons[0].pressed,
-      b: gamepad.buttons[1].pressed,
-      x: gamepad.buttons[2].pressed,
-      y: gamepad.buttons[3].pressed,
+      dpad_up: null,
+      dpad_down: null,
+      dpad_left: null,
+      dpad_right: null,
+      a: gamepad.buttons[6].pressed,
+      b: gamepad.buttons[5].pressed,
+      x: gamepad.buttons[0].pressed,
+      y: gamepad.buttons[1].pressed,
       guide: false,
-      start: gamepad.buttons[9].pressed,
-      back: gamepad.buttons[8].pressed,
-      left_bumper: gamepad.buttons[4].pressed,
-      right_bumper: gamepad.buttons[5].pressed,
-      left_stick_button: gamepad.buttons[10].pressed,
-      right_stick_button: gamepad.buttons[11].pressed,
-      left_trigger: gamepad.buttons[6].value,
-      right_trigger: gamepad.buttons[7].value
+      start: gamepad.buttons[3].pressed,
+      back: gamepad.buttons[4].pressed,
+      left_bumper: null,
+      right_bumper: null,
+      left_stick_button: null,
+      right_stick_button: null,
+      left_trigger: null,
+      right_trigger: null,
     };
+
+
   case GamepadType.L_JOYCON:
     return {
       left_stick_y: +(gamepad.buttons[12]) - +(gamepad.buttons[13]),
