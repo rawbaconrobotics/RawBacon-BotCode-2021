@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class DuncanWobbleArm extends DuncanComponentImplBase {
 
-    private Servo wobbleArm = null;
+    public Servo wobbleArm = null;
 
     private final static String WOBBLE_ARM_NAME = "wobble_arm";
 
@@ -42,9 +42,9 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
         wobbleArm.setPosition(upPosition);
     }
 
+    ArmState armState = ArmState.IDLE; //Globalized
     public void moveArm(){
-        ArmState armState = ArmState.IDLE;
-
+            
 
             //anything inside the brackets after switch(autoState) defines the robot's action at each state
             switch (armState) {

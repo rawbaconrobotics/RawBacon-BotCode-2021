@@ -15,10 +15,10 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  */
 public class DuncanDriveTrain extends DuncanComponentImplBase {
 
-    private DcMotor leftDriveBack = null;
-    private DcMotor rightDriveBack = null;
-    private DcMotor leftDriveFront = null;
-    private DcMotor rightDriveFront = null;
+    public DcMotor leftDriveBack = null;
+    public DcMotor rightDriveBack = null;
+    public DcMotor leftDriveFront = null;
+    public DcMotor rightDriveFront = null;
 
     private final static String FRONTRIGHT_WHEEL_NAME = "right_drive_front";
     private final static String FRONTLEFT_WHEEL_NAME = "left_drive_front";
