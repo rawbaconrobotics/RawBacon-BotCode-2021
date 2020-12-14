@@ -16,10 +16,10 @@ import org.firstinspires.ftc.teamcode.RevHubStore;
  */
 public class DuncanDriveTrain extends DuncanComponentImplBase {
 
-    public DcMotor leftDriveBack = null;
-    public DcMotor rightDriveBack = null;
-    public DcMotor leftDriveFront = null;
-    public DcMotor rightDriveFront = null;
+    public DcMotorEx leftDriveBack = null;
+    public DcMotorEx rightDriveBack = null;
+    public DcMotorEx leftDriveFront = null;
+    public DcMotorEx rightDriveFront = null;
 
     private final static String FRONTRIGHT_WHEEL_NAME = "right_drive_front";
     private final static String FRONTLEFT_WHEEL_NAME = "left_drive_front";
@@ -50,22 +50,22 @@ public class DuncanDriveTrain extends DuncanComponentImplBase {
     @Override
     public void init() {
 
+        runtime.reset();
 
-
-        leftDriveFront  = hardwareMap.get(DcMotor.class, FRONTLEFT_WHEEL_NAME);
-        leftDriveBack  = hardwareMap.get(DcMotor.class, BACKLEFT_WHEEL_NAME);
-        rightDriveFront  = hardwareMap.get(DcMotor.class, FRONTRIGHT_WHEEL_NAME);
-        rightDriveBack = hardwareMap.get(DcMotor.class, BACKRIGHT_WHEEL_NAME);
+        leftDriveFront  = hardwareMap.get(DcMotorEx.class, FRONTLEFT_WHEEL_NAME);
+        leftDriveBack  = hardwareMap.get(DcMotorEx.class, BACKLEFT_WHEEL_NAME);
+        rightDriveFront  = hardwareMap.get(DcMotorEx.class, FRONTRIGHT_WHEEL_NAME);
+        rightDriveBack = hardwareMap.get(DcMotorEx.class, BACKRIGHT_WHEEL_NAME);
         leftDriveFront.setDirection(DcMotor.Direction.REVERSE);
         leftDriveBack.setDirection(DcMotor.Direction.FORWARD);
         rightDriveFront.setDirection(DcMotor.Direction.FORWARD);
         rightDriveBack.setDirection(DcMotor.Direction.REVERSE);
 
 
-        leftDriveBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftDriveFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightDriveBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightDriveFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftDriveFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightDriveFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
 
@@ -111,20 +111,59 @@ public class DuncanDriveTrain extends DuncanComponentImplBase {
 
     public void wheelsTeleOp(RevHubStore motors) {
 
-        drive = -gamepad1.left_stick_y;
-        turn  =  gamepad1.right_stick_x;
-        double leftPower = Range.clip(drive + turn, -1.0, 1.0) ;
-        double rightPower = Range.clip(drive - turn, -1.0, 1.0) ;
+        double y = -gamepad1.left_stick_y; // Remember, this is reversed!
+        double x = gamepad1.left_stick_x * 1.5; // Counteract imperfect strafing
+        double rotation = gamepad1.right_stick_x;
 
-       // mechanumTeleOp(gamepad1.left_stick_x, gamepad1.left_stick_y, -gamepad1.right_stick_x);
-        leftDriveFront.setPower(leftPower);
-        leftDriveBack.setPower(leftPower);
-        rightDriveFront.setPower(rightPower);
-        rightDriveBack.setPower(rightPower);
+        double frontLeftPower = (y + x + rotation);
+        double backLeftPower = (y - x + rotation);
+        double frontRightPower = (y - x - rotation);
+        double backRightPower = (y + x - rotation);
+
+        if (Math.abs(frontLeftPower) > 1 || Math.abs(backLeftPower) > 1 ||
+                Math.abs(frontRightPower) > 1 || Math.abs(backRightPower) > 1) {
+            // Find the largest power
+            double max = 0;
+            max = Math.max(Math.abs(frontLeftPower), Math.abs(backLeftPower));
+            max = Math.max(Math.abs(frontRightPower), max);
+            max = Math.max(Math.abs(backRightPower), max);
+
+            // Divide everything by max to keep the same power ratio (largest power will be 1 then!)
+            frontLeftPower /= max;
+            backLeftPower /= max;
+            frontRightPower /= max;
+            backRightPower /= max;
 
 
+        }
+
+            leftDriveFront.setPower(frontLeftPower);
+            leftDriveBack.setPower(backLeftPower);
+            rightDriveFront.setPower(frontRightPower);
+            rightDriveBack.setPower(backRightPower);
+
+
+        //double powers[] = {frontLeftPower, backLeftPower, frontRightPower, backRightPower};
     }
 
+    double MAX_ACCELERATION = 0.1;
+
+    public void motionProfiling(RevHubStore motors, double[] powers){
+
+        double frontLeftPower = powers[0];
+        double backLeftPower = powers[1];
+        double frontRightPower = powers[2];
+        double backRightPower = powers[3];
+
+        double previous_time = 0;
+        double currentVelocity = (motors.motorVelocities[0] + motors.motorVelocities[1]
+                            + motors.motorVelocities[2] + motors.motorVelocities[3])/4;
+        double currentTime = runtime.time();
+        double output_velocity = 0, output_acceleration = 0;
+
+        //incomplete! figure out motion profiling soon
+
+}
     /**
      * Adds the forward movement, strafing, and rotation together, normalizes them, and sets the motor powers appropriatly
      *

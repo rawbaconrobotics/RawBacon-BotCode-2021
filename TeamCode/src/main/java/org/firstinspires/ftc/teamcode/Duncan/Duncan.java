@@ -33,6 +33,8 @@ public class Duncan {
      */
 
      public RevHubStore getMotorsAndEverything(){
+
+
          //Gets the values of the motor encoder positions and the velocity of the motors by calling them from the DuncanDriveTrain class
          RevHubStore hubValues = new RevHubStore();
          hubValues.motorEncoderPositions[0] = drivetrain.leftDriveBack.getCurrentPosition();
@@ -43,6 +45,10 @@ public class Duncan {
          hubValues.motorPowers[1] = drivetrain.rightDriveBack.getPower();
          hubValues.motorPowers[2] = drivetrain.leftDriveFront.getPower();
          hubValues.motorPowers[3] = drivetrain.rightDriveFront.getPower();
+         hubValues.motorVelocities[0] = drivetrain.leftDriveBack.getVelocity();
+         hubValues.motorVelocities[1] = drivetrain.rightDriveBack.getVelocity();
+         hubValues.motorVelocities[2] = drivetrain.leftDriveFront.getVelocity();
+         hubValues.motorVelocities[3] = drivetrain.rightDriveFront.getVelocity();
          //Gets the wobble arm servo position
          hubValues.wobbleServoPosition = wobble.wobbleArm.getPosition();
          return hubValues;
