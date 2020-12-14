@@ -136,7 +136,7 @@ const extractGamepadState = (gamepad) => {
       left_stick_button: gamepad.buttons[10].pressed,
       right_stick_button: gamepad.buttons[11].pressed,
       left_trigger: gamepad.buttons[6].value,
-      right_trigger: gamepad.buttons[7].value,
+      right_trigger: gamepad.buttons[7].value
     };
   case GamepadType.WII_REMOTE:
     return {
@@ -144,10 +144,10 @@ const extractGamepadState = (gamepad) => {
       left_stick_y: cleanMotionValues(-gamepad.axes[1]),
       right_stick_x: cleanMotionValues(gamepad.axes[2]),
       right_stick_y: cleanMotionValues(-gamepad.axes[3]),
-      dpad_up: null,
-      dpad_down: null,
-      dpad_left: null,
-      dpad_right: null,
+      dpad_up: false,
+      dpad_down: false,
+      dpad_left: false,
+      dpad_right: false,
       a: gamepad.buttons[6].pressed,
       b: gamepad.buttons[5].pressed,
       x: gamepad.buttons[0].pressed,
@@ -155,12 +155,12 @@ const extractGamepadState = (gamepad) => {
       guide: false,
       start: gamepad.buttons[3].pressed,
       back: gamepad.buttons[4].pressed,
-      left_bumper: null,
-      right_bumper: null,
-      left_stick_button: null,
-      right_stick_button: null,
-      left_trigger: null,
-      right_trigger: null,
+      left_bumper: false,
+      right_bumper: false,
+      left_stick_button: false,
+      right_stick_button: false,
+      left_trigger: false,
+      right_trigger: false
     };
 
 
