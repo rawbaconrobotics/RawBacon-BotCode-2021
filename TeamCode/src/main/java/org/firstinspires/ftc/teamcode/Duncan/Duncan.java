@@ -22,7 +22,6 @@ import java.util.List;
  */
 
 public class Duncan {
-
     //Initialize new components
     DuncanDriveTrain drivetrain;
     DuncanWobbleArm wobble;
@@ -37,7 +36,7 @@ public class Duncan {
      */
 
      public void getMotorsAndEverything(){
-         //Gets the values of the motors by calling them from the DuncanDriveTrain class
+         //Gets the values of the motor encoder positions and the velocity of the motors by calling them from the DuncanDriveTrain class
          RevHubStore hubValues = new RevHubStore();
          hubValues.motorEncoderPositions[0] = drivetrain.leftDriveBack.getCurrentPosition();
          hubValues.motorEncoderPositions[1] = drivetrain.rightDriveBack.getCurrentPosition();
@@ -47,13 +46,12 @@ public class Duncan {
          hubValues.motorSpeeds[1] = drivetrain.rightDriveBack.getPower();
          hubValues.motorSpeeds[2] = drivetrain.leftDriveFront.getPower();
          hubValues.motorSpeeds[3] = drivetrain.rightDriveFront.getPower();
+         //Gets the wobble arm servo position
          hubValues.wobbleServoPosition = wobble.wobbleArm.getPosition();
 
      }
     public void teleOpActivated(){
-
-
-        //add bulk reads here!!!!!!!!!
+        //add bulk reads here!!!!!!!!! - partially done, still need to change the names in components and such to the new values
         drivetrain.wheelsTeleOp();
         wobble.moveArm();
         //il.runIntakeAndLauncher();
