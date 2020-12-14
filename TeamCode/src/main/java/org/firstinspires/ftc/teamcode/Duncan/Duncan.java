@@ -13,7 +13,6 @@ import org.firstinspires.ftc.teamcode.RevHubStore;
 
 import java.util.List;
 /**TODO: Add motion profiling to drivetrain (ramp up speed sample code)
- * TODO: Add bulk reads to the teleopactivated method, remove reads from components and pass in the values
  */
 
 /**
@@ -29,31 +28,30 @@ public class Duncan {
     RemoteDriving rdrive;
     LinearOpMode opMode;
     HardwareMap hwMap;
-    private long      e1, e2, e3, e4; // Encoder Values
-    private double    v1, v2, v3, v4; // Velocities
     /**
      * Runs the teleop on all components
      */
 
-     public void getMotorsAndEverything(){
+     public RevHubStore getMotorsAndEverything(){
          //Gets the values of the motor encoder positions and the velocity of the motors by calling them from the DuncanDriveTrain class
          RevHubStore hubValues = new RevHubStore();
          hubValues.motorEncoderPositions[0] = drivetrain.leftDriveBack.getCurrentPosition();
          hubValues.motorEncoderPositions[1] = drivetrain.rightDriveBack.getCurrentPosition();
          hubValues.motorEncoderPositions[2] = drivetrain.leftDriveFront.getCurrentPosition();
          hubValues.motorEncoderPositions[3] = drivetrain.rightDriveFront.getCurrentPosition();
-         hubValues.motorSpeeds[0] = drivetrain.leftDriveBack.getPower();
-         hubValues.motorSpeeds[1] = drivetrain.rightDriveBack.getPower();
-         hubValues.motorSpeeds[2] = drivetrain.leftDriveFront.getPower();
-         hubValues.motorSpeeds[3] = drivetrain.rightDriveFront.getPower();
+         hubValues.motorPowers[0] = drivetrain.leftDriveBack.getPower();
+         hubValues.motorPowers[1] = drivetrain.rightDriveBack.getPower();
+         hubValues.motorPowers[2] = drivetrain.leftDriveFront.getPower();
+         hubValues.motorPowers[3] = drivetrain.rightDriveFront.getPower();
          //Gets the wobble arm servo position
          hubValues.wobbleServoPosition = wobble.wobbleArm.getPosition();
-
+         return hubValues;
      }
     public void teleOpActivated(){
-        //add bulk reads here!!!!!!!!! - partially done, still need to change the names in components and such to the new values
-        drivetrain.wheelsTeleOp();
-        wobble.moveArm();
+         RevHubStore hubValues = getMotorsAndEverything();
+
+        drivetrain.wheelsTeleOp(hubValues);
+        wobble.moveArm(hubValues);
         //il.runIntakeAndLauncher();
         for (LynxModule module : allHubs) {
             module.clearBulkCache();
@@ -72,10 +70,9 @@ public class Duncan {
         this.opMode = opMode;
 
         hwMap = opMode.hardwareMap;
-        /**@see org.firstinspires.ftc.robotcontroller.external.samples.ConceptMotorBulkRead */
 
         List<LynxModule> allHubs = hwMap.getAll(LynxModule.class); //Defines allHubs from the Hardware Map
-        int anInt = 0;
+
         for (LynxModule module : allHubs) {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
             module.clearBulkCache(); //Clears the BulkCache which is necessary due to it being in manual mode

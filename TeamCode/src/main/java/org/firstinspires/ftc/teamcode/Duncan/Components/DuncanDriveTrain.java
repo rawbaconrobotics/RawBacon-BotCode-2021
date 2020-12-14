@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.RevHubStore;
 
 /**
  * Represents the four wheel mechanum drive on the bot
@@ -108,7 +109,7 @@ public class DuncanDriveTrain extends DuncanComponentImplBase {
     public double drive = -1;
     public double turn = -1;
 
-    public void wheelsTeleOp() {
+    public void wheelsTeleOp(RevHubStore motors) {
 
         drive = -gamepad1.left_stick_y;
         turn  =  gamepad1.right_stick_x;

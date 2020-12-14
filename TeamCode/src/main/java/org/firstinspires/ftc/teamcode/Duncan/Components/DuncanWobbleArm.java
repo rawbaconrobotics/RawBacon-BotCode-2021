@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.Duncan.Components;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.RevHubStore;
+
 /**
  * Represents the mechanism used for lifting the wobble arm
  * @author Raw Bacon Coders
@@ -35,6 +37,7 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
 
     public void init(){
         wobbleArm = (Servo) hardwareMap.servo.get(WOBBLE_ARM_NAME);
+   
     }
 
     public void initAutonomous(){
@@ -43,7 +46,7 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
     }
 
     ArmState armState = ArmState.IDLE; //Globalized
-    public void moveArm(){
+    public void moveArm(RevHubStore servo){
             
 
             //anything inside the brackets after switch(autoState) defines the robot's action at each state
