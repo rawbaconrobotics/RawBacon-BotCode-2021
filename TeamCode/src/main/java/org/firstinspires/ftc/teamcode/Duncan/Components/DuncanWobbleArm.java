@@ -72,7 +72,7 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
                     armState = armState.IDLE;
             }
 */
-        wobbleArm.setPower(-gamepad2.left_stick_y);
+        wobbleArm.setPower(-0.3*(gamepad2.left_stick_y));
 
 
 /*
