@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -21,6 +22,7 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
@@ -32,6 +34,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvInternalCamera2;
 import org.openftc.easyopencv.OpenCvInternalCamera2Impl;
 import org.openftc.easyopencv.OpenCvPipeline;
+import org.openftc.easyopencv.OpenCvWebcam;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -41,16 +44,20 @@ import static android.content.Context.BATTERY_SERVICE;
 @TeleOp(name="AARemote Test")
 public class FTCDashCam extends LinearOpMode
 {
+    private final static String FRONTRIGHT_WHEEL_NAME = "right_drive_front";
+    private final static String FRONTLEFT_WHEEL_NAME = "left_drive_front";
+    private final static String BACKRIGHT_WHEEL_NAME = "right_drive_back";
+    private final static String BACKLEFT_WHEEL_NAME = "left_drive_back";
     FTCDashCam context = this;
     private final static String GRABBER_SERVO_NAME = "arm";
     private double GRABBER_OPEN = 1;
     private double GRABBER_CLOSED = -0.6;
-    OpenCvInternalCamera2 phoneCam;
+    //OpenCvInternalCamera2 phoneCam;
+    OpenCvWebcam phoneCam;
     private DcMotor leftDrive = null;
     private DcMotor leftDriveBack = null;
     private DcMotor rightDriveBack = null;
     private DcMotor rightDrive = null;
-    double getBatteryVoltage() { double result = Double.POSITIVE_INFINITY; for (VoltageSensor sensor : hardwareMap.voltageSensor) { double voltage = sensor.getVoltage(); if (voltage > 0) { result = Math.min(result, voltage); } } return result; }
 
     @Override
     public void runOpMode()
@@ -66,18 +73,24 @@ public class FTCDashCam extends LinearOpMode
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         //phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera2(OpenCvInternalCamera2.CameraDirection.FRONT, cameraMonitorViewId);
         // OR...  Do Not Activate the Camera Monitor View
-        phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera2(OpenCvInternalCamera2.CameraDirection.BACK);
 
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive_front");
-        leftDriveBack  = hardwareMap.get(DcMotor.class, "left_drive_back");
-        rightDrive  = hardwareMap.get(DcMotor.class, "right_drive_front");
-        rightDriveBack = hardwareMap.get(DcMotor.class, "right_drive_back");
+        phoneCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+
+
+        //phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera2(OpenCvInternalCamera2.CameraDirection.BACK);
+
+
+
+        leftDrive  = hardwareMap.get(DcMotor.class, FRONTLEFT_WHEEL_NAME);
+        leftDriveBack  = hardwareMap.get(DcMotor.class, BACKLEFT_WHEEL_NAME);
+        rightDrive  = hardwareMap.get(DcMotor.class, FRONTRIGHT_WHEEL_NAME);
+        rightDriveBack = hardwareMap.get(DcMotor.class, BACKRIGHT_WHEEL_NAME);
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
-        leftDriveBack.setDirection(DcMotor.Direction.REVERSE);
+        leftDriveBack.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightDriveBack.setDirection(DcMotor.Direction.FORWARD);
+        rightDriveBack.setDirection(DcMotor.Direction.REVERSE);
         CRServo grabberServo = null;
-        grabberServo = hardwareMap.crservo.get(GRABBER_SERVO_NAME);
+        //grabberServo = hardwareMap.crservo.get(GRABBER_SERVO_NAME);
 
         /*
          * Specify the image processing pipeline we wish to invoke upon receipt
@@ -114,8 +127,8 @@ public class FTCDashCam extends LinearOpMode
                  * For a rear facing camera or a webcam, rotation is defined assuming the camera is facing
                  * away from the user.
                  */
-                phoneCam.startStreaming(360, 270, OpenCvCameraRotation.SIDEWAYS_RIGHT);
-                phoneCam.setFlashlightEnabled(true);
+                phoneCam.startStreaming(960, 720, OpenCvCameraRotation.UPRIGHT);
+               // phoneCam.setFlashlightEnabled(true);
 
 
             }
@@ -141,7 +154,6 @@ public class FTCDashCam extends LinearOpMode
 
             int percentage = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
             telemetry.addData("Phone battery", percentage);
-            telemetry.addData("Robot Battery Voltage", getBatteryVoltage());
 
 
             //logGamepad(telemetry, gamepad1, "gamepad1");
@@ -162,7 +174,7 @@ public class FTCDashCam extends LinearOpMode
             double leftPower = Range.clip(drive + turn, -1.0, 1.0) ;
             double rightPower = Range.clip(drive - turn, -1.0, 1.0) ;
             //replace with state machine
-            if(gamepad1.right_bumper){
+        /*    if(gamepad1.right_bumper){
                 grabberServo.setPower(GRABBER_OPEN);
                 needsReset = true;
             }
@@ -173,7 +185,7 @@ public class FTCDashCam extends LinearOpMode
             else if(needsReset){
                 grabberServo.setPower(0);
                 needsReset = false;
-            }
+            } */
             //telemetry.addData("servo pressed:", needsReset);
 
             telemetry.addData("Drive:", drive);

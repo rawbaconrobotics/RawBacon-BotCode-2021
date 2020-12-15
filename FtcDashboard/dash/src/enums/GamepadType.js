@@ -11,6 +11,7 @@ const GamepadType = {
   STEELSERIES_STRATUS_XL: 'STEELSERIES_STRATUS_XL',
   L_JOYCON: 'L_JOYCON',
   PS4: 'WIRELESS_CONTROLLER',
+  WII_REMOTE: 'WII_REMOTE',
   UNKNOWN: 'UNKNOWN'
 };
 
@@ -30,7 +31,11 @@ export default Object.freeze({
        return GamepadType.PS4;
     } else if (gamepad.id.search('SteelSeries Stratus XL') !== -1) {
        return GamepadType.STEELSERIES_STRATUS_XL;
-    } else {
+    }
+     else if (gamepad.id.search('057e-0306-Nintendo Wii Remote') !== -1) {
+            return GamepadType.WII_REMOTE;
+         }
+     else {
       return GamepadType.UNKNOWN;
     }
   },
