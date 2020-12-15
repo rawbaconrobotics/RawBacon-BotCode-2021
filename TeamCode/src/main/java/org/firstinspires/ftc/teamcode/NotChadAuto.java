@@ -70,7 +70,7 @@ public class NotChadAuto extends LinearOpMode {
         moveToPosition(55, 0.75);
         //
     }
-    //
+
     //
     /*
     This function's purpose is simply to drive forward or backward.
