@@ -106,8 +106,11 @@ public class DuncanDriveTrain extends DuncanComponentImplBase {
     /**
      * Reformats input and runs the {@link #mechanumTeleOp} method
      */
-    public double drive = -1;
-    public double turn = -1;
+    double frontLeftPower = -2;
+    double backLeftPower = -2;
+    double frontRightPower = -2;
+    double backRightPower = -2;
+
 
     public void wheelsTeleOp(RevHubStore motors) {
 
@@ -115,10 +118,10 @@ public class DuncanDriveTrain extends DuncanComponentImplBase {
         double x = gamepad1.left_stick_x * 1.5; // Counteract imperfect strafing
         double rotation = gamepad1.right_stick_x;
 
-        double frontLeftPower = (y + x + rotation);
-        double backLeftPower = (y - x + rotation);
-        double frontRightPower = (y - x - rotation);
-        double backRightPower = (y + x - rotation);
+        frontLeftPower = (y + x + rotation);
+        backLeftPower = (y - x + rotation);
+        frontRightPower = (y - x - rotation);
+        backRightPower = (y + x - rotation);
 
         if (Math.abs(frontLeftPower) > 1 || Math.abs(backLeftPower) > 1 ||
                 Math.abs(frontRightPower) > 1 || Math.abs(backRightPower) > 1) {

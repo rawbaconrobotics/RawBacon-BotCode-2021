@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Duncan.Components;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.RevHubStore;
@@ -12,7 +13,7 @@ import org.firstinspires.ftc.teamcode.RevHubStore;
 
 public class DuncanWobbleArm extends DuncanComponentImplBase {
 
-    public Servo wobbleArm = null;
+    public CRServo wobbleArm = null;
 
     private final static String WOBBLE_ARM_NAME = "wobble_arm";
 
@@ -36,18 +37,19 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
     @Override
 
     public void init(){
-        wobbleArm = (Servo) hardwareMap.servo.get(WOBBLE_ARM_NAME);
+        wobbleArm = hardwareMap.crservo.get(WOBBLE_ARM_NAME);
    
     }
 
     public void initAutonomous(){
-        wobbleArm = (Servo) hardwareMap.servo.get(WOBBLE_ARM_NAME);
-        wobbleArm.setPosition(upPosition);
+        wobbleArm = hardwareMap.crservo.get(WOBBLE_ARM_NAME);
+//        wobbleArm.setPosition(upPosition);
     }
 
     ArmState armState = ArmState.IDLE; //Globalized
     public void moveArm(RevHubStore servo){
-            
+
+        /*
 
             //anything inside the brackets after switch(autoState) defines the robot's action at each state
             switch (armState) {
@@ -69,7 +71,8 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
                     wobbleArm.setPosition(downPosition);
                     armState = armState.IDLE;
             }
-
+*/
+        wobbleArm.setPower(-gamepad2.left_stick_y);
 
 
 /*
@@ -94,10 +97,10 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
         //true = up
         //false = down
         if (direction == true){
-            wobbleArm.setPosition(upPosition);
+    //      wobbleArm.setPosition(upPosition);
         }
         else if (direction == false){
-            wobbleArm.setPosition((downPosition));
+    //        wobbleArm.setPosition((downPosition));
         }
     }
 }

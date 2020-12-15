@@ -44,8 +44,10 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
 
         telemetry.addData("Phone battery", duncan.rdrive.percentage);
         telemetry.addData("Robot Battery Voltage", duncan.rdrive.voltage);
-        telemetry.addData("Drive", duncan.drivetrain.drive);
-        telemetry.addData("Turn", duncan.drivetrain.turn);
+        telemetry.addData("left front ", duncan.drivetrain.leftDriveFront);
+        telemetry.addData("left back ", duncan.drivetrain.leftDriveBack);
+        telemetry.addData("right front ", duncan.drivetrain.rightDriveFront);
+        telemetry.addData("right back ", duncan.drivetrain.rightDriveBack);
 
         telemetry.update();
 

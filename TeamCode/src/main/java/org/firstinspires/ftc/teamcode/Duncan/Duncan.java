@@ -50,7 +50,7 @@ public class Duncan {
          hubValues.motorVelocities[2] = drivetrain.leftDriveFront.getVelocity();
          hubValues.motorVelocities[3] = drivetrain.rightDriveFront.getVelocity();
          //Gets the wobble arm servo position
-         hubValues.wobbleServoPosition = wobble.wobbleArm.getPosition();
+         hubValues.wobbleServoPosition = wobble.wobbleArm.getPower();
          return hubValues;
      }
     public void teleOpActivated(){
@@ -77,7 +77,7 @@ public class Duncan {
 
         hwMap = opMode.hardwareMap;
 
-        List<LynxModule> allHubs = hwMap.getAll(LynxModule.class); //Defines allHubs from the Hardware Map
+        allHubs = hwMap.getAll(LynxModule.class); //Defines allHubs from the Hardware Map
 
         for (LynxModule module : allHubs) {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
