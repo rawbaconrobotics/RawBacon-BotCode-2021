@@ -57,15 +57,15 @@ public class NotChadAuto extends LinearOpMode {
         //
         waitForStartify();
         //
-        moveToPosition(92.6, 0.75);
+        moveToPosition(94.6, 0.75);
         //
         sleep(1000);
         //
-        moveToPosition(-92.6, 0.75);
+        moveToPosition(-94.6, 0.75);
         //
         sleep(1000);
         //
-        strafeToPosition(-37.4, 0.75);
+        strafeToPosition(-40, 0.75);
         //
         sleep(1000);
         //
@@ -77,8 +77,21 @@ public class NotChadAuto extends LinearOpMode {
         //
         sleep(1000);
         //
-        moveToPosition(55, 0.75);
+        moveToPosition(50, 0.75);
         //
+        sleep(1000);
+        //
+        moveToPosition(-40, 0.75);
+        //
+        sleep(1000);
+        //
+        strafeToPosition(-40, 0.75);
+        //
+        sleep(1000);
+        //
+        moveToPosition(40, 0.75);
+        //
+
     }
 //
     //
