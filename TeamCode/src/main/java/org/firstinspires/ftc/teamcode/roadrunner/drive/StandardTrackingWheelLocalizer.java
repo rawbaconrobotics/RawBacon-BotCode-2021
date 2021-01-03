@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.drive;
+package org.firstinspires.ftc.teamcode.roadrunner.drive;
 
 import androidx.annotation.NonNull;
 
@@ -7,7 +7,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.localization.ThreeTrackingWheelLocalizer;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import org.firstinspires.ftc.teamcode.util.Encoder;
+import org.firstinspires.ftc.teamcode.roadrunner.util.Encoder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,10 +31,10 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
     public static double WHEEL_RADIUS = 1; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (encoder) speed
 
-    public static double LATERAL_DISTANCE = 15.0933383593; // in; distance between the left and right wheels
+    public static double LATERAL_DISTANCE = 15.3633; // in; distance between the left and right wheels
     public static double FORWARD_OFFSET = 2.43; // in; offset of the lateral wheel
-    public static double X_MULTIPLIER = 1.00070759; // Multiplier in the X direction
-    public static double Y_MULTIPLIER = 0.98670441; // Multiplier in the Y direction
+    public static double X_MULTIPLIER = 0.99932944; // Multiplier in the X direction
+    public static double Y_MULTIPLIER = 1.01292222; // Multiplier in the Y direction
 
     private Encoder leftEncoder, rightEncoder, frontEncoder;
 
@@ -52,7 +52,6 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
 
         // TODO: reverse any encoders using Encoder.setDirection(Encoder.Direction.REVERSE)
         leftEncoder.setDirection(Encoder.Direction.REVERSE);
-        frontEncoder.setDirection(Encoder.Direction.REVERSE);
 
     }
 
