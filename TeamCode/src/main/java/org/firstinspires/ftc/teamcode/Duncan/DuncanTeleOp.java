@@ -73,5 +73,6 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
     @Override
     public void on_stop() {
         duncan.rdrive.onStop();
+        duncan.wobble.stopWobble();
     }
 }

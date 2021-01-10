@@ -6,6 +6,7 @@ public class RevHubStore {
     public double[] motorEncoderPositions;
     public double[] motorVelocities;
     public double wobbleServoPosition = 0;
+    public double wobbleGrabberPosition = 0;
     public RevHubStore(){
         motorPowers = new double[4]; //Stores 4 current motor speeds
         motorEncoderPositions = new double[4];

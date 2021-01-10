@@ -49,15 +49,16 @@ public class Duncan {
          hubValues.motorVelocities[1] = drivetrain.rightDriveBack.getVelocity();
          hubValues.motorVelocities[2] = drivetrain.leftDriveFront.getVelocity();
          hubValues.motorVelocities[3] = drivetrain.rightDriveFront.getVelocity();
-         //Gets the wobble arm servo position
-         hubValues.wobbleServoPosition = wobble.wobbleArm.getPower();
+         //Gets the wobble goal grabber position
+         hubValues.wobbleGrabberPosition = wobble.grabber.getPosition();
          return hubValues;
      }
     public void teleOpActivated(){
          RevHubStore hubValues = getMotorsAndEverything();
 
         drivetrain.wheelsTeleOp(hubValues);
-        wobble.moveArm(hubValues);
+        wobble.moveArm();
+        wobble.grabWobbleGoal(hubValues);
         //il.runIntakeAndLauncher();
         for (LynxModule module : allHubs) {
             module.clearBulkCache();

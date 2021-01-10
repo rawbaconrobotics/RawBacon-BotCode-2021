@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Duncan.Components;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.RevHubStore;
@@ -13,15 +14,17 @@ import org.firstinspires.ftc.teamcode.RevHubStore;
 
 public class DuncanWobbleArm extends DuncanComponentImplBase {
 
-    public CRServo wobbleArm = null;
+    public DcMotor wobbleArm = null;
+    public Servo grabber = null;
 
     private final static String WOBBLE_ARM_NAME = "wobble_arm";
+    private final static String GRABBER_NAME = "grabber";
 
     double downPosition = 0;
     double upPosition = 1;
-    boolean armPosition = true;
-    public enum ArmState { IDLE, DOWN, UP }
-    //true=arm is down, false = arm is up
+    double inPosition = 0;
+    double outPosition = 1;
+    public enum GrabberState {IDLE, IN, OUT}
 
     /**
      * Constructor
@@ -37,63 +40,42 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
     @Override
 
     public void init(){
-        wobbleArm = hardwareMap.crservo.get(WOBBLE_ARM_NAME);
-   
+        wobbleArm = hardwareMap.dcMotor.get(WOBBLE_ARM_NAME);
+        grabber = hardwareMap.servo.get(GRABBER_NAME);
+        wobbleArm.setPower(0);
     }
 
     public void initAutonomous(){
-        wobbleArm = hardwareMap.crservo.get(WOBBLE_ARM_NAME);
-//        wobbleArm.setPosition(upPosition);
+        wobbleArm = hardwareMap.dcMotor.get(WOBBLE_ARM_NAME);
+        grabber = hardwareMap.servo.get(GRABBER_NAME);
+        wobbleArm.setPower(0);
     }
 
-    ArmState armState = ArmState.IDLE; //Globalized
-    public void moveArm(RevHubStore servo){
+    GrabberState grabberState = GrabberState.IDLE; //Globalized
 
-        /*
+    public void moveArm() {
+        wobbleArm.setPower(-0.3 * (gamepad2.left_stick_y));
+    }
 
-            //anything inside the brackets after switch(autoState) defines the robot's action at each state
-            switch (armState) {
-                //case IDLE is equivalent to if(liftState == LiftState.IDLE)
-                case IDLE:
-                    if (gamepad1.b) armState = armState.UP;
-                    if (gamepad1.a) armState = armState.DOWN;
-                    break;
+    public void grabWobbleGoal (RevHubStore servo){
+        switch (grabberState) {
+            case IDLE:
+                if (gamepad2.b) grabberState = grabberState.IN;
+                if (gamepad2.a) grabberState = grabberState.OUT;
+                break;
 
-                case UP:
-                    //  if(topTouchSensor.isPressed()){
-                    wobbleArm.setPosition(upPosition);
-                    //}
-                    armState = armState.IDLE;
+            case IN:
+                grabber.setPosition(inPosition);
+                grabberState = grabberState.IDLE;
+                break;
 
-                    //else liftMotor.setPower(1);
-                    break;
-                case DOWN:
-                    wobbleArm.setPosition(downPosition);
-                    armState = armState.IDLE;
-            }
-*/
-        wobbleArm.setPower(-0.3*(gamepad2.left_stick_y));
-
-//
-/*
-
-            if (gamepad2.a){
-
-                if (armPosition = true){
-                    wobbleArm.setPosition(upPosition);
-                    armPosition = false;
-                }
-                else if (armPosition = false){
-                    wobbleArm.setPosition(downPosition);
-                    armPosition = true;
-                }
-            }
-
-        */
+            case OUT:
+                grabber.setPosition(outPosition);
+                grabberState = grabberState.IDLE;
         }
-
-    
-    public void autoArm(boolean direction){
+    }
+    //
+    /*public void autoArm(boolean direction){
         //true = up
         //false = down
         if (direction == true){
@@ -102,5 +84,10 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
         else if (direction == false){
     //        wobbleArm.setPosition((downPosition));
         }
+    }
+
+     */
+    public void stopWobble(){
+        wobbleArm.setPower(0);
     }
 }
