@@ -64,6 +64,7 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
             duncan.teleOpActivated();
             //duncan.rdrive.loop();
             //telemetry.clear();
+
             addTelemetry();
         }
     }

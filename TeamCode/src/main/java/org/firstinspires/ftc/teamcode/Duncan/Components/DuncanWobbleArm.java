@@ -20,7 +20,7 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
     double downPosition = 0;
     double upPosition = 1;
     double inPosition = 0;
-    double outPosition = 1;
+    double outPosition = 0.5;
     public enum GrabberState {IDLE, IN, OUT}
 
     /**

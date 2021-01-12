@@ -32,7 +32,7 @@ public class DuncanRRAuto extends DuncanBaseLinearOpMode {
         telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
 
         duncan.drivetrain.init();
-        duncan.wobble.init();
+      //  duncan.wobble.init();
 
     }
 

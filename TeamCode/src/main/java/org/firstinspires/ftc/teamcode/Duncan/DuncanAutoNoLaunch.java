@@ -27,7 +27,7 @@ public class DuncanAutoNoLaunch extends DuncanBaseLinearOpMode {
     public void run(){
 
         runtime.reset();
-        duncan.wobble.autoArm(false); //move the wobble arm down
+       // duncan.wobble.autoArm(false); //move the wobble arm down
         sleep(500);
         duncan.drivetrain.driveFor(96, 1, 10); //drive forwards 96 inches
         sleep(500);
