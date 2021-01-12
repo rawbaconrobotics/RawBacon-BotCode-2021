@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Duncan.Components;
 
 public class RevHubStore {
     public double[] motorPowers; //Stores motorspeeds (was originally anArray)

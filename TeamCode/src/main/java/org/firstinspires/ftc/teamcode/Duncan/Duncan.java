@@ -2,14 +2,13 @@ package org.firstinspires.ftc.teamcode.Duncan;
 
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Duncan.Components.DuncanDriveTrain;
 import org.firstinspires.ftc.teamcode.Duncan.Components.DuncanIntakeAndLauncher;
 import org.firstinspires.ftc.teamcode.Duncan.Components.DuncanWobbleArm;
 import org.firstinspires.ftc.teamcode.Duncan.Components.RemoteDriving;
-import org.firstinspires.ftc.teamcode.RevHubStore;
+import org.firstinspires.ftc.teamcode.Duncan.Components.RevHubStore;
 
 import java.util.List;
 /**TODO: Add motion profiling to drivetrain (ramp up speed sample code)
