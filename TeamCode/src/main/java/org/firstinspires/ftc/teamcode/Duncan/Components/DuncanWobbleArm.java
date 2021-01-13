@@ -19,8 +19,8 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
 
     double downPosition = 0;
     double upPosition = 1;
-    double inPosition = 0;
-    double outPosition = 0.5;
+    double inPosition = 0.75;
+    double outPosition = 0;
     public enum GrabberState {IDLE, IN, OUT}
 
     /**
@@ -48,13 +48,20 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
         wobbleArm.setPower(0);
     }
 
-    GrabberState grabberState = GrabberState.IDLE; //Globalized
+    public GrabberState grabberState = GrabberState.IDLE; //Globalized
 
     public void moveArm() {
-        wobbleArm.setPower(-0.3 * (gamepad2.left_stick_y));
+        wobbleArm.setPower(-0.6 * (gamepad2.left_stick_y));
     }
 
     public void grabWobbleGoal (RevHubStore servo){
+     /*   while(gamepad2.a){
+            grabber.setPosition(outPosition);
+        }
+        while(gamepad2.b){
+            grabber.setPosition(inPosition);
+        }*/
+
         switch (grabberState) {
             case IDLE:
                 if (gamepad2.b) grabberState = grabberState.IN;
@@ -63,6 +70,7 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
 
             case IN:
                 grabber.setPosition(inPosition);
+
                 grabberState = grabberState.IDLE;
                 break;
 
@@ -70,6 +78,8 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
                 grabber.setPosition(outPosition);
                 grabberState = grabberState.IDLE;
         }
+
+
     }
     //
     /*public void autoArm(boolean direction){

@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Duncan.Components.DuncanWobbleArm;
 import org.firstinspires.ftc.teamcode.Duncan.Components.RemoteDriving;
 
 /**
@@ -48,6 +49,7 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
         telemetry.addData("left back ", duncan.drivetrain.leftDriveBack.getPower());
         telemetry.addData("right front ", duncan.drivetrain.rightDriveFront.getPower());
         telemetry.addData("right back ", duncan.drivetrain.rightDriveBack.getPower());
+        telemetry.addData("Current servo state: ", duncan.wobble.grabberState.toString());
 
         telemetry.update();
 
