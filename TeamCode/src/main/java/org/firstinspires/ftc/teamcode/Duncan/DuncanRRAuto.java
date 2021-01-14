@@ -36,7 +36,6 @@ public class DuncanRRAuto extends DuncanBaseLinearOpMode {
 
     }
 
-
     /**
      * Activates the teleop
      */
@@ -47,39 +46,41 @@ public class DuncanRRAuto extends DuncanBaseLinearOpMode {
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        Pose2d startPose = new Pose2d(-63.0, -50.0, Math.toRadians(180));
+        //Pose2d startPose = new Pose2d(-63.0, -50.0, Math.toRadians(180));
+        Pose2d startPose = new Pose2d(-63.0, -50.0, Math.toRadians(0));
 
         drive.setPoseEstimate(startPose);
 
         Trajectory traj1 = drive.trajectoryBuilder(startPose)
-       // .splineTo(new Vector2d(-24.0, -60.0), Math.toRadians(0))
-        .forward(35.0)           // builder1.forward(25.0)
+        .forward(10.0)
+        .splineTo(new Vector2d(-24.0, -60.0), Math.toRadians(0))
+        .forward(32.0)           // builder1.forward(25.0)
                 .build();
 
         Trajectory traj2 = drive.trajectoryBuilder(traj1.end())
-        .strafeTo(new Vector2d(-63.0, -50.0))
+        .lineTo(new Vector2d(-48.0, -60.0))
         .build();
 
         Trajectory traj3 = drive.trajectoryBuilder(traj2.end())
-        .lineTo(new Vector2d(-63.0, -25.0))
+        .lineToLinearHeading(new Pose2d(-48.0, -24.0, 90.0))
+                .build();
+//turn here
+        Trajectory traj4 = drive.trajectoryBuilder(traj3.end())
+        .splineTo(new Vector2d(-24.0, -12.0), Math.toRadians(0.0))
+        .splineTo(new Vector2d(12.0, -60.0), Math.toRadians(-90.0))
                 .build();
 
-        Trajectory traj4 = drive.trajectoryBuilder(traj2.end())
-        .forward(20.0)
-        .splineToConstantHeading(new Vector2d(-24.0, -12.0), Math.toRadians(0.0))
-        .splineTo(new Vector2d(12.0, -56.0), Math.toRadians(-90.0))
-                .build();
-
-        Trajectory traj5 = drive.trajectoryBuilder(traj2.end())
+        Trajectory traj5 = drive.trajectoryBuilder(traj4.end())
         .lineTo(new Vector2d(12.0, -30.0))
                 .build();
 
         drive.followTrajectory(traj1);
-      //  drive.followTrajectory(traj2);
-      //  drive.followTrajectory(traj3);
-      //  drive.followTrajectory(traj4);
-      //  drive.followTrajectory(traj5);
-        drive.turn(-90);
+        drive.followTrajectory(traj2);
+        drive.followTrajectory(traj3);
+        drive.turn(Math.toRadians(-90));
+        drive.followTrajectory(traj4);
+        drive.followTrajectory(traj5);
+        drive.turn(Math.toRadians(90));
 
     }
     /**
