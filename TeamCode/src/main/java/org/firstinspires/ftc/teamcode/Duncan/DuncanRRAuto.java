@@ -65,7 +65,7 @@ public class DuncanRRAuto extends DuncanBaseLinearOpMode {
         .lineToLinearHeading(new Pose2d(-48.0, -24.0, 90.0))
                 .build();
 //turn here
-        Trajectory traj4 = drive.trajectoryBuilder(traj3.end())
+        Trajectory traj4 = drive.trajectoryBuilder(traj3.end().plus(new Pose2d(0, 0, Math.toRadians(-90))))
         .splineTo(new Vector2d(-24.0, -12.0), Math.toRadians(0.0))
         .splineTo(new Vector2d(12.0, -60.0), Math.toRadians(-90.0))
                 .build();
@@ -80,7 +80,7 @@ public class DuncanRRAuto extends DuncanBaseLinearOpMode {
         drive.turn(Math.toRadians(-90));
         drive.followTrajectory(traj4);
         drive.followTrajectory(traj5);
-        drive.turn(Math.toRadians(90));
+        drive.turn(Math.toRadians(-90));
 
     }
     /**
