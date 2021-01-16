@@ -53,16 +53,17 @@ public class Duncan {
          return hubValues;
      }
     public void teleOpActivated(){
-         RevHubStore hubValues = getMotorsAndEverything();
+      //   RevHubStore hubValues = getMotorsAndEverything();
 
-        drivetrain.wheelsTeleOp(hubValues);
-        wobble.moveArm();
-        wobble.grabWobbleGoal(hubValues);
+        drivetrain.wheelsTeleOp();
+        wobble.grabWobbleGoal();
         //il.runIntakeAndLauncher();
-        for (LynxModule module : allHubs) {
+     /*   for (LynxModule module : allHubs) {
             module.clearBulkCache();
         }
+    */
     }
+
     List<LynxModule> allHubs;
     /**
      * Constructor
@@ -77,13 +78,13 @@ public class Duncan {
 
         hwMap = opMode.hardwareMap;
 
-        allHubs = hwMap.getAll(LynxModule.class); //Defines allHubs from the Hardware Map
+     //   allHubs = hwMap.getAll(LynxModule.class); //Defines allHubs from the Hardware Map
 
-        for (LynxModule module : allHubs) {
+     /*   for (LynxModule module : allHubs) {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
             module.clearBulkCache(); //Clears the BulkCache which is necessary due to it being in manual mode
 
         }
-
+*/
     }
 }

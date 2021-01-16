@@ -106,7 +106,7 @@ public class DuncanDriveTrain extends DuncanComponentImplBase {
     double backRightPower = -2;
 
 
-    public void wheelsTeleOp(RevHubStore motors) {
+    public void wheelsTeleOp() {
 
         double y = -gamepad1.left_stick_y; // Remember, this is reversed!
         double x = gamepad1.left_stick_x * 1.5; // Counteract imperfect strafing

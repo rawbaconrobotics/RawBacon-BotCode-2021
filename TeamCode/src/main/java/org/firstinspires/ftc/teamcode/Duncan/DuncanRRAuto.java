@@ -24,7 +24,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
  */
 
 
-@Autonomous(name="Odometry Duncan Auto")
+@Autonomous(name="Odometry Duncan Auto", preselectTeleOp="OFFICIAL Duncan TeleOp")
 
 public class DuncanRRAuto extends DuncanBaseLinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
@@ -158,15 +158,18 @@ public class DuncanRRAuto extends DuncanBaseLinearOpMode {
             Trajectory traj4 = drive.trajectoryBuilder(traj3.end().plus(new Pose2d(0, 0, Math.toRadians(-90))))
                     .splineTo(new Vector2d(-24.0, -12.0), Math.toRadians(0.0))
                     .splineTo(new Vector2d(60.0, -60.0), Math.toRadians(-90.0))
-                    .splineTo(new Vector2d(60.0, -60.0).plus(new Vector2d(-30.0, 0.0)), Math.toRadians(-90.0))
+
                     .build();
 
+            Trajectory traj4pt5 = drive.trajectoryBuilder(traj4.end())
+                    .back(30)
+                    .build();
 
-            Trajectory traj5 = drive.trajectoryBuilder(traj4.end())
+            Trajectory traj5 = drive.trajectoryBuilder(traj4pt5.end())
                     .strafeRight(4)
                     .build();
             Trajectory traj6 = drive.trajectoryBuilder(traj5.end())
-                    .lineToLinearHeading(new Pose2d(12, -30.0, Math.toRadians(0.0)))
+                    .lineToLinearHeading(new Pose2d(12, -20.0, Math.toRadians(0.0)))
                     .build();
 
             drive.followTrajectory(traj1);
@@ -174,6 +177,7 @@ public class DuncanRRAuto extends DuncanBaseLinearOpMode {
             drive.followTrajectory(traj3);
             drive.turn(Math.toRadians(-90));
             drive.followTrajectory(traj4);
+            drive.followTrajectory(traj4pt5);
             drive.followTrajectory(traj5);
             drive.followTrajectory(traj6);
 
