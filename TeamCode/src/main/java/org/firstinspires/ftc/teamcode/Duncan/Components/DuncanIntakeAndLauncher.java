@@ -18,23 +18,23 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
     private Servo hopper = null;
     private Servo transfer = null;
 
-    private final static String INTAKE_NAME = "intake";
-    private final static String LAUNCHER_NAME = "launcher";
-    private final static String HOPPER_NAME = "hopper";
+    private final static String INTAKE_NAME = "deadwheel_left"; //plugged into deadwheel encoder port
+    private final static String LAUNCHER_NAME = "deadwheel_right";
+    private final static String HOPPER_NAME = "deadwheel_perp";
     private final static String TRANSFER_NAME = "transfer";
 
-    double hopperDownPosition = 0;
-    double hopperUpPosition = 1;
-    boolean hopperPosition = true;
+    final double hopperDownPosition = 0;
+    final double hopperUpPosition = 1;
 
-    double transferInPosition = 0;
-    double transferOutPosition = 1;
-    //true = hopper is down, transfer is out
-    // false = hopper is up, transfer is in
+    final double transferInPosition = 0;
+    final double transferOutPosition = 1;
 
-    boolean intakeStatus = false;
-    boolean launcherStatus = false;
-    //true = on, false = off
+    public enum HopperState {DOWN, UP, IDLE};
+    public enum TransferState {OUT, IN, IDLE};
+    public enum IntakeState {INTAKE, OUTTAKE, IDLE};
+    public enum LauncherState {LAUNCHING, IDLE};
+
+
 
     /**
      * Constructor
@@ -49,7 +49,6 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
      */
 
     @Override
-
     public void init(){
 
         intake = hardwareMap.dcMotor.get(INTAKE_NAME);
@@ -77,57 +76,86 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
         transfer.setPosition(transferOutPosition);
 
     }
+    public HopperState hopperState = HopperState.IDLE;
+    public TransferState transferState = TransferState.IDLE;
+    public IntakeState intakeState = IntakeState.IDLE;
+    public LauncherState launcherState = LauncherState.IDLE;
+
 
     public void runIntakeAndLauncher(){
 
 
         while (opModeIsActive()) {
-            //turns the intake on and off
-            if (gamepad1.left_trigger == 1) {
-                if (intakeStatus = false) {
-                    intake.setPower(1);
-                    intakeStatus = true;
-                } else if (intakeStatus = true) {
-                    intake.setPower(0);
-                    intakeStatus = false;
-                }
+
+            switch (intakeState) {
+                case IDLE:
+                    if (gamepad1.left_trigger > 0.5){
+                        intakeState = IntakeState.INTAKE;
+                        intake.setPower(1);
+                    }else if(gamepad1.right_trigger > 0.5){
+                        intakeState = IntakeState.OUTTAKE;
+                        intake.setPower(-1);
+                    }
+                    break;
+                case INTAKE:
+                    if (gamepad1.left_trigger < 0.5) {
+                        intakeState = IntakeState.IDLE;
+                        intake.setPower(0);
+                    }
+                    break;
+
+                case OUTTAKE:
+                    if (gamepad1.right_trigger < 0.5) {
+                        intakeState = IntakeState.IDLE;
+                        intake.setPower(0);
+                    }
+                    break;
             }
 
-            //moves the hopper if the second driver hits the b button
-            while (gamepad2.left_trigger == 1) {
-                hopperPosition = false;
-            }
 
-            while (gamepad2.left_trigger == 0){
-                hopperPosition = true;
-            }
-            if (hopperPosition = true){
-                if (gamepad2.left_trigger == 1){
+
+            switch (hopperState) {
+                case UP:
                     hopper.setPosition(hopperUpPosition);
-                }
-            }
-            if (hopperPosition = false) {
+                    transfer.setPosition(transferInPosition);
+                    hopperState = hopperState.IDLE;
+                    transferState = transferState.IDLE;
+                    break;
+                case DOWN:
                     hopper.setPosition(hopperDownPosition);
-                }
-
-            //shoots 1 ring
-            if (gamepad2.right_trigger == 1) {
-                transfer.setPosition(transferInPosition);
-                sleep(1000);
-                transfer.setPosition(transferOutPosition);
-                }
-
-            //turns the launcher on and off
-            if (gamepad2.x) {
-                if (launcherStatus = false) {
-                    launcher.setPower(1);
-                    launcherStatus = true;
+                    transfer.setPosition(transferOutPosition);
+                    hopperState = hopperState.IDLE;
+                    transferState = transferState.IDLE;
+                    break;
+                case IDLE:
+                    if(gamepad2.left_trigger > 0.5) {
+                        hopperState = HopperState.UP;
+                        transferState = TransferState.IN;
                     }
-                else if (launcherStatus = true) {
-                    launcher.setPower(0);
-                    launcherStatus = false;
+                    if(gamepad2.left_trigger < 0.5) {
+                        hopperState = HopperState.DOWN;
+                        transferState = TransferState.OUT;
                     }
-                }
+                    break;
+
+            }
+
+            switch(launcherState){
+                case IDLE:
+                    if(gamepad2.x) {
+                        launcherState = LauncherState.LAUNCHING;
+                        launcher.setPower(1);
+                    }
+                    break;
+                case LAUNCHING:
+                    if(!gamepad2.x){
+                        launcherState = LauncherState.IDLE;
+                        launcher.setPower(0);
+                    }
+                    break;
+            }
+
+
 
             }
         }

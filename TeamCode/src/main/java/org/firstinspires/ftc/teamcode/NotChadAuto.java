@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@Autonomous(name="NOT CHAD", group="chad")
+@Autonomous(name="Meet 3 Encoder-based Auto")
 public class NotChadAuto extends LinearOpMode {
     //
     DcMotor frontleft;
@@ -22,12 +22,12 @@ public class NotChadAuto extends LinearOpMode {
     DcMotor backright;
     //28 * 20 / (2ppi * 4.125)
     Double width = 17.32; //inches
-    Integer cpr = 28; //counts per rotation
+    Integer cpr = 1120; //counts per rotation
     Integer gearratio = 40;
     Double diameter = 3.93701;
     Double cpi = (cpr * gearratio)/(Math.PI * diameter); //counts per inch, 28cpr * gear ratio / (2 * pi * diameter (in inches, in the center))
     Double bias = 0.8;//default 0.8
-    Double meccyBias = 0.9;//change to adjust only strafing movement
+    Double meccyBias = 1.0;//change to adjust only strafing movement
     //
     Double conversion = cpi * bias;
     Boolean exit = false;
@@ -149,7 +149,6 @@ public class NotChadAuto extends LinearOpMode {
         telemetry.addData("Yaw", yaw);
         telemetry.update();
         //
-        telemetry.addData("stuff", speedDirection);
         telemetry.update();
         //
         double first;

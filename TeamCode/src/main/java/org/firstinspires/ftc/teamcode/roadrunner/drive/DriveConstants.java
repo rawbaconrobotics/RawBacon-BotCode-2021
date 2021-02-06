@@ -20,8 +20,8 @@ public class DriveConstants {
     /*
      * These are motor constants that should be listed online for your motors.
      */
-    public static final double TICKS_PER_REV = 1120;
-    public static final double MAX_RPM = 160;
+    public static final double TICKS_PER_REV = 537.6; //used to be 1120, changed per Elliot's request
+    public static final double MAX_RPM = 349; //used to be 160, changed per elliot's request
 
     /*
      * Set RUN_USING_ENCODER to true to enable built-in hub velocity control using drive encoders.

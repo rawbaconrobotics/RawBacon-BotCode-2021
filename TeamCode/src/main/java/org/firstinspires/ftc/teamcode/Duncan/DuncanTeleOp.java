@@ -31,7 +31,7 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
 
         duncan.drivetrain.init();
         duncan.wobble.init();
-       // duncan.il.init();
+        duncan.il.init();
       // Disabled remote driving-  duncan.rdrive.init();
 
     }
