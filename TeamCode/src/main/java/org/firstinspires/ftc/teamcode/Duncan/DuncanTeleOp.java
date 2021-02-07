@@ -30,7 +30,7 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
         telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
 
         duncan.drivetrain.init();
-        duncan.wobble.init();
+    //    duncan.wobble.init();
         duncan.il.init();
       // Disabled remote driving-  duncan.rdrive.init();
 
@@ -45,11 +45,14 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
 
         telemetry.addData("Phone battery", duncan.rdrive.percentage);
         telemetry.addData("Robot Battery Voltage", duncan.rdrive.voltage);
+
+        telemetry.addData("joystick1 y-axis", gamepad1.left_stick_y);
+
         telemetry.addData("left front ", duncan.drivetrain.leftDriveFront.getPower());
         telemetry.addData("left back ", duncan.drivetrain.leftDriveBack.getPower());
         telemetry.addData("right front ", duncan.drivetrain.rightDriveFront.getPower());
         telemetry.addData("right back ", duncan.drivetrain.rightDriveBack.getPower());
-        telemetry.addData("Current servo state: ", duncan.wobble.grabberState.toString());
+     //   telemetry.addData("Current servo state: ", duncan.wobble.grabberState.toString());
 
         telemetry.update();
 
@@ -66,8 +69,9 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
             duncan.teleOpActivated();
             //duncan.rdrive.loop();
             //telemetry.clear();
-
-            addTelemetry();
+            telemetry.addData("gamepad1 left stick y-axis", gamepad1.left_stick_y);
+            telemetry.update();
+           // addTelemetry();
         }
     }
     /**
@@ -76,6 +80,6 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
     @Override
     public void on_stop() {
        // duncan.rdrive.onStop();
-        duncan.wobble.stopWobble();
+    //    duncan.wobble.stopWobble();
     }
 }

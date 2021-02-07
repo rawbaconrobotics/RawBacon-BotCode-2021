@@ -1,8 +1,12 @@
 package org.firstinspires.ftc.teamcode.Duncan.Components;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+import java.util.concurrent.TimeUnit;
 
 import static android.os.SystemClock.sleep;
 
@@ -10,7 +14,7 @@ import static android.os.SystemClock.sleep;
  * Represents the mechanisms for the intake and launcher systems
  * @author Raw Bacon Coders
  */
-
+@Config
 public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
 
     private DcMotor intake = null;
@@ -18,21 +22,21 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
     private Servo hopper = null;
     private Servo transfer = null;
 
-    private final static String INTAKE_NAME = "deadwheel_left"; //plugged into deadwheel encoder port
-    private final static String LAUNCHER_NAME = "deadwheel_right";
-    private final static String HOPPER_NAME = "deadwheel_perp";
+    private final static String INTAKE_NAME = "intake"; //plugged into deadwheel encoder port
+    private final static String LAUNCHER_NAME = "launcher";
+    private final static String HOPPER_NAME = "hopper";
     private final static String TRANSFER_NAME = "transfer";
 
-    final double hopperDownPosition = 0;
-    final double hopperUpPosition = 1;
+    public static double hopperDownPosition = 0.2;
+    public static double hopperUpPosition = 0.43;
 
-    final double transferInPosition = 0;
-    final double transferOutPosition = 1;
+    public static double transferInPosition = 0.4;
+    public static double transferOutPosition = 0.65;
 
-    public enum HopperState {DOWN, UP, IDLE};
-    public enum TransferState {OUT, IN, IDLE};
-    public enum IntakeState {INTAKE, OUTTAKE, IDLE};
-    public enum LauncherState {LAUNCHING, IDLE};
+    enum HopperState {DOWN, UP};
+    enum TransferState {OUT, IN, IDLE};
+    enum IntakeState {INTAKE, OUTTAKE, IDLE};
+    enum LauncherState {LAUNCHING, IDLE};
 
 
 
@@ -76,10 +80,13 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
         transfer.setPosition(transferOutPosition);
 
     }
-    public HopperState hopperState = HopperState.IDLE;
+    public HopperState hopperState = HopperState.UP;
     public TransferState transferState = TransferState.IDLE;
     public IntakeState intakeState = IntakeState.IDLE;
     public LauncherState launcherState = LauncherState.IDLE;
+    private ElapsedTime runtime = new ElapsedTime();
+    private ElapsedTime launchTime = new ElapsedTime();
+    private ElapsedTime intakeTime = new ElapsedTime();
 
 
     public void runIntakeAndLauncher(){
@@ -89,66 +96,77 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
 
             switch (intakeState) {
                 case IDLE:
-                    if (gamepad1.left_trigger > 0.5){
+                    if (gamepad2.left_trigger > 0.5){
                         intakeState = IntakeState.INTAKE;
+                        intakeTime.reset();
                         intake.setPower(1);
-                    }else if(gamepad1.right_trigger > 0.5){
+                    }else if(gamepad2.right_trigger > 0.5){
                         intakeState = IntakeState.OUTTAKE;
                         intake.setPower(-1);
                     }
                     break;
                 case INTAKE:
-                    if (gamepad1.left_trigger < 0.5) {
+                    if (gamepad2.left_trigger > 0.5 && (intakeTime.time() > 0.5)) {
                         intakeState = IntakeState.IDLE;
                         intake.setPower(0);
                     }
                     break;
-
                 case OUTTAKE:
-                    if (gamepad1.right_trigger < 0.5) {
+                    if (gamepad2.right_trigger < 0.5 && (intakeTime.time() > 0.5)) {
                         intakeState = IntakeState.IDLE;
                         intake.setPower(0);
                     }
                     break;
             }
-
 
 
             switch (hopperState) {
                 case UP:
-                    hopper.setPosition(hopperUpPosition);
-                    transfer.setPosition(transferInPosition);
-                    hopperState = hopperState.IDLE;
-                    transferState = transferState.IDLE;
+                    if(gamepad2.y) {
+                        hopper.setPosition(hopperDownPosition);
+                        hopperState = HopperState.DOWN;
+                    }
                     break;
                 case DOWN:
-                    hopper.setPosition(hopperDownPosition);
+                    if(gamepad2.x) {
+                        hopper.setPosition(hopperUpPosition);
+                        hopperState = HopperState.UP;
+                    }
+                    break;
+            }
+//intake toggle fix
+            switch (transferState) {
+                case IN:
+                    transfer.setPosition(transferInPosition);
+                    if(runtime.time() > 0.5){
+                        transferState = transferState.OUT;
+                    }
+                    break;
+                case OUT:
                     transfer.setPosition(transferOutPosition);
-                    hopperState = hopperState.IDLE;
                     transferState = transferState.IDLE;
                     break;
                 case IDLE:
-                    if(gamepad2.left_trigger > 0.5) {
-                        hopperState = HopperState.UP;
+                    if(gamepad1.right_trigger > 0.5) {
+                        runtime.reset();
                         transferState = TransferState.IN;
                     }
-                    if(gamepad2.left_trigger < 0.5) {
-                        hopperState = HopperState.DOWN;
-                        transferState = TransferState.OUT;
-                    }
                     break;
-
+//
             }
+
+
 
             switch(launcherState){
                 case IDLE:
-                    if(gamepad2.x) {
+                    if(gamepad2.right_bumper) {
                         launcherState = LauncherState.LAUNCHING;
-                        launcher.setPower(1);
+                        launchTime.reset();
+                        launcher.setPower(0.5);
                     }
                     break;
                 case LAUNCHING:
-                    if(!gamepad2.x){
+                    if(gamepad2.right_bumper && (launchTime.time() > 0.5)){
                         launcherState = LauncherState.IDLE;
                         launcher.setPower(0);
                     }

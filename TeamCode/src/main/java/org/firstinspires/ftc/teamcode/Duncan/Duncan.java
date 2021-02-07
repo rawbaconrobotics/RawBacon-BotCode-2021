@@ -56,7 +56,7 @@ public class Duncan {
       //   RevHubStore hubValues = getMotorsAndEverything();
 
         drivetrain.wheelsTeleOp();
-        wobble.grabWobbleGoal();
+      //  wobble.grabWobbleGoal();
         il.runIntakeAndLauncher();
      /*   for (LynxModule module : allHubs) {
             module.clearBulkCache();
@@ -71,7 +71,7 @@ public class Duncan {
      */
     public Duncan(LinearOpMode opMode){
         drivetrain = new DuncanDriveTrain(opMode);
-        wobble = new DuncanWobbleArm(opMode);
+      //  wobble = new DuncanWobbleArm(opMode);
         il = new DuncanIntakeAndLauncher(opMode);
         rdrive = new RemoteDriving(opMode);
         this.opMode = opMode;

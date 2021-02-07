@@ -71,25 +71,25 @@ public class EncoderTest extends LinearOpMode
         leftDriveBack  = hardwareMap.get(DcMotor.class, BACKLEFT_WHEEL_NAME);
         rightDrive  = hardwareMap.get(DcMotor.class, FRONTRIGHT_WHEEL_NAME);
         rightDriveBack = hardwareMap.get(DcMotor.class, BACKRIGHT_WHEEL_NAME);
-        omniLeft = hardwareMap.get(DcMotor.class, OMNI_LEFT);
-        omniRight = hardwareMap.get(DcMotor.class, OMNI_RIGHT);
-        omniPerp = hardwareMap.get(DcMotor.class, OMNI_PERP);
+  //      omniLeft = hardwareMap.get(DcMotor.class, OMNI_LEFT);
+   //    omniRight = hardwareMap.get(DcMotor.class, OMNI_RIGHT);
+    //    omniPerp = hardwareMap.get(DcMotor.class, OMNI_PERP);
 
         leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftDriveBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightDriveBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        omniLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        omniRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        omniPerp.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    //    omniLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    //    omniRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+     //   omniPerp.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        omniLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        omniRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        omniPerp.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+  //      omniLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+  //      omniRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+  //      omniPerp.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
         leftDriveBack.setDirection(DcMotor.Direction.FORWARD);
@@ -108,10 +108,10 @@ public class EncoderTest extends LinearOpMode
         leftDriveBack  = hardwareMap.get(DcMotor.class, BACKLEFT_WHEEL_NAME);
         rightDrive  = hardwareMap.get(DcMotor.class, FRONTRIGHT_WHEEL_NAME);
         rightDriveBack = hardwareMap.get(DcMotor.class, BACKRIGHT_WHEEL_NAME);
-        omniLeft = hardwareMap.get(DcMotor.class, OMNI_LEFT);
-        omniRight = hardwareMap.get(DcMotor.class, OMNI_RIGHT);
-        omniPerp = hardwareMap.get(DcMotor.class, OMNI_PERP);
-
+    //    omniLeft = hardwareMap.get(DcMotor.class, OMNI_LEFT);
+    //    omniRight = hardwareMap.get(DcMotor.class, OMNI_RIGHT);
+  //      omniPerp = hardwareMap.get(DcMotor.class, OMNI_PERP);
+//
         while (opModeIsActive())
         {
 
@@ -120,9 +120,9 @@ public class EncoderTest extends LinearOpMode
             telemetry.addData("Left Back", leftDriveBack.getCurrentPosition());
             telemetry.addData("Right Front", rightDrive.getCurrentPosition());
             telemetry.addData("Right Back", rightDriveBack.getCurrentPosition());
-            telemetry.addData("Omni Left", omniLeft.getCurrentPosition());
-            telemetry.addData("Omni Right", omniRight.getCurrentPosition());
-            telemetry.addData("Omni Perpendicular", omniPerp.getCurrentPosition());
+       //     telemetry.addData("Omni Left", omniLeft.getCurrentPosition());
+        //    telemetry.addData("Omni Right", omniRight.getCurrentPosition());
+         //   telemetry.addData("Omni Perpendicular", omniPerp.getCurrentPosition());
 
 
 
@@ -132,18 +132,18 @@ public class EncoderTest extends LinearOpMode
                 leftDriveBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 rightDriveBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                omniLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                omniRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                omniPerp.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //        omniLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //        omniRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+       //         omniPerp.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
                 leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 leftDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 rightDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                omniLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                omniRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                omniPerp.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+          //      omniLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+         //       omniRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    //            omniPerp.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
                 sleep(500);
 
@@ -155,9 +155,9 @@ public class EncoderTest extends LinearOpMode
                     telemetry.addData("Left Back", leftDriveBack.getCurrentPosition());
                     telemetry.addData("Right Front", rightDrive.getCurrentPosition());
                     telemetry.addData("Right Back", rightDriveBack.getCurrentPosition());
-                    telemetry.addData("Omni Left", omniLeft.getCurrentPosition());
-                    telemetry.addData("Omni Right", omniRight.getCurrentPosition());
-                    telemetry.addData("Omni Perpendicular", omniPerp.getCurrentPosition());
+        //            telemetry.addData("Omni Left", omniLeft.getCurrentPosition());
+      //              telemetry.addData("Omni Right", omniRight.getCurrentPosition());
+     //               telemetry.addData("Omni Perpendicular", omniPerp.getCurrentPosition());
                     telemetry.addData("MOVING TO", "5000 TICKS");
                     telemetry.update();
 
