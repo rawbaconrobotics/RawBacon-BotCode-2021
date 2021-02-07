@@ -92,7 +92,6 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
     public void runIntakeAndLauncher(){
 
 
-        while (opModeIsActive()) {
 
             switch (intakeState) {
                 case IDLE:
@@ -112,7 +111,7 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
                     }
                     break;
                 case OUTTAKE:
-                    if (gamepad2.right_trigger < 0.5 && (intakeTime.time() > 0.5)) {
+                    if (gamepad2.right_trigger > 0.5 && (intakeTime.time() > 0.5)) {
                         intakeState = IntakeState.IDLE;
                         intake.setPower(0);
                     }
@@ -162,10 +161,10 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
                     if(gamepad2.right_bumper) {
                         launcherState = LauncherState.LAUNCHING;
                         launchTime.reset();
-                        launcher.setPower(0.5);
+                        launcher.setPower(0.6);
                     }
                     break;
-                case LAUNCHING:
+                case LAUNCHING://not turning off!
                     if(gamepad2.right_bumper && (launchTime.time() > 0.5)){
                         launcherState = LauncherState.IDLE;
                         launcher.setPower(0);
@@ -175,7 +174,7 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
 
 
 
-            }
+
         }
 
         public void autoLaunch(double height){
