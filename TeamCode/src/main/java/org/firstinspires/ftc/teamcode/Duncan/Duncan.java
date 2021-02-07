@@ -57,7 +57,7 @@ public class Duncan {
 
         drivetrain.wheelsTeleOp();
       //  wobble.grabWobbleGoal();
-        il.runIntakeAndLauncher();
+       il.runIntakeAndLauncher();
      /*   for (LynxModule module : allHubs) {
             module.clearBulkCache();
         }
@@ -73,10 +73,10 @@ public class Duncan {
         drivetrain = new DuncanDriveTrain(opMode);
       //  wobble = new DuncanWobbleArm(opMode);
         il = new DuncanIntakeAndLauncher(opMode);
-        rdrive = new RemoteDriving(opMode);
+      //  rdrive = new RemoteDriving(opMode);
         this.opMode = opMode;
 
-        hwMap = opMode.hardwareMap;
+      //  hwMap = opMode.hardwareMap;
 
      //   allHubs = hwMap.getAll(LynxModule.class); //Defines allHubs from the Hardware Map
 
