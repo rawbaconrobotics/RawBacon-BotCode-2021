@@ -51,10 +51,10 @@ public class DuncanDriveTrain extends DuncanComponentImplBase {
         leftDriveBack  = hardwareMap.get(DcMotorEx.class, BACKLEFT_WHEEL_NAME);
         rightDriveFront  = hardwareMap.get(DcMotorEx.class, FRONTRIGHT_WHEEL_NAME);
         rightDriveBack = hardwareMap.get(DcMotorEx.class, BACKRIGHT_WHEEL_NAME);
-        leftDriveFront.setDirection(DcMotor.Direction.REVERSE);
-        leftDriveBack.setDirection(DcMotor.Direction.FORWARD);
-        rightDriveFront.setDirection(DcMotor.Direction.FORWARD);
-        rightDriveBack.setDirection(DcMotor.Direction.REVERSE);
+        leftDriveFront.setDirection(DcMotor.Direction.FORWARD);
+        leftDriveBack.setDirection(DcMotor.Direction.REVERSE);
+        rightDriveFront.setDirection(DcMotor.Direction.REVERSE);
+        rightDriveBack.setDirection(DcMotor.Direction.FORWARD);
 
 
         leftDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -110,14 +110,27 @@ public class DuncanDriveTrain extends DuncanComponentImplBase {
 
     public void wheelsTeleOp() {
 
+        if(gamepad1.dpad_left){
+            leftDriveBack.setPower(0.5);
+        }
+        if(gamepad1.dpad_right){
+            leftDriveFront.setPower(0.5);
+        }
+        if(gamepad1.dpad_down){
+            rightDriveBack.setPower(0.5);
+        }
+        if(gamepad1.dpad_up){
+            rightDriveFront.setPower(0.5);
+        }
+
         double y = -gamepad1.left_stick_y; // Remember, this is reversed!
         double x = gamepad1.left_stick_x * 1.5; // Counteract imperfect strafing
         double rotation = gamepad1.right_stick_x;
 
-        frontLeftPower = (y + x + rotation);
-        backLeftPower = (y - x + rotation);
-        frontRightPower = (y - x - rotation);
-        backRightPower = (y + x - rotation);
+        frontLeftPower = (y + x - rotation);
+        backLeftPower = (y - x - rotation);
+        frontRightPower = (y - x + rotation);
+        backRightPower = (y + x + rotation);
 
         if (Math.abs(frontLeftPower) > 1 || Math.abs(backLeftPower) > 1 ||
                 Math.abs(frontRightPower) > 1 || Math.abs(backRightPower) > 1) {

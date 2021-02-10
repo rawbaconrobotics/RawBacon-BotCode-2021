@@ -73,7 +73,7 @@ public class Duncan {
         drivetrain = new DuncanDriveTrain(opMode);
       //  wobble = new DuncanWobbleArm(opMode);
         il = new DuncanIntakeAndLauncher(opMode);
-      //  rdrive = new RemoteDriving(opMode);
+        rdrive = new RemoteDriving(opMode);
         this.opMode = opMode;
 
       //  hwMap = opMode.hardwareMap;
