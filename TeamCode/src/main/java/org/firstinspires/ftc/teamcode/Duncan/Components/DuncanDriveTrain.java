@@ -148,6 +148,11 @@ public class DuncanDriveTrain extends DuncanComponentImplBase {
 
 
         }
+        //    if(frontLeftPower < 0){
+        //        frontLeftPower = Math.max(frontLeftPower, -0.9);
+        //        frontRightPower = Math.max(frontRightPower, -0.9);
+
+        //    }//changed to 0.9
 
             leftDriveFront.setPower(frontLeftPower);
             leftDriveBack.setPower(backLeftPower);

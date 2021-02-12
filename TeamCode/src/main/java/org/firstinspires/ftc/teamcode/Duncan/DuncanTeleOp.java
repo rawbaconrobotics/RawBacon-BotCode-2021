@@ -30,7 +30,7 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
         telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
 
         duncan.drivetrain.init();
-    //    duncan.wobble.init();
+       duncan.wobble.init();
         duncan.il.init();
       // Disabled remote driving-  duncan.rdrive.init();
 
@@ -80,6 +80,6 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
     @Override
     public void on_stop() {
        // duncan.rdrive.onStop();
-    //    duncan.wobble.stopWobble();
+        duncan.wobble.stopWobble();
     }
 }

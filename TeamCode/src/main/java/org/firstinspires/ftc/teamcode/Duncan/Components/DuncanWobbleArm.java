@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Duncan.Components;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -11,7 +12,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class DuncanWobbleArm extends DuncanComponentImplBase {
 
-    public DcMotor wobbleArm = null;
+    public CRServo wobbleArm = null;
     public Servo grabber = null;
 
     private final static String WOBBLE_ARM_NAME = "wobble_arm";
@@ -37,13 +38,13 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
     @Override
 
     public void init(){
-        wobbleArm = hardwareMap.dcMotor.get(WOBBLE_ARM_NAME);
+        wobbleArm = hardwareMap.crservo.get(WOBBLE_ARM_NAME);
         grabber = hardwareMap.servo.get(GRABBER_NAME);
         wobbleArm.setPower(0);
     }
 
     public void initAutonomous(){
-        wobbleArm = hardwareMap.dcMotor.get(WOBBLE_ARM_NAME);
+        wobbleArm = hardwareMap.crservo.get(WOBBLE_ARM_NAME);
         grabber = hardwareMap.servo.get(GRABBER_NAME);
         wobbleArm.setPower(0);
     }

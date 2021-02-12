@@ -95,25 +95,28 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
 
             switch (intakeState) {
                 case IDLE:
-                    if (gamepad2.left_trigger > 0.5){
+                    if (gamepad2.left_trigger > 0.5 && (intakeTime.time() > 0.5)){
                         intakeState = IntakeState.INTAKE;
                         intakeTime.reset();
                         intake.setPower(1);
-                    }else if(gamepad2.right_trigger > 0.5){
+                    }else if(gamepad2.right_trigger > 0.5 && (intakeTime.time() > 0.5)){
                         intakeState = IntakeState.OUTTAKE;
                         intake.setPower(-1);
+                        intakeTime.reset();
                     }
                     break;
                 case INTAKE:
                     if (gamepad2.left_trigger > 0.5 && (intakeTime.time() > 0.5)) {
                         intakeState = IntakeState.IDLE;
                         intake.setPower(0);
+                        intakeTime.reset();
                     }
                     break;
                 case OUTTAKE:
                     if (gamepad2.right_trigger > 0.5 && (intakeTime.time() > 0.5)) {
                         intakeState = IntakeState.IDLE;
                         intake.setPower(0);
+                        intakeTime.reset();
                     }
                     break;
             }
@@ -121,19 +124,19 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
 
             switch (hopperState) {
                 case UP:
-                    if(gamepad2.y) {
+                    if(gamepad2.dpad_down) {
                         hopper.setPosition(hopperDownPosition);
                         hopperState = HopperState.DOWN;
                     }
                     break;
                 case DOWN:
-                    if(gamepad2.x) {
+                    if(gamepad2.dpad_up) {
                         hopper.setPosition(hopperUpPosition);
                         hopperState = HopperState.UP;
                     }
                     break;
             }
-//intake toggle fix
+
             switch (transferState) {
                 case IN:
                     transfer.setPosition(transferInPosition);
@@ -158,15 +161,16 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
 
             switch(launcherState){
                 case IDLE:
-                    if(gamepad2.right_bumper) {
+                    if(gamepad2.right_bumper && (launchTime.time() > 0.5)) {
                         launcherState = LauncherState.LAUNCHING;
                         launchTime.reset();
                         launcher.setPower(0.6);
                     }
                     break;
-                case LAUNCHING://not turning off!
+                case LAUNCHING:
                     if(gamepad2.right_bumper && (launchTime.time() > 0.5)){
                         launcherState = LauncherState.IDLE;
+                        launchTime.reset();
                         launcher.setPower(0);
                     }
                     break;
