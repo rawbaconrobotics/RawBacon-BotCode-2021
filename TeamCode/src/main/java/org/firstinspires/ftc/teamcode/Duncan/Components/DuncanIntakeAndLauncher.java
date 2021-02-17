@@ -28,7 +28,7 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
     private final static String TRANSFER_NAME = "transfer";
 
     public static double hopperDownPosition = 0.2;
-    public static double hopperUpPosition = 0.43;
+    public static double hopperUpPosition = 0.53;
 
     public static double transferInPosition = 0.4;
     public static double transferOutPosition = 0.65;

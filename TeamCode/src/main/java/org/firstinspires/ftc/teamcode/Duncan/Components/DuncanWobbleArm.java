@@ -54,12 +54,6 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
 
 
     public void grabWobbleGoal (){
-     /*   while(gamepad2.a){
-            grabber.setPosition(outPosition);
-        }
-        while(gamepad2.b){
-            grabber.setPosition(inPosition);
-        }*/
 
             wobbleArm.setPower(-0.6 * (gamepad2.left_stick_y));
 
