@@ -26,7 +26,7 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
     private final static String LAUNCHER_NAME = "launcher";
     private final static String HOPPER_NAME = "hopper";
     private final static String TRANSFER_NAME = "transfer";
-
+    //test comment
     public static double hopperDownPosition = 0.2;
     public static double hopperUpPosition = 0.45;
 
