@@ -27,7 +27,7 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
     private final static String HOPPER_NAME = "hopper";
     private final static String TRANSFER_NAME = "transfer";
     //test comment
-    public static double hopperDownPosition = 0.2;
+    public static double hopperDownPosition = 0.16;
     public static double hopperUpPosition = 0.45;
 
     public static double transferInPosition = 0.4;
@@ -164,7 +164,7 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
                     if(gamepad2.right_bumper && (launchTime.time() > 0.5)) {
                         launcherState = LauncherState.LAUNCHING;
                         launchTime.reset();
-                        launcher.setPower(0.6);
+                        launcher.setPower(0.55);
                     }
                     break;
                 case LAUNCHING:
