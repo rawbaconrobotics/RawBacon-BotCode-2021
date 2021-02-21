@@ -164,7 +164,7 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
                     if(gamepad2.right_bumper && (launchTime.time() > 0.5)) {
                         launcherState = LauncherState.LAUNCHING;
                         launchTime.reset();
-                        launcher.setPower(0.55);
+wobble                         launcher.setPower(0.57);
                     }
                     break;
                 case LAUNCHING:
