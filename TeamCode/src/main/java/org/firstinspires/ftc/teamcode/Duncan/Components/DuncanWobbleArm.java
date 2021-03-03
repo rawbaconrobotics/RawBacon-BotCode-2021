@@ -57,7 +57,7 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
 
     public void grabWobbleGoal (){
 
-            wobbleArm.setPower(-0.6 * (gamepad2.left_stick_y));
+            wobbleArm.setPower(0.6 * (gamepad2.left_stick_y));
 
 
         switch (grabberState) {
