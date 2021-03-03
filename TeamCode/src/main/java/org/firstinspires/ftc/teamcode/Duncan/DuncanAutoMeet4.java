@@ -7,9 +7,11 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.arcrobotics.ftclib.vision.UGContourRingPipeline;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.Duncan.Components.RevHubStore;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.SampleMecanumDrive;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -38,6 +40,9 @@ public class DuncanAutoMeet4 extends DuncanBaseLinearOpMode {
 
     private UGContourRingPipeline pipeline;
     private OpenCvCamera camera;
+
+    public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(75, 0, 30, 12.2);
+
 
     /**
      * Initializes the teleop
@@ -108,7 +113,7 @@ public class DuncanAutoMeet4 extends DuncanBaseLinearOpMode {
 //get rid of .FOUR!
         if((pipeline.getHeight() == pipeline.getHeight().ZERO)) {
             Trajectory traj1 = drive.trajectoryBuilder(startPose)
-                    .splineTo(new Vector2d(-23.0, -8.0), Math.toRadians(0))
+                    .splineTo(new Vector2d(-23.0, -9.0), Math.toRadians(0))
                     .build();
 
             Trajectory traj2 = drive.trajectoryBuilder(traj1.end())
@@ -158,7 +163,7 @@ public class DuncanAutoMeet4 extends DuncanBaseLinearOpMode {
                     .back(6)
                     .build();
             //turn on launcher
-            duncan.il.launcher.setVelocity(1470);
+            duncan.il.launcher.setVelocity(1415);
             drive.followTrajectory(traj1);
             //raise hopper, wait one second, launch ring
             duncan.il.hopper.setPosition(0.45);
@@ -197,7 +202,7 @@ public class DuncanAutoMeet4 extends DuncanBaseLinearOpMode {
         }
         else if(pipeline.getHeight() == pipeline.getHeight().ONE){
             Trajectory traj1 = drive.trajectoryBuilder(startPose)
-                    .splineTo(new Vector2d(-23.0, -8.0), Math.toRadians(0))
+                    .splineTo(new Vector2d(-23.0, -9), Math.toRadians(0))
                     .build();
 
             Trajectory traj2 = drive.trajectoryBuilder(traj1.end())
@@ -220,7 +225,7 @@ public class DuncanAutoMeet4 extends DuncanBaseLinearOpMode {
                     .build();
 
             Trajectory traj5 = drive.trajectoryBuilder(traj4.end())
-                    .lineToLinearHeading(new Pose2d((traj4.end().getX()-52), (traj4.end().getY()-4), Math.toRadians(-180)))
+                    .lineToLinearHeading(new Pose2d((traj4.end().getX()-52), (traj4.end().getY()-3), Math.toRadians(-180)))
                     .addTemporalMarker(0.1, () -> {
                         duncan.wobble.wobbleArm.setPower(-1);
 
@@ -269,7 +274,7 @@ public class DuncanAutoMeet4 extends DuncanBaseLinearOpMode {
 //            duncan.il.transfer.setPosition(duncan.il.transferInPosition);
 //            sleep(500);
 //            duncan.il.transfer.setPosition(duncan.il.transferOutPosition);
-            duncan.il.launcher.setVelocity(1470);
+            duncan.il.launcher.setVelocity(1415);
             drive.followTrajectory(traj1);
             //raise hopper, wait one second, launch ring
             duncan.il.hopper.setPosition(0.45);
@@ -301,12 +306,15 @@ public class DuncanAutoMeet4 extends DuncanBaseLinearOpMode {
             duncan.wobble.grabber.setPosition(0.75);
             sleep(500);
             drive.followTrajectory(traj7);
+            duncan.wobble.wobbleArm.setPower(-1);
+            sleep(750);
+            duncan.wobble.wobbleArm.setPower(0);
             duncan.wobble.grabber.setPosition(0);
             drive.followTrajectory(traj8);
         }
         else if(pipeline.getHeight() == pipeline.getHeight().FOUR){
             Trajectory traj1 = drive.trajectoryBuilder(startPose)
-                    .splineTo(new Vector2d(-23.0, -8.0), Math.toRadians(0))
+                    .splineTo(new Vector2d(-23.0, -9.0), Math.toRadians(0))
                     .build();
 
             Trajectory traj2 = drive.trajectoryBuilder(traj1.end())
@@ -372,7 +380,7 @@ public class DuncanAutoMeet4 extends DuncanBaseLinearOpMode {
 //            sleep(500);
 //            duncan.il.transfer.setPosition(duncan.il.transferOutPosition);
 //            sleep(1000);
-            duncan.il.launcher.setVelocity(1470);
+            duncan.il.launcher.setVelocity(1415);
             drive.followTrajectory(traj1);
             //raise hopper, wait one second, launch ring
             duncan.il.hopper.setPosition(0.45);
@@ -446,5 +454,11 @@ public class DuncanAutoMeet4 extends DuncanBaseLinearOpMode {
     public void on_stop() {
         duncan.il.launcher.setPower(0);
         duncan.rdrive.onStop();
+    }
+
+    public RevHubStore autonomousBulkRead(){
+        RevHubStore hubValues = new RevHubStore();
+        hubValues.launcherPosition = duncan.il.launcher.getCurrentPosition();
+        return hubValues;
     }
 }

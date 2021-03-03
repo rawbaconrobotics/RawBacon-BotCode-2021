@@ -4,12 +4,15 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.concurrent.TimeUnit;
 
 import static android.os.SystemClock.sleep;
+import static org.firstinspires.ftc.teamcode.Duncan.DuncanAutoMeet4.MOTOR_VELO_PID;
 
 /**
  * Represents the mechanisms for the intake and launcher systems
@@ -60,8 +63,14 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
         launcher = hardwareMap.get(DcMotorEx.class, LAUNCHER_NAME);
         hopper = hardwareMap.servo.get(HOPPER_NAME);
         transfer = hardwareMap.servo.get(TRANSFER_NAME);
+        MotorConfigurationType motorConfigurationType = launcher.getMotorType().clone();
+        motorConfigurationType.setAchieveableMaxRPMFraction(1.0);
+        launcher.setMotorType(motorConfigurationType);
         launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
+        launcher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(
+                MOTOR_VELO_PID.p, MOTOR_VELO_PID.i, MOTOR_VELO_PID.d,
+                MOTOR_VELO_PID.f * 12 / hardwareMap.voltageSensor.iterator().next().getVoltage()
+        ));
         intake.setPower(0);
         launcher.setPower(0);
         hopper.setPosition(hopperDownPosition);
@@ -75,8 +84,14 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
         launcher = hardwareMap.get(DcMotorEx.class, LAUNCHER_NAME);
         hopper = hardwareMap.servo.get(HOPPER_NAME);
         transfer = hardwareMap.servo.get(TRANSFER_NAME);
+        MotorConfigurationType motorConfigurationType = launcher.getMotorType().clone();
+        motorConfigurationType.setAchieveableMaxRPMFraction(1.0);
+        launcher.setMotorType(motorConfigurationType);
         launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
+        launcher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(
+                MOTOR_VELO_PID.p, MOTOR_VELO_PID.i, MOTOR_VELO_PID.d,
+                MOTOR_VELO_PID.f * 12 / hardwareMap.voltageSensor.iterator().next().getVoltage()
+        ));
         intake.setPower(0);
         launcher.setPower(0);
         hopper.setPosition(hopperDownPosition);
