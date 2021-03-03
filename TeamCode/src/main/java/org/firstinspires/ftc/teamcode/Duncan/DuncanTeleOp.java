@@ -27,7 +27,7 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
     @Override
     public void on_init(){
         FtcDashboard dashboard = FtcDashboard.getInstance();
-        telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
+        //telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
 
         duncan.drivetrain.init();
        duncan.wobble.init();
@@ -53,7 +53,7 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
         telemetry.addData("right front ", duncan.drivetrain.rightDriveFront.getPower());
         telemetry.addData("right back ", duncan.drivetrain.rightDriveBack.getPower());
      //   telemetry.addData("Current servo state: ", duncan.wobble.grabberState.toString());
-
+        telemetry.addData("launcher encoder: ", duncan.il.launcher.getVelocity());
         telemetry.update();
 
     }
@@ -69,9 +69,9 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
             duncan.teleOpActivated();
             //duncan.rdrive.loop();
             //telemetry.clear();
-            telemetry.addData("gamepad1 left stick y-axis", gamepad1.left_stick_y);
-            telemetry.update();
            // addTelemetry();
+            telemetry.addData("launcher encoder: ", duncan.il.launcher.getVelocity());
+            telemetry.update();
         }
     }
     /**

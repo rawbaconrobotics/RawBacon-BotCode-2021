@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Duncan.Components;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -17,10 +18,10 @@ import static android.os.SystemClock.sleep;
 @Config
 public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
 
-    private DcMotor intake = null;
-    private DcMotor launcher = null;
-    private Servo hopper = null;
-    private Servo transfer = null;
+    public DcMotor intake = null;
+    public DcMotorEx launcher = null;
+    public Servo hopper = null;
+    public Servo transfer = null;
 
     private final static String INTAKE_NAME = "intake"; //plugged into deadwheel encoder port
     private final static String LAUNCHER_NAME = "launcher";
@@ -56,9 +57,10 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
     public void init(){
 
         intake = hardwareMap.dcMotor.get(INTAKE_NAME);
-        launcher = hardwareMap.dcMotor.get(LAUNCHER_NAME);
+        launcher = hardwareMap.get(DcMotorEx.class, LAUNCHER_NAME);
         hopper = hardwareMap.servo.get(HOPPER_NAME);
         transfer = hardwareMap.servo.get(TRANSFER_NAME);
+        launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         intake.setPower(0);
         launcher.setPower(0);
@@ -70,13 +72,14 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
     public void initAutonomous(){
 
         intake = hardwareMap.dcMotor.get(INTAKE_NAME);
-        launcher = hardwareMap.dcMotor.get(LAUNCHER_NAME);
+        launcher = hardwareMap.get(DcMotorEx.class, LAUNCHER_NAME);
         hopper = hardwareMap.servo.get(HOPPER_NAME);
         transfer = hardwareMap.servo.get(TRANSFER_NAME);
+        launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         intake.setPower(0);
         launcher.setPower(0);
-        hopper.setPosition(hopperUpPosition);
+        hopper.setPosition(hopperDownPosition);
         transfer.setPosition(transferOutPosition);
 
     }
@@ -93,95 +96,95 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
 
 
 
-            switch (intakeState) {
-                case IDLE:
-                    if (gamepad2.left_trigger > 0.5 && (intakeTime.time() > 0.5)){
-                        intakeState = IntakeState.INTAKE;
-                        intakeTime.reset();
-                        intake.setPower(1);
-                    }else if(gamepad2.right_trigger > 0.5 && (intakeTime.time() > 0.5)){
-                        intakeState = IntakeState.OUTTAKE;
-                        intake.setPower(-1);
-                        intakeTime.reset();
-                    }
-                    break;
-                case INTAKE:
-                    if (gamepad2.left_trigger > 0.5 && (intakeTime.time() > 0.5)) {
-                        intakeState = IntakeState.IDLE;
-                        intake.setPower(0);
-                        intakeTime.reset();
-                    }
-                    break;
-                case OUTTAKE:
-                    if (gamepad2.right_trigger > 0.5 && (intakeTime.time() > 0.5)) {
-                        intakeState = IntakeState.IDLE;
-                        intake.setPower(0);
-                        intakeTime.reset();
-                    }
-                    break;
-            }
-
-
-            switch (hopperState) {
-                case UP:
-                    if(gamepad2.dpad_down) {
-                        hopper.setPosition(hopperDownPosition);
-                        hopperState = HopperState.DOWN;
-                    }
-                    break;
-                case DOWN:
-                    if(gamepad2.dpad_up) {
-                        hopper.setPosition(hopperUpPosition);
-                        hopperState = HopperState.UP;
-                    }
-                    break;
-            }
-
-            switch (transferState) {
-                case IN:
-                    transfer.setPosition(transferInPosition);
-                    if(runtime.time() > 0.5){
-                        transferState = transferState.OUT;
-                    }
-                    break;
-                case OUT:
-                    transfer.setPosition(transferOutPosition);
-                    transferState = transferState.IDLE;
-                    break;
-                case IDLE:
-                    if(gamepad1.right_trigger > 0.5) {
-                        runtime.reset();
-                        transferState = TransferState.IN;
-                    }
-                    break;
-//
-            }
-
-
-
-            switch(launcherState){
-                case IDLE:
-                    if(gamepad2.right_bumper && (launchTime.time() > 0.5)) {
-                        launcherState = LauncherState.LAUNCHING;
-                        launchTime.reset();
-wobble                         launcher.setPower(0.57);
-                    }
-                    break;
-                case LAUNCHING:
-                    if(gamepad2.right_bumper && (launchTime.time() > 0.5)){
-                        launcherState = LauncherState.IDLE;
-                        launchTime.reset();
-                        launcher.setPower(0);
-                    }
-                    break;
-            }
-
-
-
-
+        switch (intakeState) {
+            case IDLE:
+                if (gamepad2.left_trigger > 0.5 && (intakeTime.time() > 0.5)){
+                    intakeState = IntakeState.INTAKE;
+                    intakeTime.reset();
+                    intake.setPower(1);
+                }else if(gamepad2.right_trigger > 0.5 && (intakeTime.time() > 0.5)){
+                    intakeState = IntakeState.OUTTAKE;
+                    intake.setPower(-1);
+                    intakeTime.reset();
+                }
+                break;
+            case INTAKE:
+                if (gamepad2.left_trigger > 0.5 && (intakeTime.time() > 0.5)) {
+                    intakeState = IntakeState.IDLE;
+                    intake.setPower(0);
+                    intakeTime.reset();
+                }
+                break;
+            case OUTTAKE:
+                if (gamepad2.right_trigger > 0.5 && (intakeTime.time() > 0.5)) {
+                    intakeState = IntakeState.IDLE;
+                    intake.setPower(0);
+                    intakeTime.reset();
+                }
+                break;
         }
 
-        public void autoLaunch(double height){
+
+        switch (hopperState) {
+            case UP:
+                if(gamepad2.dpad_down) {
+                    hopper.setPosition(hopperDownPosition);
+                    hopperState = HopperState.DOWN;
+                }
+                break;
+            case DOWN:
+                if(gamepad2.dpad_up) {
+                    hopper.setPosition(hopperUpPosition);
+                    hopperState = HopperState.UP;
+                }
+                break;
+        }
+
+        switch (transferState) {
+            case IN:
+                transfer.setPosition(transferInPosition);
+                if(runtime.time() > 0.5){
+                    transferState = transferState.OUT;
+                }
+                break;
+            case OUT:
+                transfer.setPosition(transferOutPosition);
+                transferState = transferState.IDLE;
+                break;
+            case IDLE:
+                if(gamepad1.right_trigger > 0.5) {
+                    runtime.reset();
+                    transferState = TransferState.IN;
+                }
+                break;
+//
+        }
+
+
+
+        switch(launcherState){
+            case IDLE:
+                if(gamepad2.right_bumper && (launchTime.time() > 0.5)) {
+                    launcherState = LauncherState.LAUNCHING;
+                    launchTime.reset();
+                    launcher.setVelocity(1470); //ticks per second
+                }
+                break;
+            case LAUNCHING:
+                if(gamepad2.right_bumper && (launchTime.time() > 0.5)){
+                    launcherState = LauncherState.IDLE;
+                    launchTime.reset();
+                    launcher.setVelocity(0);
+                }
+                break;
+        }
+
+
+
+
+    }
+
+    public void autoLaunch(double height){
         if (height == 1){
             launcher.setPower(1);
             transfer.setPosition(transferInPosition);
@@ -207,5 +210,5 @@ wobble                         launcher.setPower(0.57);
             launcher.setPower(0);
         }
 
-        }
     }
+}

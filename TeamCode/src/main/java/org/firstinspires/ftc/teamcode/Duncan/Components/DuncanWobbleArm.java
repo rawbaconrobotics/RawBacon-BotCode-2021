@@ -47,6 +47,8 @@ public class DuncanWobbleArm extends DuncanComponentImplBase {
         wobbleArm = hardwareMap.crservo.get(WOBBLE_ARM_NAME);
         grabber = hardwareMap.servo.get(GRABBER_NAME);
         wobbleArm.setPower(0);
+        grabber.setPosition(0.75);
+
     }
 
     public GrabberState grabberState = GrabberState.IDLE; //Globalized

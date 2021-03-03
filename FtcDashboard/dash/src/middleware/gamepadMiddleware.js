@@ -256,7 +256,7 @@ window.onkeydown = function(e) { pressedKeys[e.keyCode] = true; if(e.keyCode===1
     }
 }}
 
-let keyboardPlayer = false;
+let keyboardPlayer = true;
 
 let leftYaxis = function(){
   if(pressedKeys["87"]){
@@ -307,8 +307,9 @@ let gamepad2Rested = false;
 
 const gamepadMiddleware = store => {
   function updateGamepads() {
-    const gamepads = navigator.getGamepads();
-    if ((gamepads.length === 0) && !(pressedKeys[81] === true)) {
+    //const gamepads = navigator.getGamepads();
+    const gamepads = [];
+    if ((gamepads.length === 999999) && !(pressedKeys[81] === true)) {
       if(!keyboardPlayer){
       setTimeout(updateGamepads, 500);
       }
@@ -341,7 +342,7 @@ const gamepadMiddleware = store => {
     } 
 
       // update gamepad 1 & 2 associations
-      if ((gamepadState.start && gamepadState.a) | ((pressedKeys["81"]) && (pressedKeys["82"]))) {
+      if (pressedKeys["82"]) {
         if(!keyboardPlayer){
         gamepad1Index = gamepad.index;
         }
@@ -357,7 +358,9 @@ const gamepadMiddleware = store => {
 
           gamepad2Index = -2;
         }
-      } else if ((gamepadState.start && gamepadState.b) | ((pressedKeys["81"]) && (pressedKeys["83"]))) {
+      } else if ((gamepadState.start && gamepadState.b) | ((pressedKeys["85"]))) {
+        //    } else if ((gamepadState.start && gamepadState.b) | ((pressedKeys["81"]) && (pressedKeys["83"]))) {
+
         if(!keyboardPlayer){
           gamepad2Index = gamepad.index;
           }

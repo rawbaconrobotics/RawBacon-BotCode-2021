@@ -24,14 +24,14 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
  */
 
 
-@Autonomous(name="Odometry Duncan Auto", preselectTeleOp="OFFICIAL Duncan TeleOp")
+@Autonomous(name="Odometry Duncan Auto Old", preselectTeleOp="OFFICIAL Duncan TeleOp")
 
 public class DuncanRRAuto extends DuncanBaseLinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private static final int CAMERA_WIDTH = 320; // width  of wanted camera resolution
     private static final int CAMERA_HEIGHT = 240; // height of wanted camera resolution
 
-    private static final int HORIZON = 100; // horizon value to tune
+    private static final int HORIZON = 75; // horizon value to tune
 
     private static final boolean DEBUG = false; // if debug is wanted, change to true
 
@@ -76,7 +76,7 @@ public class DuncanRRAuto extends DuncanBaseLinearOpMode {
 
         UGContourRingPipeline.Config.setHORIZON(HORIZON);
 
-        camera.openCameraDeviceAsync(() -> camera.startStreaming(CAMERA_WIDTH, CAMERA_HEIGHT, OpenCvCameraRotation.SIDEWAYS_RIGHT));
+        camera.openCameraDeviceAsync(() -> camera.startStreaming(CAMERA_WIDTH, CAMERA_HEIGHT, OpenCvCameraRotation.UPRIGHT));
 
         FtcDashboard.getInstance().startCameraStream(camera, 0);
         FtcDashboard.getInstance().setImageQuality(50);
@@ -86,7 +86,7 @@ public class DuncanRRAuto extends DuncanBaseLinearOpMode {
             telemetry.update();
         }
 
-      //  duncan.wobble.init();
+        duncan.wobble.init();
 
     }
 
