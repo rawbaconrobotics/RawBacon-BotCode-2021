@@ -106,7 +106,7 @@ public class DuncanDriveTrain extends DuncanComponentImplBase {
     double backLeftPower = -2;
     double frontRightPower = -2;
     double backRightPower = -2;
-
+    double x, y, rotation;
 
     public void wheelsTeleOp() {
 
@@ -123,9 +123,15 @@ public class DuncanDriveTrain extends DuncanComponentImplBase {
             rightDriveFront.setPower(0.5);
         }
 
-        double y = -gamepad1.left_stick_y; // Remember, this is reversed!
-        double x = gamepad1.left_stick_x * 1.5; // Counteract imperfect strafing
-        double rotation = -gamepad1.right_stick_x;
+        if(gamepad1.left_trigger > 0.4){
+            y = 0.1 * -gamepad1.left_stick_y; // Remember, this is reversed!
+            x = 0.1 * gamepad1.left_stick_x * 1.5; // Counteract imperfect strafing
+            rotation = 0.1 * -gamepad1.right_stick_x;
+        }else{
+            y = -gamepad1.left_stick_y; // Remember, this is reversed!
+            x = gamepad1.left_stick_x * 1.5; // Counteract imperfect strafing
+            rotation = -gamepad1.right_stick_x;
+        }
 
         frontLeftPower = (y + x - rotation);
         backLeftPower = (y - x - rotation);
