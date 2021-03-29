@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Duncan.Components;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
@@ -32,7 +33,7 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
     private final static String TRANSFER_NAME = "transfer";
     //test comment
     public static double hopperDownPosition = 0.16;
-    public static double hopperUpPosition = 0.45;
+    public static double hopperUpPosition = 0.57;
 
     public static double transferInPosition = 0.4;
     public static double transferOutPosition = 0.65;
@@ -42,7 +43,8 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
     enum IntakeState {INTAKE, OUTTAKE, IDLE};
     enum LauncherState {LAUNCHING, IDLE};
 
-
+   // Servo transfer2 = hardwareMap.servo.get(TRANSFER_NAME);
+    //fake servo
 
     /**
      * Constructor
@@ -105,7 +107,7 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
     private ElapsedTime runtime = new ElapsedTime();
     private ElapsedTime launchTime = new ElapsedTime();
     private ElapsedTime intakeTime = new ElapsedTime();
-
+    private int transferCounter = 0;
 
     public void runIntakeAndLauncher(){
 
@@ -155,26 +157,71 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
                 break;
         }
 
-        switch (transferState) {
-            case IN:
-                transfer.setPosition(transferInPosition);
-                if(runtime.time() > 0.5){
-                    transferState = transferState.OUT;
-                }
-                break;
-            case OUT:
-                transfer.setPosition(transferOutPosition);
-                transferState = transferState.IDLE;
-                break;
-            case IDLE:
-                if(gamepad1.right_trigger > 0.5) {
-                    runtime.reset();
-                    transferState = TransferState.IN;
-                }
-                break;
-//
-        }
+//        switch (transferState) {
+//            case IN:
+//                //transfer.setPower(transferInPosition);
+//                if(runtime.time() > 0.5){
+//                    transfer.setPosition(transferInPosition);
+//                    transfer.setPosition(transferOutPosition);
+//                    transfer.setPosition(transferInPosition);
+//                    transfer.setPosition(transferOutPosition);
+//                    transfer.setPosition(transferInPosition);
+//                    transfer.setPosition(transferOutPosition);
+//                    runtime.reset();
+//                    //transferState = transferState.OUT;
+//                }
+//                break;
+//            case OUT:
+//                //transfer.setPower(transferOutPosition);
+//                if(runtime.time() > 0.5){
+//                    //transfer.setPower(0);
+//                    runtime.reset();
+//                    transferState = transferState.IDLE;
+//                }
+//                break;
+//            case IDLE:
+//                if(gamepad1.right_trigger > 0.5) {
+//                    runtime.reset();
+//                    transferState = TransferState.IN;
+//                }
+//                break;
+////
+//        }
 
+                  switch (transferState) {
+                      case IN:
+                          transfer.setPosition(transferInPosition);
+                          if(runtime.time() > 0.5){
+                              transferState = transferState.OUT;
+                          }
+                          break;
+                      case OUT:
+                          transfer.setPosition(transferOutPosition);
+                          transferCounter+=1;
+                          transferState = transferState.IDLE;
+                          break;
+                      case IDLE:
+                          if(transferCounter < 3 && transferCounter > 0 && runtime.time() > 1){
+                              runtime.reset();
+                              transferState = TransferState.IN;
+                          }else if(transferCounter == 3){
+                              transferCounter = 0;
+                            }
+                          else if(gamepad1.right_trigger > 0.5) {
+                              runtime.reset();
+                              transferState = TransferState.IN;
+                          }
+                          break;
+          //
+                  }
+
+
+
+       // if (gamepad1.right_trigger == 1) {
+       //     transfer.setPower(1);
+       //     sleep(2175);
+       //     transfer.setPower(0);
+        //}
 
 
         switch(launcherState){
@@ -202,25 +249,25 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
     public void autoLaunch(double height){
         if (height == 1){
             launcher.setPower(1);
-            transfer.setPosition(transferInPosition);
+            //transfer2.setPosition(transferInPosition);
             sleep(1000);
-            transfer.setPosition(transferOutPosition);
+            //transfer2.setPosition(transferOutPosition);
             sleep(1000);
             launcher.setPower(0);
         }
         else if (height == 2){
             launcher.setPower(1);
-            transfer.setPosition(transferInPosition);
+            //transfer2.setPosition(transferInPosition);
             sleep(1000);
-            transfer.setPosition(transferOutPosition);
+            //transfer2.setPosition(transferOutPosition);
             sleep(1000);
             launcher.setPower(0);
         }
         else if (height == 3){
             launcher.setPower(1);
-            transfer.setPosition(transferInPosition);
+            //transfer2.setPosition(transferInPosition);
             sleep(1000);
-            transfer.setPosition(transferOutPosition);
+            //transfer2.setPosition(transferOutPosition);
             sleep(1000);
             launcher.setPower(0);
         }
