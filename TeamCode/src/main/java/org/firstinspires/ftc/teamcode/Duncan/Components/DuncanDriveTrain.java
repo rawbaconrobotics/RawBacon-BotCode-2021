@@ -1,9 +1,13 @@
 package org.firstinspires.ftc.teamcode.Duncan.Components;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.roadrunner.drive.SampleMecanumDrive;
 
 /**
  * Represents the four wheel mechanum drive on the bot
@@ -27,6 +31,9 @@ public class DuncanDriveTrain extends DuncanComponentImplBase {
     private static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
 
     private ElapsedTime runtime = new ElapsedTime();
+    SampleMecanumDrive drive;
+    Trajectory traj5;
+    Pose2d startPose;
 
     boolean speedModeOn = false;
 
@@ -44,6 +51,14 @@ public class DuncanDriveTrain extends DuncanComponentImplBase {
      */
     @Override
     public void init() {
+
+        drive = new SampleMecanumDrive(hardwareMap);
+        startPose = new Pose2d(0.0, 0.0, Math.toRadians(0));
+        drive.setPoseEstimate(startPose);
+
+        traj5 = drive.trajectoryBuilder(startPose)
+                .strafeRight(6)
+                .build();
 
         runtime.reset();
 
@@ -110,17 +125,12 @@ public class DuncanDriveTrain extends DuncanComponentImplBase {
 
     public void wheelsTeleOp() {
 
-        if(gamepad1.dpad_left){
-            leftDriveBack.setPower(0.5);
-        }
         if(gamepad1.dpad_right){
-            leftDriveFront.setPower(0.5);
-        }
-        if(gamepad1.dpad_down){
-            rightDriveBack.setPower(0.5);
-        }
-        if(gamepad1.dpad_up){
-            rightDriveFront.setPower(0.5);
+           // startPose = new Pose2d(startPose.getX()+6, 0.0, Math.toRadians(0));
+            drive.setPoseEstimate(startPose);
+            drive.followTrajectory(drive.trajectoryBuilder(startPose)
+                    .strafeRight(6.2)
+                    .build());
         }
 
         if(gamepad1.left_trigger > 0.4){
@@ -167,6 +177,7 @@ public class DuncanDriveTrain extends DuncanComponentImplBase {
 
 
         //double powers[] = {frontLeftPower, backLeftPower, frontRightPower, backRightPower};
+
     }
 
     double MAX_ACCELERATION = 0.1;

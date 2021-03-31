@@ -13,7 +13,6 @@ public class RevHubStore {
         motorEncoderPositions = new double[4];
         motorVelocities = new double[4];
 
-       //8=======================================D this stays
     }
 
 }

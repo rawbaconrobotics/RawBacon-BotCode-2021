@@ -108,7 +108,7 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
     private ElapsedTime launchTime = new ElapsedTime();
     private ElapsedTime intakeTime = new ElapsedTime();
     private int transferCounter = 0;
-
+    boolean leftButtonPress = false;
     public void runIntakeAndLauncher(){
 
 
@@ -187,7 +187,6 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
 //                break;
 ////
 //        }
-
                   switch (transferState) {
                       case IN:
                           transfer.setPosition(transferInPosition);
@@ -197,7 +196,11 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
                           break;
                       case OUT:
                           transfer.setPosition(transferOutPosition);
-                          transferCounter+=1;
+                          if(!leftButtonPress){
+                              transferCounter+=1;
+                          }else{
+                              leftButtonPress = false;
+                          }
                           transferState = transferState.IDLE;
                           break;
                       case IDLE:
@@ -209,6 +212,11 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
                             }
                           else if(gamepad1.right_trigger > 0.5) {
                               runtime.reset();
+                              transferState = TransferState.IN;
+                          }
+                          else if(gamepad1.y) {
+                              runtime.reset();
+                              leftButtonPress = true;
                               transferState = TransferState.IN;
                           }
                           break;
@@ -240,9 +248,6 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
                 }
                 break;
         }
-
-
-
 
     }
 
