@@ -35,7 +35,7 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
     public static double hopperDownPosition = 0.16;
     public static double hopperUpPosition = 0.57;
 
-    public static double transferInPosition = 0.4;
+    public static double transferInPosition = 0.9;
     public static double transferOutPosition = 0.65;
 
     enum HopperState {DOWN, UP};

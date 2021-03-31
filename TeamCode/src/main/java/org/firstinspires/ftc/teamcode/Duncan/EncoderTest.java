@@ -18,6 +18,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -41,85 +42,61 @@ import java.lang.reflect.Modifier;
 import static android.content.Context.BATTERY_SERVICE;
 
 @TeleOp(name="Encoder Test")
-public class EncoderTest extends LinearOpMode
+public class EncoderTest extends DuncanBaseLinearOpMode
 {
-    private final static String FRONTRIGHT_WHEEL_NAME = "right_drive_front";
-    private final static String FRONTLEFT_WHEEL_NAME = "left_drive_front";
-    private final static String BACKRIGHT_WHEEL_NAME = "right_drive_back";
-    private final static String BACKLEFT_WHEEL_NAME = "left_drive_back";
-    private final static String OMNI_LEFT = "deadwheel_left";
-    private final static String OMNI_RIGHT = "deadwheel_right";
-    private final static String OMNI_PERP = "intake";
-
-
-    private DcMotor leftDrive = null;
-    private DcMotor leftDriveBack = null;
-    private DcMotor rightDriveBack = null;
-    private DcMotor rightDrive = null;
-    private DcMotor omniLeft = null;
-    private DcMotor omniRight = null;
-    private DcMotor omniPerp = null;
-
+    DcMotor motors[];
+    DcMotor omniLeft, omniRight, omniPerp;
     @Override
-    public void runOpMode()
-    {
+    public void on_init(){
 
+        omniLeft = hardwareMap.dcMotor.get("deadwheel_left");
+        omniRight = hardwareMap.dcMotor.get("deadwheel_right");
+        omniPerp = hardwareMap.dcMotor.get("intake");
+
+
+        duncan.drivetrain.init();
         FtcDashboard dashboard = FtcDashboard.getInstance();
         telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
 
-        leftDrive  = hardwareMap.get(DcMotor.class, FRONTLEFT_WHEEL_NAME);
-        leftDriveBack  = hardwareMap.get(DcMotor.class, BACKLEFT_WHEEL_NAME);
-        rightDrive  = hardwareMap.get(DcMotor.class, FRONTRIGHT_WHEEL_NAME);
-        rightDriveBack = hardwareMap.get(DcMotor.class, BACKRIGHT_WHEEL_NAME);
-        omniLeft = hardwareMap.get(DcMotor.class, OMNI_LEFT);
-       omniRight = hardwareMap.get(DcMotor.class, OMNI_RIGHT);
-        omniPerp = hardwareMap.get(DcMotor.class, OMNI_PERP);
-
-        leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftDriveBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightDriveBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        duncan.drivetrain.leftDriveFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        duncan.drivetrain.leftDriveBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        duncan.drivetrain.rightDriveFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        duncan.drivetrain.rightDriveBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         omniLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         omniRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         omniPerp.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        duncan.drivetrain.leftDriveFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        duncan.drivetrain.leftDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        duncan.drivetrain.rightDriveFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        duncan.drivetrain.rightDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         omniLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         omniRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-       omniPerp.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        omniPerp.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motors = new DcMotor[] {duncan.drivetrain.leftDriveFront, duncan.drivetrain.leftDriveBack, duncan.drivetrain.rightDriveFront, duncan.drivetrain.rightDriveBack};
+    }
 
-        leftDrive.setDirection(DcMotor.Direction.REVERSE);
-        leftDriveBack.setDirection(DcMotor.Direction.FORWARD);
-        rightDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightDriveBack.setDirection(DcMotor.Direction.REVERSE);
+    @Override
+    public void on_stop() {
+
+    }
+
+    private ElapsedTime runtime = new ElapsedTime();
+
+    @Override
+    public void run()
+    {
 
 
-        telemetry.addLine("Waiting for start");
-        telemetry.update();
-
-        waitForStart();
-
-        DcMotor motors[] = {leftDrive, leftDriveBack, rightDrive, rightDriveBack};
-
-        leftDrive  = hardwareMap.get(DcMotor.class, FRONTLEFT_WHEEL_NAME);
-        leftDriveBack  = hardwareMap.get(DcMotor.class, BACKLEFT_WHEEL_NAME);
-        rightDrive  = hardwareMap.get(DcMotor.class, FRONTRIGHT_WHEEL_NAME);
-        rightDriveBack = hardwareMap.get(DcMotor.class, BACKRIGHT_WHEEL_NAME);
-        omniLeft = hardwareMap.get(DcMotor.class, OMNI_LEFT);
-        omniRight = hardwareMap.get(DcMotor.class, OMNI_RIGHT);
-        omniPerp = hardwareMap.get(DcMotor.class, OMNI_PERP);
 
         while (opModeIsActive())
         {
 
 
-            telemetry.addData("Left Front", leftDrive.getCurrentPosition());
-            telemetry.addData("Left Back", leftDriveBack.getCurrentPosition());
-            telemetry.addData("Right Front", rightDrive.getCurrentPosition());
-            telemetry.addData("Right Back", rightDriveBack.getCurrentPosition());
+            telemetry.addData("Left Front", duncan.drivetrain.leftDriveFront.getCurrentPosition());
+            telemetry.addData("Left Back", duncan.drivetrain.leftDriveBack.getCurrentPosition());
+            telemetry.addData("Right Front", duncan.drivetrain.rightDriveFront.getCurrentPosition());
+            telemetry.addData("Right Back", duncan.drivetrain.rightDriveBack.getCurrentPosition());
             telemetry.addData("Omni Left", omniLeft.getCurrentPosition());
             telemetry.addData("Omni Right", omniRight.getCurrentPosition());
             telemetry.addData("Omni Perpendicular", omniPerp.getCurrentPosition());
@@ -128,19 +105,19 @@ public class EncoderTest extends LinearOpMode
 
             if(gamepad1.a)
             {
-                leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                leftDriveBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                rightDriveBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                duncan.drivetrain.leftDriveFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                duncan.drivetrain.leftDriveBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                duncan.drivetrain.rightDriveFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                duncan.drivetrain.rightDriveBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //        omniLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //        omniRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
        //         omniPerp.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
-                leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                leftDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                rightDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                duncan.drivetrain.leftDriveFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                duncan.drivetrain.leftDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                duncan.drivetrain.rightDriveFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                duncan.drivetrain.rightDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 omniLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 omniRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 omniPerp.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -150,11 +127,12 @@ public class EncoderTest extends LinearOpMode
                 for(DcMotor motor : motors){
                     motor.setPower(0.5);
                 }
-                while(Math.abs(leftDrive.getCurrentPosition()) < 5000 || Math.abs(leftDriveBack.getCurrentPosition()) < 5000 || Math.abs(rightDrive.getCurrentPosition()) < 5000 || Math.abs(rightDriveBack.getCurrentPosition()) < 5000){
-                    telemetry.addData("Left Front", leftDrive.getCurrentPosition());
-                    telemetry.addData("Left Back", leftDriveBack.getCurrentPosition());
-                    telemetry.addData("Right Front", rightDrive.getCurrentPosition());
-                    telemetry.addData("Right Back", rightDriveBack.getCurrentPosition());
+                runtime.reset();
+                while(runtime.time() < 3){
+                    telemetry.addData("Left Front", duncan.drivetrain.leftDriveFront.getCurrentPosition());
+                    telemetry.addData("Left Back", duncan.drivetrain.leftDriveBack.getCurrentPosition());
+                    telemetry.addData("Right Front", duncan.drivetrain.rightDriveFront.getCurrentPosition());
+                    telemetry.addData("Right Back", duncan.drivetrain.rightDriveBack.getCurrentPosition());
                     telemetry.addData("Omni Left", omniLeft.getCurrentPosition());
                     telemetry.addData("Omni Right", omniRight.getCurrentPosition());
                     telemetry.addData("Omni Perpendicular", omniPerp.getCurrentPosition());
