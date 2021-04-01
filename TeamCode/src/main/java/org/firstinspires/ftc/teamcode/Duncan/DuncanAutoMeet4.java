@@ -174,13 +174,14 @@ public class DuncanAutoMeet4 extends DuncanBaseLinearOpMode {
             sleep(800);
             //strafe right again
             drive.followTrajectory(traj2);
+            sleep(500);
             duncan.il.transfer.setPosition(duncan.il.transferInPosition);
             sleep(500);
             duncan.il.transfer.setPosition(duncan.il.transferOutPosition);
             sleep(800);
             //strafe right again
             drive.followTrajectory(traj3);
-            sleep(1000);
+            sleep(500);
             duncan.il.transfer.setPosition(duncan.il.transferInPosition);
             sleep(500);
             duncan.il.transfer.setPosition(duncan.il.transferOutPosition);
@@ -285,13 +286,15 @@ public class DuncanAutoMeet4 extends DuncanBaseLinearOpMode {
             sleep(800);
             //strafe right again
             drive.followTrajectory(traj2);
+            sleep(500);
+
             duncan.il.transfer.setPosition(duncan.il.transferInPosition);
             sleep(500);
             duncan.il.transfer.setPosition(duncan.il.transferOutPosition);
             sleep(800);
             //strafe right again
             drive.followTrajectory(traj3);
-            sleep(1000);
+            sleep(500);
             duncan.il.transfer.setPosition(duncan.il.transferInPosition);
             sleep(500);
             duncan.il.transfer.setPosition(duncan.il.transferOutPosition);
@@ -307,7 +310,7 @@ public class DuncanAutoMeet4 extends DuncanBaseLinearOpMode {
             sleep(500);
             drive.followTrajectory(traj7);
             duncan.wobble.wobbleArm.setPower(-1);
-            sleep(750);
+            sleep(900);
             duncan.wobble.wobbleArm.setPower(0);
             duncan.wobble.grabber.setPosition(0);
             drive.followTrajectory(traj8);
@@ -354,7 +357,7 @@ public class DuncanAutoMeet4 extends DuncanBaseLinearOpMode {
                     .forward(6)
                     .build();
             Trajectory traj7 = drive.trajectoryBuilder(traj6.end())
-                    .lineToLinearHeading(new Pose2d(44.0, -55.0, Math.toRadians(360.0)))
+                    .lineToLinearHeading(new Pose2d(44.0, -55.0, Math.toRadians(360.0)+ 1E-6))
                     .build();
             Trajectory traj8 = drive.trajectoryBuilder(traj7.end())
                     .back(30)
@@ -391,13 +394,14 @@ public class DuncanAutoMeet4 extends DuncanBaseLinearOpMode {
             sleep(800);
             //strafe right again
             drive.followTrajectory(traj2);
+            sleep(500);
             duncan.il.transfer.setPosition(duncan.il.transferInPosition);
             sleep(500);
             duncan.il.transfer.setPosition(duncan.il.transferOutPosition);
             sleep(800);
             //strafe right again
             drive.followTrajectory(traj3);
-            sleep(1000);
+            sleep(500);
             duncan.il.transfer.setPosition(duncan.il.transferInPosition);
             sleep(500);
             duncan.il.transfer.setPosition(duncan.il.transferOutPosition);
