@@ -113,15 +113,15 @@ public class DuncanAutoMeet4 extends DuncanBaseLinearOpMode {
 //get rid of .FOUR!
         if((pipeline.getHeight() == pipeline.getHeight().ZERO)) {
             Trajectory traj1 = drive.trajectoryBuilder(startPose)
-                    .splineTo(new Vector2d(-23.0, -9.0), Math.toRadians(0))
+                    .splineTo(new Vector2d(-23.0, -9), Math.toRadians(-1.1))
                     .build();
 
             Trajectory traj2 = drive.trajectoryBuilder(traj1.end())
-                    .strafeRight(8.0)
+                    .strafeRight(9.0)
                     .build();
 
             Trajectory traj3 = drive.trajectoryBuilder(traj2.end())
-                    .strafeRight(8.0)
+                    .strafeRight(7.0)
                     .build();
 //turn here
             Trajectory traj4 = drive.trajectoryBuilder(traj3.end())
@@ -143,7 +143,7 @@ public class DuncanAutoMeet4 extends DuncanBaseLinearOpMode {
                         duncan.wobble.wobbleArm.setPower(-1);
 
          })
-                   .addTemporalMarker(0.9, () -> {
+                   .addTemporalMarker(1.1, () -> {
                         duncan.wobble.wobbleArm.setPower(0);
                     })
                     .forward(42)
@@ -153,7 +153,7 @@ public class DuncanAutoMeet4 extends DuncanBaseLinearOpMode {
                         duncan.wobble.wobbleArm.setPower(1);
 
                     })
-                    .addTemporalMarker(1.0, () -> {
+                    .addTemporalMarker(1.2, () -> {
                         duncan.wobble.wobbleArm.setPower(0);
                     })
                     //.back(42)
@@ -203,15 +203,15 @@ public class DuncanAutoMeet4 extends DuncanBaseLinearOpMode {
         }
         else if(pipeline.getHeight() == pipeline.getHeight().ONE){
             Trajectory traj1 = drive.trajectoryBuilder(startPose)
-                    .splineTo(new Vector2d(-23.0, -9), Math.toRadians(0))
+                    .splineTo(new Vector2d(-23.0, -9), Math.toRadians(-1.1))
                     .build();
 
             Trajectory traj2 = drive.trajectoryBuilder(traj1.end())
-                    .strafeRight(8.0)
+                    .strafeRight(9.0)
                     .build();
 
             Trajectory traj3 = drive.trajectoryBuilder(traj2.end())
-                    .strafeRight(8.0)
+                    .strafeRight(7.0)
                     .build();
 
             Trajectory traj4 = drive.trajectoryBuilder(traj3.end())
@@ -220,24 +220,25 @@ public class DuncanAutoMeet4 extends DuncanBaseLinearOpMode {
                         duncan.wobble.wobbleArm.setPower(-1);
 
                     })
-                    .addTemporalMarker(2, () -> {
+                    .addTemporalMarker(2.2, () -> {
                         duncan.wobble.wobbleArm.setPower(0);
                     })
                     .build();
 
             Trajectory traj5 = drive.trajectoryBuilder(traj4.end())
-                    .lineToLinearHeading(new Pose2d((traj4.end().getX()-52), (traj4.end().getY()-3), Math.toRadians(-180)))
+                    .lineToLinearHeading(new Pose2d((traj4.end().getX()-52), (traj4.end().getY()-3), Math.toRadians(-179)))
                     .addTemporalMarker(0.1, () -> {
                         duncan.wobble.wobbleArm.setPower(-1);
 
                     })
                     .addTemporalMarker(0.9, () -> {
                         duncan.wobble.wobbleArm.setPower(0);
+
                     })
                     .build();
 
             Trajectory traj6 = drive.trajectoryBuilder(traj5.end())
-                  .forward(6)
+                  .forward(7)
                   .build();
             Trajectory traj7 = drive.trajectoryBuilder(traj6.end())
                     .lineToLinearHeading(new Pose2d((traj6.end().getX()+49), (traj6.end().getY()+5), Math.toRadians(0)))
@@ -317,19 +318,19 @@ public class DuncanAutoMeet4 extends DuncanBaseLinearOpMode {
         }
         else if(pipeline.getHeight() == pipeline.getHeight().FOUR){
             Trajectory traj1 = drive.trajectoryBuilder(startPose)
-                    .splineTo(new Vector2d(-23.0, -9.0), Math.toRadians(0))
+                    .splineTo(new Vector2d(-23.0, -9), Math.toRadians(-1.1))
                     .build();
 
             Trajectory traj2 = drive.trajectoryBuilder(traj1.end())
-                    .strafeRight(8.0)
+                    .strafeRight(9.0)
                     .build();
 
             Trajectory traj3 = drive.trajectoryBuilder(traj2.end())
-                    .strafeRight(8.0)
+                    .strafeRight(7.0)
                     .build();
 //turn here
             Trajectory traj4 = drive.trajectoryBuilder(traj3.end())
-                    .splineTo(new Vector2d(50.0, -56.0), Math.toRadians(0.0))
+                    .splineTo(new Vector2d(50.0, -59.0), Math.toRadians(0.0))
                     .addTemporalMarker(0.3, () -> {
                         duncan.wobble.wobbleArm.setPower(-1);
 
@@ -351,13 +352,21 @@ public class DuncanAutoMeet4 extends DuncanBaseLinearOpMode {
                     .addTemporalMarker(0.9, () -> {
                         duncan.wobble.wobbleArm.setPower(0);
                     })
+                    //.lineToLinearHeading(new Pose2d(-28.0, -43, Math.toRadians(180.0)))
                     .lineToLinearHeading(new Pose2d(-28.0, -43, Math.toRadians(180.0)))
                     .build();
             Trajectory traj6 = drive.trajectoryBuilder(traj5.end())
-                    .forward(6)
+                    .forward(8)
                     .build();
             Trajectory traj7 = drive.trajectoryBuilder(traj6.end())
-                    .lineToLinearHeading(new Pose2d(44.0, -55.0, Math.toRadians(360.0)+ 1E-6))
+                    .lineToLinearHeading(new Pose2d(44.0, -58.0, Math.toRadians(360.0)+ 1E-6))
+                    .addTemporalMarker(0.1, () -> {
+                        duncan.wobble.wobbleArm.setPower(1);
+
+                    })
+                    .addTemporalMarker(1.0, () -> {
+                        duncan.wobble.wobbleArm.setPower(0);
+                    })
                     .build();
             Trajectory traj8 = drive.trajectoryBuilder(traj7.end())
                     .back(30)

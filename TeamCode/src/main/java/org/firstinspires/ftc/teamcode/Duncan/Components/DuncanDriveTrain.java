@@ -129,7 +129,7 @@ public class DuncanDriveTrain extends DuncanComponentImplBase {
            // startPose = new Pose2d(startPose.getX()+6, 0.0, Math.toRadians(0));
             drive.setPoseEstimate(startPose);
             drive.followTrajectory(drive.trajectoryBuilder(startPose)
-                    .strafeRight(6.2)
+                    .strafeRight(7.5)
                     .build());
         }
 
