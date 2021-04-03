@@ -209,8 +209,10 @@ public class DuncanIntakeAndLauncher extends DuncanComponentImplBase {
                               transferState = TransferState.IN;
                           }else if(transferCounter == 3){
                               transferCounter = 0;
+                              hopper.setPosition(hopperDownPosition);
                             }
                           else if(gamepad1.right_trigger > 0.5) {
+                              hopper.setPosition(hopperUpPosition);
                               runtime.reset();
                               transferState = TransferState.IN;
                           }
