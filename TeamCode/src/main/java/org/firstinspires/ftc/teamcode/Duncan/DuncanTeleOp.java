@@ -32,7 +32,7 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
         duncan.drivetrain.init();
        duncan.wobble.init();
         duncan.il.init();
-      // Disabled remote driving-  duncan.rdrive.init();
+      duncan.rdrive.init();
 
     }
 
@@ -67,7 +67,7 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()){
             duncan.teleOpActivated();
-            //duncan.rdrive.loop();
+            duncan.rdrive.loop();
             //telemetry.clear();
            // addTelemetry();
             telemetry.addData("launcher encoder: ", duncan.il.launcher.getVelocity());
@@ -79,7 +79,7 @@ public class DuncanTeleOp extends DuncanBaseLinearOpMode {
      */
     @Override
     public void on_stop() {
-       // duncan.rdrive.onStop();
+       duncan.rdrive.onStop();
         duncan.wobble.stopWobble();
     }
 }

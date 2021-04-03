@@ -380,10 +380,10 @@ const gamepadMiddleware = store => {
         gamepad1State = extractGamepadState(gamepads[gamepad1Index], 1);
       } else if(keyboardPlayer && (gamepad1Index === 1)){
         let PAD1_KEYBOARD_STATE = {
-          left_stick_x: leftXaxis(),
-          left_stick_y: -leftYaxis(),
-          right_stick_x: rightXAxis(),
-          right_stick_y: -rightYaxis(),
+          left_stick_x: 0.6 * leftXaxis(),
+          left_stick_y: 0.6 * -leftYaxis(),
+          right_stick_x: 0.6 * rightXAxis(),
+          right_stick_y: 0.6 * -rightYaxis(),
           dpad_up: pressedKeys["38"],
           dpad_down: pressedKeys["40"],
           dpad_left: pressedKeys["37"],
@@ -412,10 +412,10 @@ const gamepadMiddleware = store => {
         gamepad2State = extractGamepadState(gamepads[gamepad2Index], 2);
       } else if((keyboardPlayer) && (gamepad2Index === 1)){
         let PAD2_KEYBOARD_STATE = {
-          left_stick_x: leftXaxis(),
-          left_stick_y: -leftYaxis(),
-          right_stick_x: rightXAxis(),
-          right_stick_y: -rightYaxis(),
+          left_stick_x: 0.6 * leftXaxis(),
+          left_stick_y: 0.6 * -leftYaxis(),
+          right_stick_x: 0.6 * rightXAxis(),
+          right_stick_y: 0.6 * -rightYaxis(),
           dpad_up: pressedKeys["38"],
           dpad_down: pressedKeys["40"],
           dpad_left: pressedKeys["37"],
